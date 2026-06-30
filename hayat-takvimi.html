@@ -82,7 +82,7 @@ body.light {
   --grnbg:  rgba(10,112,48,.08);
   --ov:     rgba(0,0,0,.5);
 }
-
+/*Git için açıklama Satırı*/
 /* ═══════════════════════════════════════════
    RESET & TEMEL
 ═══════════════════════════════════════════ */
@@ -98,8 +98,12 @@ body {
   text-rendering: optimizeLegibility;
   transition: background .2s, color .2s;
 }
-button { font-family: 'Outfit', sans-serif; cursor: pointer; border: none; background: none; outline: none; }
+button { font-family: 'Outfit', sans-serif; cursor: pointer; border: none; background: none; outline: none; touch-action: manipulation; }
 input, select, textarea { font-family: 'Outfit', sans-serif; outline: none; }
+button, .tbtn, .btn, .tbtn-add, .cat-mgr-btn, .cat-add-btn, .mini-act, .mcancel, .msave, .cbtn, .cbtn2, .reset-main, .reset-small, .habit-btn, .pwa-install-btn, .pwa-dismiss {
+  min-height: 44px;
+  min-width: 0;
+}
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--bd2); border-radius: 2px; }
 button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
@@ -751,12 +755,55 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 @media (max-width:780px) {
   html, body { overflow: auto; }
+  .topbar {
+    position: sticky;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 12px 14px;
+    row-gap: 10px;
+    height: auto;
+  }
+  .brand { width: 100%; justify-content: space-between; }
+  .tnav-wrap {
+    width: 100%; gap: 6px; order: 3;
+    justify-content: stretch;
+  }
+  .tnav { flex: 1 1 calc(50% - 6px); min-width: 120px; min-height: 44px; padding: 10px 12px; font-size: .74rem; }
+  .top-r {
+    width: 100%; margin-left: 0; justify-content: space-between;
+    gap: 8px; flex-wrap: wrap;
+  }
+  .top-r > * { flex: 1 1 auto; min-width: 0; }
   .layout { height: auto; overflow: visible; grid-template-columns: 1fr; }
-  .sidebar, .rpanel { border: none; border-bottom: 1px solid var(--bd); overflow: visible !important; }
-  .topbar { position: sticky; }
+  .sidebar, .rpanel { border: none; border-bottom: 1px solid var(--bd); overflow: visible !important; padding: 12px 10px; }
+  .center { padding: 12px 14px; }
   .cal-row { grid-template-columns: 1fr; }
   .daily-grid { grid-template-columns: 1fr; }
   .series-grid { grid-template-columns: 1fr !important; }
+  .wday { min-height: 96px; padding: 12px 10px; border-radius: 16px; }
+  .wday-n { font-size: 1rem; }
+  .wday-tasks, .wday-add { font-size: .62rem; }
+  .qabar { flex-direction: column; align-items: stretch; }
+  .qabar input { padding: 12px 14px; }
+  .qabtn { width: 100%; }
+  .fbar { flex-direction: column; align-items: stretch; }
+  .sw { min-width: 0; }
+  .fsort { width: 100%; }
+  .fchip { flex: 1 1 auto; width: 100%; text-align: center; }
+  .page-acts, .tbtns { flex-wrap: wrap; gap: 8px; }
+  .tbtn, .btn, .tbtn-add, .cat-mgr-btn, .cat-add-btn, .mini-act, .mcancel, .msave, .cbtn, .cbtn2, .reset-main, .reset-small, .habit-btn, .pwa-install-btn, .pwa-dismiss { width: 100%; min-height: 46px; border-radius: 14px; }
+  .cat-form-row { flex-direction: column; }
+  .cat-form-field { min-width: 0; width: 100%; }
+  .cat-list { max-height: none; }
+  .mov .modal { width: 100%; max-width: 100%; max-height: 95vh; border-radius: 16px; padding: 18px; }
+  .tc { left: 50%; right: auto; transform: translateX(-50%); width: calc(100% - 32px); max-width: 340px; bottom: 12px; }
+  .pwa-banner { left: 50%; right: auto; transform: translateX(-50%); width: calc(100% - 32px); max-width: 420px; }
+  .habit-day-wrap { min-width: 0; }
+  .hdot { min-height: 20px; }
+  .rcard { padding: 12px 10px; }
+  .tcard { padding: 14px 14px 12px; }
+  .chk { width: 22px; height: 22px; margin-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
