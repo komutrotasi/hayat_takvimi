@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<!--
+  Hayat Takvimi v7.0
+  Görev yönetimi, ibadet takibi, alışkanlık izleme,
+  odaklanma sayacı ve şifreli yedekleme uygulaması.
+  Tek dosyalık HTML/CSS/JavaScript — localStorage tabanlı.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1117">
+<title>Hayat Takvimi</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark">
+
+<!-- ═══ ÜST BAR ═══ -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-ico">🌙</div>
+    <div>
+      <div class="brand-name">Hayat Takvimi</div>
+      <div class="brand-ara">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    </div>
+  </div>
+  <div class="tnav-wrap">
+    <button class="tnav" onclick="showView('tasks',this)">📋 Görevler</button>
+    <button class="tnav" onclick="showView('analytics',this)">📊 Analitik</button>
+    <button class="tnav on" onclick="showView('calendar',this)">📅 Takvim</button>
+  </div>
+  <div class="top-r">
+    <div style="text-align:right">
+      <div class="clk" id="clockEl">00:00:00</div>
+      <div class="dstr" id="dateEl">—</div>
+    </div>
+    <button class="tbtn notif-btn" id="notifBtn" onclick="toggleNotifications()" title="Bildirimler">
+      🔔<div class="notif-dot"></div>
+    </button>
+    <button class="tbtn" id="themeBtn" onclick="toggleTheme()" title="Tema">☀️</button>
+    <button class="tbtn" onclick="openSettings()" title="Ayarlar">⚙️</button>
+    <button class="tbtn-add" onclick="openAdd()">+ Görev Ekle</button>
+  </div>
+</div>
+
+<!-- ═══ ANA LAYOUT ═══ -->
+<div class="layout">
+
+  <!-- SOL PANEL -->
+  <div class="sidebar">
+    <div>
+      <div class="slbl">Günlük Özet</div>
+      <div class="dcard">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+          <div><div class="dscore" id="dscore">0%</div><div class="dsub">Tamamlanma oranı</div></div>
+          <div style="font-size:1.9rem" id="dmood">😐</div>
+        </div>
+        <div id="dpbars"></div>
+      </div>
+      <div class="dcard" style="margin-top:7px">
+        <div class="dsub" style="margin-bottom:6px">Genel Durum</div>
+        <div id="genelDurum"></div>
+      </div>
+    </div>
+    <div>
+      <div class="slbl">Kategoriler</div>
+      <div class="ccards">
+        <div class="allcard on" id="allcard" onclick="filterCat(null)">
+          <span style="font-size:.95rem">🗂️</span>
+          <span class="allcard-nm">Tüm Görevler</span>
+          <span class="allcard-n" id="allnum">0</span>
+        </div>
+        <div id="ccards"></div>
+      </div>
+      <button class="cat-mgr-btn" onclick="openCatManager()">⚙️ Kategorileri Yönet</button>
+    </div>
+  </div>
+
+  <!-- ORTA — İÇERİK -->
+  <div class="center">
+
+    <!-- GÖREVLER -->
+    <div class="view" id="v-tasks">
+      <div class="page-hdr">
+        <div>
+          <div class="page-title" id="pgTitle">🗂️ Tüm Görevler</div>
+          <div class="page-sub" id="pgSub">Tüm kategoriler</div>
+        </div>
+        <div class="page-acts">
+          <button class="btn" onclick="clearDone()">🧹 Temizle</button>
+        </div>
+      </div>
+      <div class="fbar">
+        <div class="sw"><span class="sw-i">🔍</span><input type="text" id="searchInp" placeholder="Görev ara..." oninput="renderTasks()"/></div>
+        <button class="fchip on" onclick="setFilter('all',this)">Tümü</button>
+        <button class="fchip" onclick="setFilter('pending',this)">Bekliyor</button>
+        <button class="fchip" onclick="setFilter('done',this)">Bitti</button>
+        <button class="fchip" onclick="setFilter('today',this)">Bugün</button>
+        <select class="fsort" id="sortSel" onchange="renderTasks()">
+          <option value="priority">Öncelik</option>
+          <option value="due">Tarih</option>
+          <option value="created">Eklenme</option>
+          <option value="name">İsim</option>
+        </select>
+      </div>
+      <div class="qabar">
+        <input type="text" id="qaInp" placeholder="Hızlı görev ekle — Enter (kategori için #anahtar kullan)"/>
+        <button class="qabtn" onclick="quickAdd()">+ Ekle</button>
+      </div>
+      <div id="taskList"></div>
+    </div>
+
+    <!-- ANALİTİK -->
+    <div class="view" id="v-analytics">
+      <div class="page-title">📊 Analitik</div>
+      <div class="ag" id="agrid"></div>
+      <div id="aperf"></div>
+    </div>
+
+    <!-- TAKVİM -->
+    <div class="view on" id="v-calendar">
+      <div class="page-hdr">
+        <div>
+          <div class="page-title">📅 Hayat Takvimi</div>
+          <div class="page-sub" id="calSub">Seçili gün için planlama</div>
+        </div>
+        <div class="page-acts">
+          <button class="btn" onclick="openAddForSelectedDay()">+ Seçili Güne Görev</button>
+        </div>
+      </div>
+
+      <!-- Günlük içerik kartları -->
+      <div class="daily-grid">
+        <div class="daily-card">
+          <div class="daily-title">📖 GÜNÜN AYETİ</div>
+          <div class="daily-text">Rabbin, kendisinden başkasına kulluk etmemenizi ve anne babaya iyilik etmenizi emretti.</div>
+          <div class="daily-src">İsrâ 17/23</div>
+        </div>
+        <div class="daily-card hadis">
+          <div class="daily-title">🎓 GÜNÜN HADİSİ</div>
+          <div class="daily-text">Merhamet etmeyene merhamet olunmaz.</div>
+          <div class="daily-src">Buhârî, Edeb, 18</div>
+        </div>
+        <div class="daily-card dua">
+          <div class="daily-title">🤲 GÜNÜN DUASI</div>
+          <div class="daily-text">Rabbim! Beni namaza devam edenlerden eyle.</div>
+          <div class="daily-src">İbrâhîm 14/40</div>
+        </div>
+      </div>
+
+      <!-- Takvim + Namaz Paneli -->
+      <div class="cal-row">
+        <div class="cal-main">
+          <div class="month-head">
+            <button class="month-nav" onclick="changeMonth(-1)">‹</button>
+            <div>
+              <div class="section-lbl">AYLIK TAKVİM</div>
+              <div class="month-title" id="monthTitle">—</div>
+            </div>
+            <button class="month-nav" onclick="changeMonth(1)">›</button>
+          </div>
+          <div class="wgrid" id="wgrid"></div>
+        </div>
+        <div class="ncard cal-prayers">
+          <div class="nhead">
+            <span class="nhead-l">🕌 Namaz Vakitleri</span>
+            <span class="nhead-n" id="namazCnt">0/5</span>
+          </div>
+          <div class="ngrid" id="namazGrid"></div>
+          <div class="ibadet-ozet" id="ibadetOzet">
+            <div class="io-row"><span>📊 Günlük İbadet</span><strong id="ibadetCount">0 / 5</strong></div>
+            <div class="io-bar"><div class="io-fill" id="ibadetBar"></div></div>
+            <div class="io-msg" id="ibadetMsg">Başlamak için ilk namazı kıl</div>
+          </div>
+          <div class="namaz-next" id="namazNext">
+            <div>
+              <div class="namaz-next-l">Sıradaki Vakit</div>
+              <div class="namaz-next-n">—</div>
+            </div>
+            <div class="namaz-next-t">—</div>
+          </div>
+          <div class="zikir-card" id="zikirCard">
+            <div style="min-width:0">
+              <div class="zikir-title">📿 Günün Zikri</div>
+              <div class="zikir-text" id="zikirText">—</div>
+              <div class="zikir-note" id="zikirNote"></div>
+            </div>
+            <button class="zikir-btn" onclick="completeDailyZikir()" id="zikirBtn">Tamamla</button>
+          </div>
+          <div class="weekly-ibadet" id="weeklyIbadet">
+            <div class="wi-head"><span>📈 Haftalık İbadet</span><span class="wi-score" id="weeklyIbadetScore">0/35</span></div>
+            <div class="wi-days" id="weeklyIbadetDays"></div>
+          </div>
+          <div class="namaz-live" id="namazSource">📡 Yükleniyor…</div>
+        </div>
+      </div>
+    </div><!-- /v-calendar -->
+
+  </div><!-- /center -->
+
+  <!-- SAĞ PANEL -->
+  <div class="rpanel">
+    <!-- Odaklanma Sayacı -->
+    <div class="rcard">
+      <div class="rcard-title">
+        <span>⏱ Odaklanma Sayacı</span>
+        <span id="timerCatLbl" style="color:var(--teal);font-size:.58rem"></span>
+      </div>
+      <div class="timer-wrap">
+        <div class="trw">
+          <svg width="108" height="108" viewBox="0 0 108 108">
+            <circle cx="54" cy="54" r="44" fill="none" stroke="#2c3550" stroke-width="6"/>
+            <circle id="timerRing" cx="54" cy="54" r="44" fill="none" stroke="#3ecfb0" stroke-width="6" stroke-linecap="round"
+              stroke-dasharray="276.5" stroke-dashoffset="0" transform="rotate(-90 54 54)"
+              style="transition:stroke-dashoffset 1s linear"/>
+          </svg>
+          <div class="ti">
+            <div class="tnum" id="tnum">25:00</div>
+            <div class="tph"  id="tph">Hazır</div>
+          </div>
+        </div>
+      </div>
+      <div class="tpres">
+        <button class="tpre on" onclick="setPreset(25,this)">25dk</button>
+        <button class="tpre" onclick="setPreset(45,this)">45dk</button>
+        <button class="tpre" onclick="setPreset(60,this)">60dk</button>
+        <button class="tpre" onclick="setPreset(5,this)">5dk 🍵</button>
+      </div>
+      <select class="tcat" id="timerCat"></select>
+      <div class="sessrow">
+        <span>Bugünkü seanslar</span>
+        <div class="sdots" id="sdots">
+          <div class="sdot"></div><div class="sdot"></div>
+          <div class="sdot"></div><div class="sdot"></div>
+        </div>
+      </div>
+      <div class="tbtns">
+        <button class="tbstart" id="tbstart" onclick="timerToggle()">▶ Başlat</button>
+        <button class="tbreset" onclick="timerReset()">↺ Sıfırla</button>
+      </div>
+    </div>
+
+    <!-- Kategori Süreleri -->
+    <div class="rcard">
+      <div class="rcard-title">⏰ Kategori Süreleri (Bugün)</div>
+      <div id="catTimes"></div>
+    </div>
+
+    <!-- Alışkanlıklar -->
+    <div class="rcard">
+      <div class="rcard-title">
+        <span>🔥 Alışkanlıklar</span>
+        <button class="mini-act" onclick="addHabitPrompt()">+ Ekle</button>
+      </div>
+      <div id="habitList"></div>
+    </div>
+  </div>
+
+</div><!-- /layout -->
+
+<!-- ═══ GÖREV MODAL ═══ -->
+<div class="mov" id="taskModal" onclick="if(event.target===this)closeModal('taskModal')">
+<div class="modal">
+  <div class="modal-title" id="mTitle">✏️ Yeni Görev</div>
+  <div class="modal-sub">Bilgileri doldurup kaydedin</div>
+  <div class="fgrid">
+    <div class="fg s2"><label class="flbl">Görev Adı *</label><input class="finp" id="fName" placeholder="Ne yapılacak?"/></div>
+    <div class="fg"><label class="flbl">Kategori</label><select class="fsel" id="fCat"></select></div>
+    <div class="fg"><label class="flbl">Öncelik</label>
+      <select class="fsel" id="fPri">
+        <option value="yuksek">🔴 Yüksek</option>
+        <option value="orta" selected>🟡 Orta</option>
+        <option value="dusuk">🟢 Düşük</option>
+      </select>
+    </div>
+    <div class="fg"><label class="flbl">Son Tarih</label><input class="finp" type="date" id="fDue"/></div>
+    <div class="fg"><label class="flbl">Hatırlatıcı Zamanı</label><input class="finp" type="time" id="fReminder"/></div>
+    <div class="fg"><label class="flbl">Hatırlatma</label>
+      <select class="fsel" id="fRemRep">
+        <option value="none">Kapalı</option>
+        <option value="once">Tek Sefer</option>
+        <option value="daily">Her Gün</option>
+        <option value="weekly">Her Hafta</option>
+      </select>
+    </div>
+    <div class="fg"><label class="flbl">Tekrar</label>
+      <select class="fsel" id="fRep" onchange="toggleRepDays()">
+        <option value="yok">Tekrar Yok</option>
+        <option value="gunluk">Her Gün</option>
+        <option value="her_2_gunde">2 Günde Bir</option>
+        <option value="haftalik">Her Hafta</option>
+        <option value="aylik">Her Ay</option>
+        <option value="ay_son">Ayın Sonu</option>
+        <option value="ozel">Özel Aralık</option>
+      </select>
+    </div>
+    <div class="fg s2" id="repDaysRow" style="display:none">
+      <label class="flbl" id="repDaysLbl">Hangi Günler?</label>
+      <div id="repDaysPicker" style="display:flex;gap:5px;flex-wrap:wrap;margin-top:4px"></div>
+    </div>
+    <div class="fg" id="repIntervalRow" style="display:none">
+      <label class="flbl">Özel Aralık</label><input class="finp" type="number" min="2" id="fRepInterval" placeholder="Gün sayısı"/>
+    </div>
+    <div class="fg" id="repEndRow" style="display:none">
+      <label class="flbl">Tekrar Bitişi</label><input class="finp" type="date" id="fRepEnd"/>
+    </div>
+    <div class="fg"><label class="flbl">Süre Tahmini</label>
+      <select class="fsel" id="fEst">
+        <option value="">—</option><option value="15">15 dk</option>
+        <option value="30">30 dk</option><option value="45">45 dk</option>
+        <option value="60">1 saat</option><option value="90">1.5 saat</option>
+        <option value="120">2 saat</option>
+      </select>
+    </div>
+    <div class="fg"><label class="flbl">Etiket</label><input class="finp" id="fTag" placeholder="örn: acil, fikir"/></div>
+    <div class="fg s2"><label class="flbl">Not</label><textarea class="ftxt" id="fNote" placeholder="Ek notlar..."></textarea></div>
+    <div class="fg s2">
+      <label class="flbl">Alt Görevler</label>
+      <div class="sub-adder">
+        <input type="text" id="subInp" placeholder="Alt görev yaz, Enter'a bas"/>
+        <button onclick="addSub()">+ Ekle</button>
+      </div>
+      <div class="sub-prev" id="subPrev"></div>
+    </div>
+  </div>
+  <div class="mfooter">
+    <button class="mcancel" onclick="closeModal('taskModal')">İptal</button>
+    <button class="msave" onclick="saveTask()">💾 Kaydet</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SİLME ONAY MODAL ═══ -->
+<div class="mov" id="confModal" onclick="if(event.target===this)closeModal('confModal')">
+<div class="modal conf-modal">
+  <div class="modal-title">🗑️ Onayla</div>
+  <div class="conf-txt" id="confTxt">Emin misiniz?</div>
+  <div style="display:flex;gap:8px;justify-content:flex-end">
+    <button class="mcancel" onclick="closeModal('confModal')">İptal</button>
+    <button class="mdel" id="confOk">Sil</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ KATEGORİ YÖNET MODAL ═══ -->
+<div class="mov" id="catModal" onclick="if(event.target===this)closeModal('catModal')">
+<div class="modal" style="max-width:540px">
+  <div class="modal-title">⚙️ Kategori Yönetimi</div>
+  <div class="modal-sub">Kategori ekle, düzenle veya sil</div>
+  <div class="cat-form">
+    <div class="cat-form-title" id="catFormTitle">Yeni Kategori Ekle</div>
+    <div class="cat-form-row">
+      <div class="cat-form-field" style="max-width:58px"><label>Emoji</label><input type="text" id="catIco" placeholder="📌" maxlength="2"/></div>
+      <div class="cat-form-field" style="flex:2"><label>Kategori Adı</label><input type="text" id="catName" placeholder="örn: Sağlık"/></div>
+      <div class="cat-form-field" style="max-width:96px"><label>Anahtar</label><input type="text" id="catKey" placeholder="saglik" maxlength="20"/></div>
+    </div>
+    <div style="margin-top:8px">
+      <div style="font-size:.56rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:4px">Renk</div>
+      <div class="color-presets" id="colorPresets"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:9px">
+      <button class="cat-add-btn" onclick="saveCat()">💾 Kaydet</button>
+      <button class="cbtn2" style="flex:1;margin-bottom:0" onclick="resetCatForm()">Temizle</button>
+    </div>
+  </div>
+  <div class="cat-list" id="catList"></div>
+  <div class="mfooter"><button class="mcancel" onclick="closeModal('catModal')">Kapat</button></div>
+</div>
+</div>
+
+<!-- ═══ AYARLAR MODAL ═══ -->
+<div class="mov" id="settingsModal" onclick="if(event.target===this)closeModal('settingsModal')">
+<div class="modal" style="max-width:540px">
+  <div class="modal-title">⚙️ Ayarlar</div>
+  <div class="modal-sub">Veri aktarımı, şifreli yedekleme ve sıfırlama</div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:13px">
+      <div style="font-size:.60rem;text-transform:uppercase;letter-spacing:.12em;color:var(--tx3);font-weight:700;margin-bottom:11px">🔐 Veri Aktarımı (AES-256)</div>
+      <div class="ctabs">
+        <button class="ctab on" onclick="cTab('exp',this)">↑ Dışa Aktar</button>
+        <button class="ctab" onclick="cTab('imp',this)">↓ İçe Aktar</button>
+      </div>
+      <div id="cexp">
+        <div class="cfield"><label>Şifre (min 6 karakter)</label><input type="password" id="epw" placeholder="Güçlü şifre girin"/></div>
+        <div class="cfield"><label>Şifreyi Onayla</label><input type="password" id="epw2" placeholder="Tekrar girin"/></div>
+        <button class="cbtn" onclick="doExport()">🔒 Şifrele & Aktar</button>
+        <div class="cfield" id="expR" style="display:none"><label>Şifreli Veri</label><textarea id="expOut" readonly></textarea></div>
+        <button class="cbtn2" id="copybtn" style="display:none" onclick="copyExp()">📋 Kopyala</button>
+        <button class="cbtn2" id="dlbtn"   style="display:none" onclick="dlExp()">💾 Dosya İndir</button>
+      </div>
+      <div id="cimp" style="display:none">
+        <div class="cfield"><label>Şifre</label><input type="password" id="ipw" placeholder="Dışa aktarırken kullandığınız şifre"/></div>
+        <div class="cfield"><label>Şifreli Veri</label><textarea id="idata" placeholder="Şifreli metni yapıştırın..."></textarea></div>
+        <button class="cbtn" onclick="doImport()">🔓 Çöz & İçe Aktar</button>
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:13px">
+      <div style="font-size:.60rem;text-transform:uppercase;letter-spacing:.12em;color:var(--tx3);font-weight:700;margin-bottom:11px">📍 Namaz & Yedekleme</div>
+      <div class="cfield"><label>Namaz Şehri</label><input class="finp" type="text" id="namazCityInput" placeholder="Konya"/></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <button class="cbtn2" onclick="detectLocation()">📍 Konumu Bul</button>
+        <button class="cbtn2" onclick="saveNamazCity()">💾 Kaydet</button>
+      </div>
+      <div class="cfield" id="locationStatus">Konum kaydedilmedi.</div>
+      <div class="cfield"><label>Otomatik Yedekleme</label><input type="checkbox" id="autoBackupToggle" onchange="toggleAutoBackup(this.checked)"/></div>
+      <div id="backupStatus" class="reset-note" style="margin-top:6px;">Henüz bir yedekleme yapılmadı.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+        <button class="cbtn2" onclick="doExportJson()">JSON İndir</button>
+        <button class="cbtn2" onclick="doExportCsv()">CSV İndir</button>
+        <button class="cbtn2" onclick="restoreBackup()">Yedekten Geri Yükle</button>
+      </div>
+      <div class="reset-note">JSON/CSV doğrudan dosya indirir, şifreli AES dışa aktarma korunur.</div>
+    </div>
+    <div style="background:var(--rosebg);border:1px solid var(--rose);border-radius:12px;padding:13px">
+      <div style="font-size:.60rem;text-transform:uppercase;letter-spacing:.12em;color:var(--rose);font-weight:700;margin-bottom:9px">⚠️ Sıfırlama</div>
+      <button class="reset-main" onclick="dailyReset()">↺ Günlük Sıfırla</button>
+      <div class="reset-note">Bugünün namaz, zikir, alışkanlık ve görev işaretleri temizlenir.</div>
+      <div style="display:grid;grid-template-columns:1fr;gap:5px;margin-top:7px;padding-top:7px;border-top:1px dashed var(--bd)">
+        <button class="reset-small" onclick="trackingReset()">📊 Takip Verilerini Sıfırla</button>
+        <button class="reset-small danger" onclick="factoryReset()">🧨 Fabrika Ayarlarına Dön</button>
+      </div>
+    </div>
+  </div>
+  <div class="mfooter"><button class="mcancel" onclick="closeModal('settingsModal')">Kapat</button></div>
+</div>
+</div>
+
+<!-- ═══ ALIÞKANLIK DÜZENLE MODAL ═══ -->
+<div class="mov" id="habitModal" onclick="if(event.target===this)closeHabitModal()">
+<div class="modal" style="max-width:370px">
+  <div class="modal-title" id="habitModalTitle">✨ Yeni Alışkanlık</div>
+  <div class="modal-sub" id="habitModalSub">Başına emoji ekleyebilirsiniz</div>
+  <div style="margin-bottom:18px">
+    <label class="flbl" style="display:block;margin-bottom:5px">Alışkanlık Adı</label>
+    <input class="habit-modal-inp" id="habitModalInp" placeholder="örn: 🏃 Sabah yürüyüşü" maxlength="80"
+      onkeydown="if(event.key==='Enter')saveHabitModal()"/>
+  </div>
+  <div class="mfooter">
+    <button class="mcancel" onclick="closeHabitModal()">İptal</button>
+    <button class="msave" onclick="saveHabitModal()">💾 Kaydet</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ ALIÞKANLIK SİL MODAL ═══ -->
+<div class="mov" id="habitDelModal" onclick="if(event.target===this)closeModal('habitDelModal')">
+<div class="modal conf-modal">
+  <div class="modal-title">🗑️ Alışkanlığı Sil</div>
+  <div class="conf-txt" id="habitDelTxt">Bu alışkanlık silinsin mi?</div>
+  <div style="display:flex;gap:8px;justify-content:flex-end">
+    <button class="mcancel" onclick="closeModal('habitDelModal')">İptal</button>
+    <button class="mdel" id="habitDelOk">Sil</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ PWA BANNER ═══ -->
+<div class="pwa-banner" id="pwaBanner">
+  <div style="font-size:.80rem;font-weight:700;color:var(--gold);margin-bottom:3px">📱 Uygulamayı Yükle</div>
+  <div style="font-size:.70rem;color:var(--tx3);margin-bottom:9px">Hayat Takvimi'ni telefona veya masaüstüne yükleyebilirsiniz.</div>
+  <div style="display:flex;gap:6px">
+    <button class="pwa-install-btn" onclick="pwsInstall()">Yükle</button>
+    <button class="pwa-dismiss"     onclick="pwaDismiss()">Kapat</button>
+  </div>
+</div>
+
+<div class="tc" id="tc"></div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script defer src="app.js"></script>
+</body>
+</html>
+
+
+
