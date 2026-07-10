@@ -1,0 +1,55 @@
+// H-12: Cache versiyonu güncellendi — eski cache'ler activate'de temizleniyor
+const CACHE_NAME = 'hayat-takvimi-v19';
+const STATIC_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.ico',
+  './styles.css',
+  './app.js'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(STATIC_ASSETS))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  // Eski cache sürümlerini temizle
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+
+  // API çağrıları (namaz vakitleri): Network-first, fallback cache
+  if (url.hostname === 'api.aladhan.com') {
+    event.respondWith(
+      fetch(event.request)
+        .then(res => {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
+          return res;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Statik dosyalar: Cache-first, fallback network
+  event.respondWith(
+    caches.match(event.request)
+      .then(cached => cached || fetch(event.request))
+  );
+});
