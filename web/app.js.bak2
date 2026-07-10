@@ -105,7 +105,8 @@ function dayOfYear() {
   return Math.floor((n - s) / 86400000);
 }
 function parseYmd(s) {
-  return /^\d{4}-\d{2}-\d{2}$/.test(s || '') ? new Date(s + 'T00:00:00') : null;
+  return /^
+?\d{4}-\d{2}-\d{2}$/.test(s || '') ? new Date(s + 'T00:00:00') : null;
 }
 function diffDays(a,b) {
   return Math.floor((b - a) / 86400000);
@@ -276,8 +277,7 @@ function save() {
   try {
     S.cats = normalizeCats(CATS);
     S.habitDefs = normalizeHabits(HABITS);
-    // H-02: S nesnesini yeni bir referansla değil, mevcut nesneyi güncelleyerek sakla
-    Object.assign(S, sanitizeState({...S}));
+    S = sanitizeState(S);
     localStorage.setItem('ht6', JSON.stringify(S));
     maybeAutoBackup();
     return true;
@@ -286,13 +286,6 @@ function save() {
     toast('Kayıt yapılamadı. Tarayıcı depolama alanını kontrol edin.', 'e');
     return false;
   }
-}
-
-/* save() için debounce — hızlı ardışık değişikliklerde yazım azaltılır */
-let _saveTimer = null;
-function debouncedSave() {
-  clearTimeout(_saveTimer);
-  _saveTimer = setTimeout(save, 300);
 }
 
 /* ── TEMA ── */
@@ -316,15 +309,6 @@ async function deriveKey(pw, salt) {
     km, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']
   );
 }
-// H-10: Büyük veri setlerinde stack overflow önlemek için chunk-based base64
-function uint8ToBase64(bytes) {
-  let binary = '';
-  const chunkSize = 8192;
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
-  }
-  return btoa(binary);
-}
 async function encData(data, pw) {
   const enc  = new TextEncoder();
   const salt = crypto.getRandomValues(new Uint8Array(32));
@@ -333,7 +317,7 @@ async function encData(data, pw) {
   const ct   = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(JSON.stringify(data)));
   const out  = new Uint8Array(44 + ct.byteLength);
   out.set(salt); out.set(iv, 32); out.set(new Uint8Array(ct), 44);
-  return 'HT6:' + uint8ToBase64(out);
+  return 'HT6:' + btoa(String.fromCharCode(...out));
 }
 async function decData(str, pw) {
   if (!str.startsWith('HT6:') && !str.startsWith('HT5:') && !str.startsWith('HT4:'))
@@ -415,13 +399,11 @@ function toggleAutoBackup(enabled) {
   toast(S.autoBackup ? 'Otomatik yedekleme etkin' : 'Otomatik yedekleme kapatıldı', S.autoBackup ? 's' : 'i');
 }
 function maybeAutoBackup() {
-  // H-01: Sadece backup key'ine yaz; ht6'ya tekrar yazmak save() döngüsüne neden olur
   if (!S.autoBackup) return;
-  const ts = new Date().toISOString();
-  const backup = {ts, data: JSON.parse(JSON.stringify(S))};
+  const backup = {ts:new Date().toISOString(), data:S};
   localStorage.setItem('ht6-auto-backup', JSON.stringify(backup));
-  S.lastBackup = ts;
-  // Not: ht6 anahtarına tekrar yazmıyoruz — save() zaten yazdı
+  S.lastBackup = backup.ts;
+  localStorage.setItem('ht6', JSON.stringify(S));
 }
 function doExportJson() {
   const data = JSON.stringify(S, null, 2);
@@ -460,25 +442,18 @@ function doExportCsv() {
 function restoreBackup() {
   const raw = localStorage.getItem('ht6-auto-backup');
   if (!raw) { toast('Otomatik yedek bulunamadı', 'e'); return; }
-  let backup;
-  try { backup = JSON.parse(raw); } catch(e) { toast('Yedek okunamadı: ' + e.message, 'e'); return; }
-  if (!backup || !backup.data) { toast('Geçersiz yedek dosyası', 'e'); return; }
-  const ts = backup.ts ? new Date(backup.ts).toLocaleString('tr-TR') : '—';
-  showConfirm(
-    '💾 Yedekten Geri Yükle',
-    'Otomatik yedekten geri yükleyelim mi?',
-    'Yedek tarihi: ' + ts,
-    '✅ Geri Yükle',
-    () => {
-      try {
-        Object.assign(S, sanitizeState(backup.data));
-        CATS = normalizeCats(S.cats); HABITS = normalizeHabits(S.habitDefs);
-        S.cats = CATS; S.habitDefs = HABITS;
-        save(); render(); renderSelects(); renderSettings();
-        toast('Yedek geri yüklendi', 's');
-      } catch(e) { toast('Yedek yüklenemedi: ' + e.message, 'e'); }
-    }
-  );
+  try {
+    const backup = JSON.parse(raw);
+    if (!backup || !backup.data) throw new Error('Geçersiz yedek');
+    if (!confirm('Otomatik yedekten geri yükleyelim mi?')) return;
+    Object.assign(S, sanitizeState(backup.data));
+    CATS = normalizeCats(S.cats); HABITS = normalizeHabits(S.habitDefs);
+    S.cats = CATS; S.habitDefs = HABITS;
+    save(); render(); renderSelects(); renderSettings();
+    toast('Yedek geri yüklendi', 's');
+  } catch(e) {
+    toast('Yedek yüklenemedi: ' + e.message, 'e');
+  }
 }
 function cTab(t, el) {
   document.querySelectorAll('.ctab').forEach(x => x.classList.remove('on'));
@@ -559,10 +534,9 @@ function scheduleNotifs() {
       remindAt.setHours(h, m, 0, 0);
       const diff = remindAt - now;
       if (diff > 0 && diff < 86400000) {
-        // H-07: Operatör önceliği netleştirildi — her koşul ayrı paranteze alındı
-        const valid = (task.reminderRepeat === 'daily')
-          || (task.reminderRepeat === 'weekly' && (new Date(task.due+'T00:00:00').getDay() === now.getDay() || !task.due))
-          || (task.reminderRepeat === 'once' && task.due === today());
+        const valid = task.reminderRepeat === 'daily'
+          || task.reminderRepeat === 'weekly' && (new Date(task.due+'T00:00:00').getDay() === now.getDay() || !task.due)
+          || task.reminderRepeat === 'once' && task.due === today();
         if (valid) {
           notifTimers.push(setTimeout(() => {
             if (S.notifEnabled && Notification.permission === 'granted' && !task.done) {
@@ -598,8 +572,6 @@ async function fetchPrayerTimes() {
       {n:'Akşam',  t:t.Maghrib.slice(0,5),  h:parseInt(t.Maghrib)},
       {n:'Yatsı',  t:t.Isha.slice(0,5),     h:parseInt(t.Isha)},
     ];
-    // Günlük cache — aynı günde tekrar API çağrısını önler
-    try { localStorage.setItem('ht6-prayer-cache', JSON.stringify({date: today(), prayers: PRAYERS})); } catch(e) {}
     document.getElementById('namazSource').textContent = '🌐 Canlı veri — ' + S.namazCity;
     renderNamaz();
     if (S.notifEnabled) scheduleNotifs();
@@ -720,28 +692,6 @@ function openEdit(id) {
   setTimeout(() => document.getElementById('fName').focus(), 80);
 }
 function closeModal(id) { document.getElementById(id).classList.remove('on'); }
-
-/**
- * H-13: Generic confirm modal — native confirm() yerine PWA uyumlu dialog
- * @param {string} title   - Modal başlığı
- * @param {string} msg     - Ana mesaj (kalın)
- * @param {string} detail  - İsteğe bağlı detay metni (bosse gizlenir)
- * @param {string} okLabel - Onayla butonunun metni
- * @param {Function} onOk  - Onaylanma callback'i
- * @param {boolean} danger - true ise kırmızı .mdel, false ise yeşil .msave stili
- */
-function showConfirm(title, msg, detail, okLabel, onOk, danger = false) {
-  document.getElementById('confModalTitle').textContent = title;
-  document.getElementById('confTxt').textContent = msg;
-  const det = document.getElementById('confDetail');
-  if (detail) { det.textContent = detail; det.style.display = ''; }
-  else { det.textContent = ''; det.style.display = 'none'; }
-  const btn = document.getElementById('confOk');
-  btn.textContent = okLabel;
-  btn.className = danger ? 'mdel' : 'msave';
-  btn.onclick = () => { closeModal('confModal'); onOk(); };
-  document.getElementById('confModal').classList.add('on');
-}
 function saveTask() {
   const name = document.getElementById('fName').value.trim();
   if (!name) { toast('Görev adı boş olamaz!', 'e'); return; }
@@ -785,17 +735,14 @@ function toggleSub(tid, si) {
 }
 function confirmDel(id) {
   const t = S.tasks.find(x => x.id === id); if (!t) return;
-  showConfirm(
-    '🗑️ Görevi Sil',
-    `“${t.name}” silinsin mi?`,
-    '',
-    '🗑️ Sil',
-    () => { S.tasks = S.tasks.filter(x => x.id !== id); save(); render(); toast('Silindi.', 'i'); },
-    true
-  );
+  document.getElementById('confTxt').textContent = `"${t.name}" silinsin mi?`;
+  document.getElementById('confOk').onclick = () => {
+    S.tasks = S.tasks.filter(x => x.id !== id);
+    save(); render(); closeModal('confModal'); toast('Silindi.', 'i');
+  };
+  document.getElementById('confModal').classList.add('on');
 }
-// H-05: İsim düzeltildi — fonksiyon siler değil, tamamlanmışları sıfırlar
-function resetDoneTasks() {
+function clearDone() {
   const n = S.tasks.filter(t => t.done).length;
   S.tasks.filter(t => t.done).forEach(t => {
     t.done = false; t.completedAt = null;
@@ -803,8 +750,6 @@ function resetDoneTasks() {
   });
   save(); render(); toast(`${n} tamamlanmış görev sıfırlandı.`, 'i');
 }
-// Geriye dönük uyumluluk için eski isim de çalışsın
-const clearDone = resetDoneTasks;
 
 /* ── ALT GÖREVLER ── */
 function addSub() {
@@ -842,12 +787,7 @@ function filterCat(cat) {
   activeCat = cat;
   document.getElementById('allcard').classList.toggle('on', !cat);
   document.querySelectorAll('.ccard').forEach(c => c.classList.remove('on'));
-  // H-04: CSS.escape ile selector injection koruması
-  if (cat) {
-    const selector = '[data-cat="' + (CSS.escape ? CSS.escape(cat) : cat.replace(/"/g,'')) + '"]';
-    const el = document.querySelector(selector);
-    if (el) el.classList.add('on');
-  }
+  if (cat) { const el = document.querySelector(`[data-cat="${cat}"]`); if (el) el.classList.add('on'); }
   renderTasks(); updatePgHdr();
 }
 function setFilter(f, el) {
@@ -880,8 +820,7 @@ function streak(id) {
 }
 
 /* ── SAYAÇ ── */
-// H-03: Timer Date.now() bazlı — arka plan tab'ında negatife düşmez
-const T = {running:false, remain:1500, total:1500, iv:null, startedAt:null, pausedRemain:null};
+const T = {running:false, remain:1500, total:1500, iv:null};
 function setPreset(m, el) {
   document.querySelectorAll('.tpre').forEach(b => b.classList.remove('on'));
   el.classList.add('on'); timerReset(); T.remain = m*60; T.total = m*60; drawTimer();
@@ -889,24 +828,16 @@ function setPreset(m, el) {
 function timerToggle() {
   if (T.running) {
     clearInterval(T.iv); T.running = false;
-    T.pausedRemain = T.remain;
     document.getElementById('tbstart').textContent = '▶ Devam';
     document.getElementById('tph').textContent = 'Duraklatıldı';
   } else {
     T.running = true;
-    // Duraklatmadan devam ediyorsak kalan süreyi kullan
-    const startRemain = (T.pausedRemain !== null) ? T.pausedRemain : T.remain;
-    T.pausedRemain = null;
-    T.startedAt = Date.now();
-    const snapRemain = startRemain;
     document.getElementById('tbstart').textContent = '⏸ Duraklat';
     document.getElementById('tph').textContent = 'Odaklanıyor...';
     T.iv = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - T.startedAt) / 1000);
-      T.remain = Math.max(0, snapRemain - elapsed);
-      drawTimer();
+      T.remain--; drawTimer();
       if (T.remain <= 0) {
-        clearInterval(T.iv); T.running = false; T.startedAt = null;
+        clearInterval(T.iv); T.running = false;
         const d = today();
         if (!S.timerSess[d]) S.timerSess[d] = 0; S.timerSess[d]++;
         const cat = document.getElementById('timerCat').value;
@@ -922,12 +853,11 @@ function timerToggle() {
         if (S.notifEnabled && Notification.permission === 'granted')
           new Notification('⏱ Pomodoro Tamamlandı', {body:'Seans bitti! Molayı hak ettin. ☕', tag:'pomodoro'});
       }
-    }, 250);
+    }, 1000);
   }
 }
 function timerReset() {
   clearInterval(T.iv); T.running = false; T.remain = T.total;
-  T.startedAt = null; T.pausedRemain = null;
   document.getElementById('tbstart').textContent = '▶ Başlat';
   document.getElementById('tph').textContent = 'Hazır'; drawTimer();
 }
@@ -1050,19 +980,15 @@ function saveCat() {
 function deleteCat(key) {
   if (Object.keys(CATS).length <= 1) { toast('En az 1 kategori olmalı', 'e'); return; }
   const fallback = Object.keys(CATS).find(k => k !== key) || 'diger';
-  showConfirm(
-    '🗑️ Kategoriyi Sil',
-    `“${CATS[key].l}” silinsin mi?`,
-    `Bu kategorideki görevler “${CATS[fallback]?.l}” kategorisine taşınır.`,
-    '🗑️ Sil',
-    () => {
-      S.tasks.forEach(t => { if (t.cat === key) t.cat = fallback; });
-      delete CATS[key];
-      save(); render(); renderSelects(); renderCatList();
-      toast('Kategori silindi', 'i');
-    },
-    true
-  );
+  document.getElementById('confTxt').textContent =
+    `"${CATS[key].l}" silinsin mi? Bu kategorideki görevler "${CATS[fallback]?.l}" kategorisine taşınır.`;
+  document.getElementById('confOk').onclick = () => {
+    S.tasks.forEach(t => { if (t.cat === key) t.cat = fallback; });
+    delete CATS[key];
+    save(); render(); renderSelects(); renderCatList();
+    closeModal('confModal'); toast('Kategori silindi', 'i');
+  };
+  document.getElementById('confModal').classList.add('on');
 }
 
 /* ── RENDER: SELECT'LER ── */
@@ -1378,7 +1304,7 @@ function tHtml(t) {
     dueH = `<span class="chip" style="background:transparent;${dc}">📅 ${new Date(t.due+'T12:00:00').toLocaleDateString('tr-TR',{day:'numeric',month:'short'})}</span>`;
   }
   const tagH = t.tag ? `<span class="chip" style="background:rgba(154,160,184,.12);color:var(--tx3)">#${esc(t.tag)}</span>` : '';
-  const repLabels = {gunluk:'🔄 Her Gün', haftalik:'🔄 Haftalık', aylik:'🔄 Aylık', ay_son:'🔄 Ay Sonu', her_2_gunde:'🔄 Her 2 Günde Bir', ozel:'🔄 Özel'};
+  const repLabels = {gunluk:'🔄 Her Gün', haftalik:'🔄 Haftalık', aylik:'🔄 Aylık'};
   let repH = '';
   if (t.rep && t.rep !== 'yok') {
     let repTxt = repLabels[t.rep] || '🔄';
@@ -1390,9 +1316,6 @@ function tHtml(t) {
     }
     repH = `<span class="chip" style="background:rgba(154,160,184,.08);color:var(--tx3)">${repTxt}</span>`;
   }
-  const remH = t.reminderTime && t.reminderRepeat && t.reminderRepeat !== 'none'
-    ? `<span class="chip" style="background:rgba(62,207,176,.12);color:#059669">⏰ ${esc(t.reminderTime)} ${esc(t.reminderRepeat)}</span>`
-    : '';
   const estH   = t.est ? `<span class="chip" style="background:rgba(154,160,184,.08);color:var(--tx3)">⏱${esc(String(t.est))}dk</span>` : '';
   const progH  = st.total ? `<span class="chip task-progress${st.full?' full':''}">✓ ${st.done}/${st.total}</span>` : '';
   const subsH  = st.total ? `<div class="tc-subs">${t.subs.map((s,i) =>
@@ -1408,7 +1331,7 @@ function tHtml(t) {
       <div class="tc-meta">
         <span class="chip" style="background:${safeColor(c.bg)};color:${safeColor(c.c)}">${esc(c.i)} ${esc(c.l)}</span>
         <span class="chip" style="background:${pb[t.pri]};color:${pc[t.pri]}">${pl[t.pri]}</span>
-        ${progH}${dueH}${tagH}${repH}${remH}${estH}
+        ${progH}${dueH}${tagH}${repH}${estH}
       </div>
       ${t.note ? `<div class="tc-note">${esc(t.note)}</div>` : ''}
       ${subsH}
@@ -1505,7 +1428,6 @@ function habitSeriesHtml() {
   }).join('');
   return `<div class="series-title">🔥 Alışkanlık Serileri</div><div class="series-grid">${cards}</div>`;
 }
-// H-06: Haftalık tekrar repDays dizisini de kontrol ediyor
 function taskOccursOn(t, ds) {
   if (t.due === ds) return true;
   const rep = t.rep || 'yok'; if (rep === 'yok') return false;
@@ -1514,21 +1436,8 @@ function taskOccursOn(t, ds) {
   const d1 = new Date(start+'T12:00:00'), d2 = new Date(ds+'T12:00:00');
   const diff = Math.round((d2-d1)/86400000); if (diff < 0) return false;
   if (rep === 'gunluk') return true;
-  if (rep === 'haftalik') {
-    // repDays varsa haftanın belirli günlerini kontrol et
-    if (Array.isArray(t.repDays) && t.repDays.length) {
-      return t.repDays.includes(d2.getDay());
-    }
-    return diff % 7 === 0;
-  }
-  if (rep === 'aylik') {
-    if (Array.isArray(t.repDays) && t.repDays.length) {
-      return t.repDays.includes(d2.getDate());
-    }
-    return d1.getDate() === d2.getDate();
-  }
-  if (rep === 'her_2_gunde') return diff % 2 === 0;
-  if (rep === 'ozel' && t.repInterval > 1) return diff % t.repInterval === 0;
+  if (rep === 'haftalik') return diff % 7 === 0;
+  if (rep === 'aylik')   return d1.getDate() === d2.getDate();
   return false;
 }
 function catSeriesHtml() {
@@ -1606,60 +1515,30 @@ function toast(msg, type) {
 
 /* ── SIFIRLAMA PANELİ ── */
 function dailyReset() {
-  showConfirm(
-    '↺ Günlük Sıfırla',
-    'Bugünün işaretleri sıfırlansın mı?',
-    '• Görev işaretleri (tekrarlı & bugünlük)\n• Namaz, zikir, alışkanlık tikleri temizlenir\n• Görevler ve kategoriler korunur',
-    '↺ Sıfırla',
-    () => {
-      const td = today(); let n = 0;
-      S.tasks.forEach(t => { if (isTaskDueToday(t) && t.done) { t.done=false; t.completedAt=null; t.subs?.forEach(s=>s.done=false); n++; } });
-      if (S.prayers)   delete S.prayers[td];
-      if (S.habits)    delete S.habits[td];
-      if (S.zikirDone) delete S.zikirDone[td];
-      save(); render(); toast(`Günlük işaretler sıfırlandı. Görev: ${n}`, 's');
-    },
-    false
-  );
+  const td = today();
+  if (!confirm('Bugünün işaretleri sıfırlansın mı?\n\n• Görev işaretleri (tekrarlı & bugünlük)\n• Namaz, zikir, alışkanlık tikleri temizlenir\n• Görevler ve kategoriler korunur')) return;
+  let n = 0;
+  S.tasks.forEach(t => { if (isTaskDueToday(t) && t.done) { t.done=false; t.completedAt=null; t.subs?.forEach(s=>s.done=false); n++; } });
+  if (S.prayers)   delete S.prayers[td];
+  if (S.habits)    delete S.habits[td];
+  if (S.zikirDone) delete S.zikirDone[td];
+  save(); render(); toast(`Günlük işaretler sıfırlandı. Görev: ${n}`, 's');
 }
 function trackingReset() {
-  showConfirm(
-    '📊 Takip Verilerini Sıfırla',
-    'Takip verileri sıfırlansın mı?',
-    'Silinir: Alışkanlık geçmişi, namaz, zikir, odaklanma süreleri\nKalır: Görevler, kategoriler, alışkanlık isimleri',
-    '📊 Sıfırla',
-    () => {
-      S.prayers={}; S.habits={}; S.zikirDone={}; S.catTime={}; S.timerSess={};
-      S.tasks.forEach(t => t.completedAt=null);
-      save(); render(); toast('Takip verileri sıfırlandı.', 's');
-    },
-    true
-  );
+  if (!confirm('Takip verileri sıfırlansın mı?\n\nSilinir: Alışkanlık geçmişi, namaz, zikir, odaklanma süreleri\nKalır: Görevler, kategoriler, alışkanlık isimleri')) return;
+  S.prayers={}; S.habits={}; S.zikirDone={}; S.catTime={}; S.timerSess={};
+  S.tasks.forEach(t => t.completedAt=null);
+  save(); render(); toast('Takip verileri sıfırlandı.', 's');
 }
 function factoryReset() {
-  // H-13: prompt() kaldırıldı — factoryModal (text input) kullanılıyor
-  const inp = document.getElementById('factoryConfirmInp');
-  if (inp) inp.value = '';
-  const btn = document.getElementById('factoryOkBtn');
-  if (btn) { btn.disabled = true; btn.style.opacity = '0.4'; btn.style.cursor = 'not-allowed'; }
-  document.getElementById('factoryModal').classList.add('on');
-  setTimeout(() => inp?.focus(), 80);
-}
-function factoryCheckInput(inp) {
-  const ok = inp.value === 'SIFIRLA';
-  const btn = document.getElementById('factoryOkBtn');
-  btn.disabled = !ok;
-  btn.style.opacity = ok ? '1' : '0.4';
-  btn.style.cursor  = ok ? 'pointer' : 'not-allowed';
-}
-function doFactoryReset() {
-  closeModal('factoryModal');
+  if (!confirm('Fabrika ayarlarına dönülsün mü?\n\nTÜM veri silinir: görevler, kategoriler, alışkanlıklar, ayarlar.')) return;
+  const code = prompt('Onaylamak için SIFIRLA yazın:');
+  if (code !== 'SIFIRLA') { toast('Sıfırlama iptal edildi.', 'i'); return; }
   localStorage.removeItem('ht6'); localStorage.removeItem('ht5');
   CATS   = JSON.parse(JSON.stringify(DEFAULT_CATS));
   HABITS = JSON.parse(JSON.stringify(DEFAULT_HABITS));
   S = {tasks:[], prayers:{}, habits:{}, zikirDone:{}, catTime:{}, timerSess:{},
-       theme:'dark', cats:null, habitDefs:null, lastReset:'', notifEnabled:false, namazCity:'Konya',
-       autoBackup:false, lastBackup:'', lat:null, lng:null};
+       theme:'dark', cats:null, habitDefs:null, lastReset:'', notifEnabled:false, namazCity:'Konya'};
   selectedDate = today(); activeCat = null; statusF = 'all';
   applyTheme('dark'); save(); render(); renderSelects();
   toast('Fabrika ayarlarına dönüldü.', 's');
@@ -1688,8 +1567,7 @@ function seed() {
     {name:'İkindi namazını kıl',        cat:'dini',     pri:'yuksek', rep:'gunluk',   tag:'namaz'},
     {name:'Akşam namazını kıl',         cat:'dini',     pri:'yuksek', rep:'gunluk',   tag:'namaz'},
     {name:'Yatsı namazını kıl',         cat:'dini',     pri:'yuksek', rep:'gunluk',   tag:'namaz'},
-    // H-09: repDays:[5] = Cuma (0=Pazar,...,5=Cuma,6=Cumartesi)
-    {name:'Cuma namazına git',          cat:'dini',     pri:'yuksek', rep:'haftalik', repDays:[5], tag:'namaz'},
+    {name:'Cuma namazına git',          cat:'dini',     pri:'yuksek', rep:'haftalik', tag:'namaz'},
     {name:'Sabah sünnetini kıl',        cat:'dini',     pri:'orta',   rep:'gunluk'},
     {name:'Kuran tilâveti (min 1 sayfa)',cat:'kuran',   pri:'yuksek', rep:'gunluk',   est:'15', note:'Mümkünse sesli oku'},
     {name:'Sabah zikirleri',            cat:'kuran',    pri:'yuksek', rep:'gunluk',   est:'10'},
@@ -1715,14 +1593,14 @@ function seed() {
   S.tasks = defs.map(d => ({
     id:gid(), done:false, subs:[], created:new Date().toISOString(), completedAt:null,
     due:'', note:d.note||'', tag:d.tag||'', est:d.est||'',
-    rep:d.rep||'yok', repDays:d.repDays||[], pri:d.pri||'orta', cat:d.cat||'diger', name:d.name,
+    rep:d.rep||'yok', repDays:[], pri:d.pri||'orta', cat:d.cat||'diger', name:d.name,
   }));
 }
 
 /* ── KEYBOARD KISAYOLLARI ── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    ['taskModal','confModal','catModal','settingsModal','habitModal','habitDelModal','factoryModal'].forEach(closeModal);
+    ['taskModal','confModal','catModal','settingsModal','habitModal','habitDelModal'].forEach(closeModal);
     closeHabitModal();
   }
   if ((e.ctrlKey || e.metaKey) && e.key === 'n' && !e.shiftKey) { e.preventDefault(); openAdd(); }
@@ -1746,36 +1624,10 @@ function pwaDismiss() {
   localStorage.setItem('pwaDismissed','1');
 }
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js').then(reg => {
-    // Service Worker güncellemesi varsa kullanıcıyı bilgilendir
-    reg.addEventListener('updatefound', () => {
-      const newSW = reg.installing;
-      if (!newSW) return;
-      newSW.addEventListener('statechange', () => {
-        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-          toast('Yeni sürüm mevcut! Sayfayı yenileyin.', 'i');
-        }
-      });
-    });
-  }).catch(() => {});
+  const sw = `const C='ht-v7';self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.add('/'))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+  const blob = new Blob([sw], {type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
 }
-
-/* ── ÇEVRİMDIŞI GÖSTERGESİ ── */
-function updateOnlineStatus() {
-  const banner = document.getElementById('offlineBanner');
-  if (!banner) return;
-  if (!navigator.onLine) {
-    banner.style.display = 'block';
-    requestAnimationFrame(() => banner.classList.add('show'));
-  } else {
-    banner.classList.remove('show');
-    setTimeout(() => { if (banner.classList.contains('show') === false) banner.style.display = 'none'; }, 300);
-  }
-}
-window.addEventListener('online',  updateOnlineStatus);
-window.addEventListener('offline', updateOnlineStatus);
-// Sayfa yüklenirken de kontrol et
-updateOnlineStatus();
 
 /* ═══════════════════════════════════════════
    BAŞLATMA
@@ -1791,30 +1643,11 @@ if (S.notifEnabled && Notification.permission === 'granted') scheduleNotifs();
 save();
 render();
 renderClock();
-// H-15: Saat saniyeyi gösterdiğinden 1s aralığı doğru; tarih güncellenmesi dakikada bir yeterli
 setInterval(renderClock, 1000);
-// Namaz vakitlerini dakikada bir güncelle
 setInterval(renderNamaz, 60000);
-// Sabah 04:00'da namaz vakitlerini yeniden çek ve otomatik sıfırla
 setInterval(() => {
   const now = new Date();
   if (now.getHours() === 4 && now.getMinutes() === 0) { fetchPrayerTimes(); autoReset(); }
 }, 60000);
-// Namaz vakitleri: önce localStorage cache'den dene, sonra API
-(function fetchPrayerWithCache() {
-  try {
-    const cached = localStorage.getItem('ht6-prayer-cache');
-    if (cached) {
-      const { date, prayers } = JSON.parse(cached);
-      if (date === today() && Array.isArray(prayers)) {
-        PRAYERS = prayers;
-        document.getElementById('namazSource').textContent = '💾 Önbellek — ' + (S.namazCity||'Konya');
-        renderNamaz();
-        if (S.notifEnabled) scheduleNotifs();
-        return; // cache geçerli, API çağrısına gerek yok
-      }
-    }
-  } catch(e) {}
-  fetchPrayerTimes();
-})();
+fetchPrayerTimes();
 

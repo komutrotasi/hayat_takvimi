@@ -165,10 +165,16 @@
           <div class="wgrid" id="wgrid"></div>
         </div>
         <div class="ncard cal-prayers">
+          <!-- Hicri Tarih ve Ramazan Banner -->
+          <div id="ramazanBanner" style="display:none;background:linear-gradient(135deg,#059669,#047857);color:#fff;border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:.78rem;text-align:center;font-weight:600">🌙 Ramazan-ı Şerif Mübarek Olsun!</div>
           <div class="nhead">
             <span class="nhead-l">🕌 Namaz Vakitleri</span>
             <span class="nhead-n" id="namazCnt">0/5</span>
           </div>
+          <!-- Hicri Tarih -->
+          <div style="text-align:center;font-size:.68rem;color:var(--namaz-gold,#D4AF37);margin-bottom:8px;font-family:'Amiri',serif;letter-spacing:.05em" id="hicriDateEl">— Yükleniyor</div>
+          <!-- Kerahat Vakti Uyarı Bandı -->
+          <div id="kerahatBanner" style="display:none;background:rgba(251,146,60,.15);border:1px solid #fb923c;color:#fb923c;border-radius:8px;padding:7px 10px;font-size:.68rem;font-weight:600;margin-bottom:8px;text-align:center"></div>
           <div class="ngrid" id="namazGrid"></div>
           <div class="ibadet-ozet" id="ibadetOzet">
             <div class="io-row"><span>📊 Günlük İbadet</span><strong id="ibadetCount">0 / 5</strong></div>
@@ -182,6 +188,11 @@
             </div>
             <div class="namaz-next-t">—</div>
           </div>
+          <!-- Aksiyon Butonları -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0">
+            <button class="namaz-action-btn" onclick="openZikirmatik()">📿 Zikirmatik</button>
+            <button class="namaz-action-btn" onclick="openImsakiye()">📅 İmsakiye</button>
+          </div>
           <div class="zikir-card" id="zikirCard">
             <div style="min-width:0">
               <div class="zikir-title">📿 Günün Zikri</div>
@@ -189,6 +200,11 @@
               <div class="zikir-note" id="zikirNote"></div>
             </div>
             <button class="zikir-btn" onclick="completeDailyZikir()" id="zikirBtn">Tamamla</button>
+          </div>
+          <!-- Kaza Namazı Takip -->
+          <div class="qada-card">
+            <div class="qada-head">⏳ Kaza Borçlarım</div>
+            <div id="qadaBox"></div>
           </div>
           <div class="weekly-ibadet" id="weeklyIbadet">
             <div class="wi-head"><span>📈 Haftalık İbadet</span><span class="wi-score" id="weeklyIbadetScore">0/35</span></div>
@@ -336,9 +352,10 @@
 <!-- ═══ SİLME ONAY MODAL ═══ -->
 <div class="mov" id="confModal" onclick="if(event.target===this)closeModal('confModal')">
 <div class="modal conf-modal">
-  <div class="modal-title">🗑️ Onayla</div>
+  <div class="modal-title" id="confModalTitle">🗑️ Onayla</div>
   <div class="conf-txt" id="confTxt">Emin misiniz?</div>
-  <div style="display:flex;gap:8px;justify-content:flex-end">
+  <div class="conf-detail" id="confDetail" style="display:none;font-size:.72rem;color:var(--tx3);margin-top:6px;line-height:1.5"></div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
     <button class="mcancel" onclick="closeModal('confModal')">İptal</button>
     <button class="mdel" id="confOk">Sil</button>
   </div>
@@ -457,6 +474,61 @@
 </div>
 </div>
 
+<!-- ═══ NAMAZ TİPİ SEÇME MODAL (Farz/Sünnet/Cemaat) ═══ -->
+<div class="mov" id="prayerTypeModal" onclick="if(event.target===this)closeModal('prayerTypeModal')">
+<div class="modal conf-modal" style="max-width:320px">
+  <div class="modal-title" id="ptModalName">Namaz</div>
+  <div style="font-size:.72rem;color:var(--tx3);margin-bottom:14px;text-align:center">Nasıl kıldınız?</div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <button class="pt-opt" data-type="farz" onclick="setPrayerType('farz')">✓ Sadece Farz</button>
+    <button class="pt-opt" data-type="sunnet" onclick="setPrayerType('sunnet')">🌟 Sünnetiyle Birlikte</button>
+    <button class="pt-opt" data-type="cemaat" onclick="setPrayerType('cemaat')">🕌 Cemaatle Kıldım</button>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center;margin-top:14px">
+    <button class="mcancel" onclick="setPrayerType(null)">✕ Kılınmadı</button>
+    <button class="mcancel" onclick="closeModal('prayerTypeModal')">Kapat</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ ZİKİRMATİK MODAL ═══ -->
+<div class="mov zikirmatik-ov" id="zikirmatikModal">
+<div class="zikirmatik-wrap">
+  <button class="zm-close" onclick="closeZikirmatik()">✕ Kapat</button>
+  <div class="zm-phases">
+    <div class="zm-phase-dot active" title="Sübhanallah"></div>
+    <div class="zm-phase-dot" title="Elhamdülillah"></div>
+    <div class="zm-phase-dot" title="Allahu Ekber"></div>
+  </div>
+  <div class="zm-ring-wrap">
+    <svg width="150" height="150" viewBox="0 0 150 150">
+      <circle cx="75" cy="75" r="60" fill="none" stroke="rgba(5,150,105,.25)" stroke-width="8"/>
+      <circle id="zmRing" cx="75" cy="75" r="60" fill="none" stroke="#059669" stroke-width="8"
+        stroke-linecap="round" stroke-dasharray="376.99" stroke-dashoffset="376.99"
+        transform="rotate(-90 75 75)" style="transition:stroke-dashoffset .2s ease"/>
+    </svg>
+    <div class="zm-center">
+      <div class="zm-arabic" id="zmArabic">سُبْحَانَ اللَّهِ</div>
+      <div class="zm-tr" id="zmTr">Sübhanallah</div>
+      <div class="zm-count" id="zmCount">0 / 33</div>
+    </div>
+  </div>
+  <button class="zm-tap" onclick="tapZikirmatik()" ontouchstart="tapZikirmatik();event.preventDefault()">
+    👆 Dokunun
+  </button>
+  <button class="zm-reset" onclick="resetZikirmatik()">↺ Sıfırla</button>
+</div>
+</div>
+
+<!-- ═══ AYLIK İMSAKİYE MODAL ═══ -->
+<div class="mov" id="imsakiyeModal" onclick="if(event.target===this)closeModal('imsakiyeModal')">
+<div class="modal" style="max-width:680px">
+  <div class="modal-title">📅 Aylık İmsakiye</div>
+  <div id="imsakiyeContent"><div style="text-align:center;padding:30px;color:var(--tx3)">⏳ Yükleniyor…</div></div>
+  <div class="mfooter"><button class="mcancel" onclick="closeModal('imsakiyeModal')">Kapat</button></div>
+</div>
+</div>
+
 <!-- ═══ PWA BANNER ═══ -->
 <div class="pwa-banner" id="pwaBanner">
   <div style="font-size:.80rem;font-weight:700;color:var(--gold);margin-bottom:3px">📱 Uygulamayı Yükle</div>
@@ -466,6 +538,23 @@
     <button class="pwa-dismiss"     onclick="pwaDismiss()">Kapat</button>
   </div>
 </div>
+
+<!-- ═══ FABRİKA AYARLARI MODAL ═══ -->
+<div class="mov" id="factoryModal" onclick="if(event.target===this)closeModal('factoryModal')">
+<div class="modal conf-modal">
+  <div class="modal-title" style="color:var(--rose)">🧨 Fabrika Ayarlarına Dön</div>
+  <div class="conf-txt">TÜM veri silinir: görevler, kategoriler, alışkanlıklar, ayarlar.</div>
+  <div style="font-size:.72rem;color:var(--tx3);margin-top:8px;margin-bottom:12px">Onaylamak için aşağıya <strong>SIFIRLA</strong> yazın:</div>
+  <input class="finp" id="factoryConfirmInp" placeholder="SIFIRLA" oninput="factoryCheckInput(this)" style="margin-bottom:10px"/>
+  <div style="display:flex;gap:8px;justify-content:flex-end">
+    <button class="mcancel" onclick="closeModal('factoryModal')">İptal</button>
+    <button class="mdel" id="factoryOkBtn" onclick="doFactoryReset()" disabled style="opacity:.4;cursor:not-allowed">🧨 Sıfırla</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ ÇEVRİMDIŞI BANNER ═══ -->
+<div id="offlineBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--rose);color:#fff;text-align:center;padding:8px;font-size:.75rem;z-index:9999;transition:opacity .3s">📡 Çevrimdışısınız — veriler yerel olarak saklanıyor</div>
 
 <div class="tc" id="tc"></div>
 

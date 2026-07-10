@@ -1584,27 +1584,7 @@ function renderAnalytics() {
   document.getElementById('aperf').innerHTML = habitSeriesHtml() + catSeriesHtml();
 }
 
-/* ── RENDER: SAAT ── */
-function renderClock() {
-  const n = new Date();
-  document.getElementById('clockEl').textContent = n.toLocaleTimeString('tr-TR');
-  const dn = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
-  document.getElementById('dateEl').textContent = dn[n.getDay()] + ', ' + n.toLocaleDateString('tr-TR',{day:'numeric',month:'long'});
-}
-
-/* ── TOAST ── */
-function toast(msg, type) {
-  const icons = {s:'✅',e:'❌',i:'ℹ️',w:'⚠️'};
-  const tc = document.getElementById('tc');
-  const el = document.createElement('div');
-  el.className = 'toast ' + type;
-  el.innerHTML = `<span>${esc(icons[type]||'')}</span><span>${esc(msg)}</span>`;
-  tc.appendChild(el);
-  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
-  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 320); }, 2800);
-}
-
-/* ── SIFIRLAMA PANELİ ── */
+/* ── RENDER: SAAT �/* ── SIFIRLAMA PANELİ ── */
 function dailyReset() {
   showConfirm(
     '↺ Günlük Sıfırla',
@@ -1660,6 +1640,23 @@ function doFactoryReset() {
   S = {tasks:[], prayers:{}, habits:{}, zikirDone:{}, catTime:{}, timerSess:{},
        theme:'dark', cats:null, habitDefs:null, lastReset:'', notifEnabled:false, namazCity:'Konya',
        autoBackup:false, lastBackup:'', lat:null, lng:null};
+  selectedDate = today(); activeCat = null; statusF = 'all';
+  applyTheme('dark'); save(); render(); renderSelects();
+  toast('Fabrika ayarlarına dönüldü.', 's');
+}nSilinir: Alışkanlık geçmişi, namaz, zikir, odaklanma süreleri\nKalır: Görevler, kategoriler, alışkanlık isimleri')) return;
+  S.prayers={}; S.habits={}; S.zikirDone={}; S.catTime={}; S.timerSess={};
+  S.tasks.forEach(t => t.completedAt=null);
+  save(); render(); toast('Takip verileri sıfırlandı.', 's');
+}
+function factoryReset() {
+  if (!confirm('Fabrika ayarlarına dönülsün mü?\n\nTÜM veri silinir: görevler, kategoriler, alışkanlıklar, ayarlar.')) return;
+  const code = prompt('Onaylamak için SIFIRLA yazın:');
+  if (code !== 'SIFIRLA') { toast('Sıfırlama iptal edildi.', 'i'); return; }
+  localStorage.removeItem('ht6'); localStorage.removeItem('ht5');
+  CATS   = JSON.parse(JSON.stringify(DEFAULT_CATS));
+  HABITS = JSON.parse(JSON.stringify(DEFAULT_HABITS));
+  S = {tasks:[], prayers:{}, habits:{}, zikirDone:{}, catTime:{}, timerSess:{},
+       theme:'dark', cats:null, habitDefs:null, lastReset:'', notifEnabled:false, namazCity:'Konya'};
   selectedDate = today(); activeCat = null; statusF = 'all';
   applyTheme('dark'); save(); render(); renderSelects();
   toast('Fabrika ayarlarına dönüldü.', 's');
