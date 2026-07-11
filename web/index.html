@@ -1,7 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
-  /*ZAFER DENEME*/
 <!--
   Hayat Takvimi v7.0
   Görev yönetimi, ibadet takibi, alışkanlık izleme,
@@ -9,9 +8,10 @@
   Tek dosyalık HTML/CSS/JavaScript — localStorage tabanlı.
 -->
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.aladhan.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src 'none'; object-src 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d1117">
-<title>Hayat Takvimi</title>
+<title>Mikat</title>
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,29 +21,29 @@
 
 <!-- ═══ ÜST BAR ═══ -->
 <div class="topbar">
-  <div class="brand">
-    <div class="brand-ico">🌙</div>
-    <div>
-      <div class="brand-name">Hayat Takvimi</div>
-      <div class="brand-ara">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <div class="brand">
+      <div class="brand-ico" style="background: none; border: none; padding: 0;">
+        <img src="mikat-logo.png" alt="Mikat" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; display: block;">
+      </div>
+      <div>
+        <div class="brand-name">Mikat</div>
+        <div class="brand-sub">Zamanı Bereketlendir</div>
+      </div>
     </div>
   </div>
-  <div class="tnav-wrap">
-    <button class="tnav" onclick="showView('tasks',this)">📋 Görevler</button>
-    <button class="tnav" onclick="showView('analytics',this)">📊 Analitik</button>
-    <button class="tnav on" onclick="showView('calendar',this)">📅 Takvim</button>
+  
+  <!-- Besmele ve Rabbi Yessir Duası (Header Merkez) -->
+  <div class="header-dua">
+    <span class="dua-basmala">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
+    <span class="dua-separator">❖</span>
+    <span class="dua-arabic">رَبِّ يَسِّرْ وَلَا تُعَسِّرْ رَبِّ تَمِّمْ بِالْخَيْرِ</span>
   </div>
-  <div class="top-r">
-    <div style="text-align:right">
-      <div class="clk" id="clockEl">00:00:00</div>
-      <div class="dstr" id="dateEl">—</div>
-    </div>
-    <button class="tbtn notif-btn" id="notifBtn" onclick="toggleNotifications()" title="Bildirimler">
-      🔔<div class="notif-dot"></div>
-    </button>
-    <button class="tbtn" id="themeBtn" onclick="toggleTheme()" title="Tema">☀️</button>
-    <button class="tbtn" onclick="openSettings()" title="Ayarlar">⚙️</button>
-    <button class="tbtn-add" onclick="openAdd()">+ Görev Ekle</button>
+
+
+  <div class="top-r" style="display:flex; align-items:center;">
+    <!-- Namaz Vakti Mini Gösterge -->
+    <div id="headerPrayerVakit" style="display:flex; align-items:center; gap:8px; display:none;"></div>
   </div>
 </div>
 
@@ -52,31 +52,34 @@
 
   <!-- SOL PANEL -->
   <div class="sidebar">
-    <div>
-      <div class="slbl">Günlük Özet</div>
-      <div class="dcard">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
-          <div><div class="dscore" id="dscore">0%</div><div class="dsub">Tamamlanma oranı</div></div>
-          <div style="font-size:1.9rem" id="dmood">😐</div>
+    <div class="sidebar-wrapper">
+      <!-- Menü Kartı -->
+      <div class="dcard sidebar-menu-card">
+        <div class="slbl" style="margin-bottom:8px">Menü</div>
+        <div class="sidebar-menu-list">
+          <button class="menu-item-vertical on" onclick="showView('calendar', this)">📅 Takvim</button>
+          <button class="menu-item-vertical" onclick="showView('tasks', this)">📋 Görevler</button>
+          <button class="menu-item-vertical" onclick="showView('prayers', this)">🕌 Namaz</button>
+          <button class="menu-item-vertical" onclick="showView('analytics', this)">📊 Analitik</button>
+          <button class="menu-item-vertical" onclick="showView('habits', this)">🔥 Alışkanlıklar</button>
         </div>
-        <div id="dpbars"></div>
       </div>
-      <div class="dcard" style="margin-top:7px">
-        <div class="dsub" style="margin-bottom:6px">Genel Durum</div>
-        <div id="genelDurum"></div>
-      </div>
-    </div>
-    <div>
-      <div class="slbl">Kategoriler</div>
-      <div class="ccards">
-        <div class="allcard on" id="allcard" onclick="filterCat(null)">
-          <span style="font-size:.95rem">🗂️</span>
-          <span class="allcard-nm">Tüm Görevler</span>
-          <span class="allcard-n" id="allnum">0</span>
+
+      <!-- Oturum Açma Kartı -->
+      <div class="dcard sidebar-auth-card" id="sidebarAuthCard"></div>
+
+      <!-- Ayarlar Kartı -->
+      <div class="dcard sidebar-settings-card">
+        <div class="slbl" style="margin-bottom:6px">Ayarlar & Sistem</div>
+        <div class="sidebar-settings-buttons" style="display:flex; gap:6px; margin-bottom:8px;">
+          <button class="tbtn" id="themeBtn" onclick="toggleTheme()" title="Tema" style="flex:1; width:auto; height:36px;">☀️</button>
+          <button class="tbtn notif-btn" id="notifBtn" onclick="toggleNotifications()" title="Bildirimler" style="flex:1; width:auto; height:36px; position:relative;">
+            🔔<div class="notif-dot"></div>
+          </button>
+          <button class="tbtn" onclick="openSettings()" title="Ayarlar" style="flex:1; width:auto; height:36px;">⚙️</button>
         </div>
-        <div id="ccards"></div>
+        <button class="tbtn-add" onclick="openAdd()" style="width:100%; height:36px;">+ Görev Ekle</button>
       </div>
-      <button class="cat-mgr-btn" onclick="openCatManager()">⚙️ Kategorileri Yönet</button>
     </div>
   </div>
 
@@ -94,6 +97,20 @@
           <button class="btn" onclick="clearDone()">🧹 Temizle</button>
         </div>
       </div>
+      
+      <!-- KATEGORİ SEÇİCİ -->
+      <div class="tasks-categories-wrap">
+        <div class="tasks-categories-list">
+          <div class="cat-pill on" id="allcard" onclick="filterCat(null)">
+            <span class="cat-pill-ico">🗂️</span>
+            <span class="cat-pill-nm">Tüm Görevler</span>
+            <span class="cat-pill-n" id="allnum">0</span>
+          </div>
+          <div id="ccards" style="display:flex;gap:8px;"></div>
+          <button class="cat-mgr-pill" onclick="openCatManager()" title="Kategorileri Yönet">⚙️</button>
+        </div>
+      </div>
+
       <div class="fbar">
         <div class="sw"><span class="sw-i">🔍</span><input type="text" id="searchInp" placeholder="Görev ara..." oninput="renderTasks()"/></div>
         <button class="fchip on" onclick="setFilter('all',this)">Tümü</button>
@@ -125,7 +142,7 @@
     <div class="view on" id="v-calendar">
       <div class="page-hdr">
         <div>
-          <div class="page-title">📅 Hayat Takvimi</div>
+          <div class="page-title">📅 Mikat</div>
           <div class="page-sub" id="calSub">Seçili gün için planlama</div>
         </div>
         <div class="page-acts">
@@ -137,144 +154,223 @@
       <div class="daily-grid">
         <div class="daily-card">
           <div class="daily-title">📖 GÜNÜN AYETİ</div>
-          <div class="daily-text">Rabbin, kendisinden başkasına kulluk etmemenizi ve anne babaya iyilik etmenizi emretti.</div>
-          <div class="daily-src">İsrâ 17/23</div>
+          <div class="daily-text" id="dailyAyatText">Rabbin, kendisinden başkasına kulluk etmemenizi ve anne babaya iyilik etmenizi emretti.</div>
+          <div class="daily-src" id="dailyAyatSrc">İsrâ 17/23</div>
         </div>
         <div class="daily-card hadis">
           <div class="daily-title">🎓 GÜNÜN HADİSİ</div>
-          <div class="daily-text">Merhamet etmeyene merhamet olunmaz.</div>
-          <div class="daily-src">Buhârî, Edeb, 18</div>
+          <div class="daily-text" id="dailyHadisText">Merhamet etmeyene merhamet olunmaz.</div>
+          <div class="daily-src" id="dailyHadisSrc">Buhârî, Edeb, 18</div>
         </div>
         <div class="daily-card dua">
           <div class="daily-title">🤲 GÜNÜN DUASI</div>
-          <div class="daily-text">Rabbim! Beni namaza devam edenlerden eyle.</div>
-          <div class="daily-src">İbrâhîm 14/40</div>
+          <div class="daily-text" id="dailyDuaText">Rabbim! Beni namaza devam edenlerden eyle.</div>
+          <div class="daily-src" id="dailyDuaSrc">İbrâhîm 14/40</div>
         </div>
       </div>
 
-      <!-- Takvim + Namaz Paneli -->
-      <div class="cal-row">
-        <div class="cal-main">
-          <div class="month-head">
-            <button class="month-nav" onclick="changeMonth(-1)">‹</button>
-            <div>
-              <div class="section-lbl">AYLIK TAKVİM</div>
-              <div class="month-title" id="monthTitle">—</div>
-            </div>
-            <button class="month-nav" onclick="changeMonth(1)">›</button>
+      <!-- Aylık Takvim -->
+      <div class="cal-main-full">
+        <div class="month-head">
+          <button class="month-nav" onclick="changeMonth(-1)">‹</button>
+          <div>
+            <div class="section-lbl">AYLIK TAKVİM</div>
+            <div class="month-title" id="monthTitle">—</div>
           </div>
-          <div class="wgrid" id="wgrid"></div>
+          <button class="month-nav" onclick="changeMonth(1)">›</button>
         </div>
-        <div class="ncard cal-prayers">
-          <!-- Hicri Tarih ve Ramazan Banner -->
-          <div id="ramazanBanner" style="display:none;background:linear-gradient(135deg,#059669,#047857);color:#fff;border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:.78rem;text-align:center;font-weight:600">🌙 Ramazan-ı Şerif Mübarek Olsun!</div>
-          <div class="nhead">
-            <span class="nhead-l">🕌 Namaz Vakitleri</span>
-            <span class="nhead-n" id="namazCnt">0/5</span>
-          </div>
-          <!-- Hicri Tarih -->
-          <div style="text-align:center;font-size:.68rem;color:var(--namaz-gold,#D4AF37);margin-bottom:8px;font-family:'Amiri',serif;letter-spacing:.05em" id="hicriDateEl">— Yükleniyor</div>
-          <!-- Kerahat Vakti Uyarı Bandı -->
-          <div id="kerahatBanner" style="display:none;background:rgba(251,146,60,.15);border:1px solid #fb923c;color:#fb923c;border-radius:8px;padding:7px 10px;font-size:.68rem;font-weight:600;margin-bottom:8px;text-align:center"></div>
-          <div class="ngrid" id="namazGrid"></div>
-          <div class="ibadet-ozet" id="ibadetOzet">
-            <div class="io-row"><span>📊 Günlük İbadet</span><strong id="ibadetCount">0 / 5</strong></div>
-            <div class="io-bar"><div class="io-fill" id="ibadetBar"></div></div>
-            <div class="io-msg" id="ibadetMsg">Başlamak için ilk namazı kıl</div>
-          </div>
-          <div class="namaz-next" id="namazNext">
-            <div>
-              <div class="namaz-next-l">Sıradaki Vakit</div>
-              <div class="namaz-next-n">—</div>
-            </div>
-            <div class="namaz-next-t">—</div>
-          </div>
-          <!-- Aksiyon Butonları -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0">
-            <button class="namaz-action-btn" onclick="openZikirmatik()">📿 Zikirmatik</button>
-            <button class="namaz-action-btn" onclick="openImsakiye()">📅 İmsakiye</button>
-          </div>
-          <div class="zikir-card" id="zikirCard">
-            <div style="min-width:0">
-              <div class="zikir-title">📿 Günün Zikri</div>
-              <div class="zikir-text" id="zikirText">—</div>
-              <div class="zikir-note" id="zikirNote"></div>
-            </div>
-            <button class="zikir-btn" onclick="completeDailyZikir()" id="zikirBtn">Tamamla</button>
-          </div>
-          <!-- Kaza Namazı Takip -->
-          <div class="qada-card">
-            <div class="qada-head">⏳ Kaza Borçlarım</div>
-            <div id="qadaBox"></div>
-          </div>
-          <div class="weekly-ibadet" id="weeklyIbadet">
-            <div class="wi-head"><span>📈 Haftalık İbadet</span><span class="wi-score" id="weeklyIbadetScore">0/35</span></div>
-            <div class="wi-days" id="weeklyIbadetDays"></div>
-          </div>
-          <div class="namaz-live" id="namazSource">📡 Yükleniyor…</div>
-        </div>
+        <div class="wgrid" id="wgrid"></div>
       </div>
     </div><!-- /v-calendar -->
 
-  </div><!-- /center -->
-
-  <!-- SAĞ PANEL -->
-  <div class="rpanel">
-    <!-- Odaklanma Sayacı -->
-    <div class="rcard">
-      <div class="rcard-title">
-        <span>⏱ Odaklanma Sayacı</span>
-        <span id="timerCatLbl" style="color:var(--teal);font-size:.58rem"></span>
+    <!-- NAMAZ -->
+    <div class="view" id="v-prayers">
+      <div class="page-hdr">
+        <div>
+          <div class="page-title">🕌 Namaz Vakitleri & İbadet Takibi</div>
+          <div style="text-align:left;font-size:.78rem;color:var(--namaz-gold,#D4AF37);margin-top:4px;font-family:'Amiri',serif;letter-spacing:.05em" id="hicriDateEl">— Yükleniyor</div>
+        </div>
+        <div class="page-acts">
+          <span class="namaz-live" id="namazSource">📡 Yükleniyor…</span>
+        </div>
       </div>
-      <div class="timer-wrap">
-        <div class="trw">
-          <svg width="108" height="108" viewBox="0 0 108 108">
-            <circle cx="54" cy="54" r="44" fill="none" stroke="#2c3550" stroke-width="6"/>
-            <circle id="timerRing" cx="54" cy="54" r="44" fill="none" stroke="#3ecfb0" stroke-width="6" stroke-linecap="round"
-              stroke-dasharray="276.5" stroke-dashoffset="0" transform="rotate(-90 54 54)"
-              style="transition:stroke-dashoffset 1s linear"/>
-          </svg>
-          <div class="ti">
-            <div class="tnum" id="tnum">25:00</div>
-            <div class="tph"  id="tph">Hazır</div>
+
+      <!-- Ramazan & Kerahat Uyarıları -->
+      <div id="ramazanBanner" style="display:none;background:linear-gradient(135deg,#059669,#047857);color:#fff;border-radius:10px;padding:10px 13px;margin-bottom:12px;font-size:.78rem;text-align:center;font-weight:600">🌙 Ramazan-ı Şerif Mübarek Olsun!</div>
+      <div id="kerahatBanner" style="display:none;background:rgba(251,146,60,.15);border:1px solid #fb923c;color:#fb923c;border-radius:8px;padding:9px 12px;font-size:.74rem;font-weight:600;margin-bottom:12px;text-align:center"></div>
+
+      <!-- ── SATIR 1: VAKTİN AYET/HADİSİ & GÜNLÜK FARZ DURUMU (2 Kolon — Ayrı Kalın Çerçeveli Tasarım) ── -->
+      <div style="display: flex; gap: 16px; margin-bottom: 16px; align-items: stretch; width: 100%;">
+        <!-- Vakit Kadranı ve Sayaç (Sol - Kalın Koyu Yeşil Çerçeve) -->
+        <div class="ncard gauge-card" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin: 0; padding: 14px 20px 20px; background: linear-gradient(135deg, #092c2a 0%, #031413 100%); border: 3px solid #0d403d; border-radius: 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); aspect-ratio: 2 / 1; width: 400px; flex: 0 0 400px;">
+          <!-- Top center title for hover text -->
+          <div id="dialHoverTitle" style="color: var(--gold); font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; min-height: 12px; text-align: center; width: 100%;">VAKİT KADRANI</div>
+          <div class="gauge-wrap" style="width: 360px; height: 180px; margin: 0 auto; position: relative; overflow: hidden;">
+            <svg id="vakitDialSvg" width="360" height="180" viewBox="0 10 200 100" style="overflow: hidden;">
+              <!-- Outer circle border (arch) -->
+              <path d="M 18 110 A 82 82 0 0 1 182 110" fill="none" stroke="rgba(20,91,88,0.4)" stroke-width="1"/>
+              
+              <!-- Outer Bezel for Hour Numbers (arch segment) -->
+              <path d="M 2 110 A 98 98 0 0 1 198 110 L 182 110 A 82 82 0 0 0 18 110 Z" fill="#9bc7c5" stroke="#145b58" stroke-width="0.8"/>
+              
+              <!-- Sector paths (annular sectors) will go here -->
+              <g id="dialSectors"></g>
+              
+              <!-- Red separator lines will go here -->
+              <g id="dialSeparators"></g>
+              
+              <!-- Ticks and hour numbers will go here -->
+              <g id="dialHours"></g>
+              
+              <!-- Central circle for countdown backdrop (arch) - light glowing backdrop -->
+              <path d="M 48 110 A 52 52 0 0 1 152 110 Z" fill="#a4cfce" stroke="#145b58" stroke-width="1.2"/>
+              
+              <!-- Needle (Red pointer) -->
+              <line id="dialNeedle" x1="100" y1="110" x2="100" y2="24" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" />
+              <!-- Needle cap -->
+              <circle cx="100" cy="110" r="4.5" fill="#ef4444"/>
+            </svg>
+            
+            <!-- Info in the center: countdown timer with dark text -->
+            <div id="dialCenterText" style="position: absolute; bottom: 8px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; line-height: 1.15;">
+              <div style="font-size: 0.56rem; font-weight: 900; color: #0c3d3a; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.95; margin-bottom: 2px;">Vaktin Çıkmasına</div>
+              <div style="font-size: 1.45rem; font-weight: 900; color: #031413; font-family: 'JetBrains Mono', monospace; letter-spacing: -0.02em;" id="dialCountdown">--:--<span style="font-size: 0.65em; font-weight: 900; vertical-align: super; margin-left: 1px;" id="dialCountdownSec">--</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vaktin Ayeti (Sağ - Kalın Koyu Kehribar/Altın Çerçeve) -->
+        <div class="ncard quote-card" id="vaktinQuoteCard" style="display: flex; flex-direction: column; justify-content: center; min-height: 80px; margin: 0; padding: 20px 24px; border: 3px solid #6d4e1b; border-radius: 18px; flex: 1; height: auto;">
+          <div class="daily-title" id="vaktinQuoteTitle" style="color:var(--gold); font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; margin-bottom: 2px;">📖 GÜNÜN AYETİ</div>
+          <!-- Arapça Kısmı -->
+          <div id="vaktinQuoteArabic" style="font-family:'Amiri',serif; font-size: 1.05rem; color: var(--gold); text-align: right; margin-top: 2px; line-height: 1.25;"></div>
+          <!-- Meal Kısmı -->
+          <div class="daily-text" id="vaktinQuoteText" style="font-size: 0.76rem; line-height: 1.35; font-weight: 600; margin: 4px 0; color: var(--tx);">—</div>
+          <div class="daily-src" id="vaktinQuoteSrc" style="font-size: 0.62rem; color: var(--tx3); text-align: right; font-weight: 700;">—</div>
+        </div>
+      </div>
+
+      <!-- ── SATIR 2: FARZ NAMAZ ÇETELESİ & VAKİTLER (Full Width Grid) ── -->
+      <div class="ncard" style="margin-bottom: 16px;">
+        <div class="nhead" style="margin-bottom: 12px; padding: 12px 16px 0;">
+          <span class="nhead-l">🕌 Günlük Farz Namazlar</span>
+          <span class="nhead-n" id="namazCnt" style="background: var(--goldbg); color: var(--gold); padding: 2px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: 700;">0/5</span>
+        </div>
+        <div class="ngrid" id="namazGrid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; padding: 0 16px 16px;"></div>
+      </div>
+
+      <!-- ── SATIR 3: NAFİLELER, ZİKİR & HAFTALIK GRAFİK (3 Sütun) ── -->
+      <div style="display: grid; grid-template-columns: 1.1fr 1fr 1.1fr; gap: 16px; margin-bottom: 16px;">
+        <!-- Nafile İbadetler -->
+        <div class="ncard nafile-card" style="margin: 0;">
+          <div class="nhead">✨ Nafile İbadetler</div>
+          <div class="nafile-grid" id="nafileGrid" style="margin-top: 8px;"></div>
+        </div>
+
+        <!-- Zikir & Tesbihat -->
+        <div class="ncard zikir-widget" style="margin: 0; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="nhead" style="margin-bottom: 10px;">📿 Zikir & Tesbihat</div>
+            <div class="zikir-card" id="zikirCard" style="margin-top:0; border:none; background:none; padding:0;">
+              <div style="min-width:0">
+                <div class="zikir-text" id="zikirText" style="font-size:1.05rem; font-weight: 700; color: var(--tx); margin-bottom:4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">—</div>
+                <div class="zikir-note" id="zikirNote" style="font-size:.68rem; color: var(--tx3); margin-bottom:8px;"></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="zikir-btn" onclick="completeDailyZikir()" id="zikirBtn" style="width: 100%; margin-bottom: 8px;">Hedefi Tamamla</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <button class="namaz-action-btn" onclick="openZikirmatik()" style="padding: 6px; font-size: 0.72rem;">📿 Zikirmatik</button>
+              <button class="namaz-action-btn" onclick="openImsakiye()" style="padding: 6px; font-size: 0.72rem;">📅 İmsakiye</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sağ Sütun: Haftalık Takip & Kaza Namazları -->
+        <div style="display: flex; flex-direction: column; gap: 16px; justify-content: space-between;">
+          <!-- Haftalık İbadet Grafiği -->
+          <div class="weekly-ibadet" id="weeklyIbadet" style="margin: 0; padding:12px; background:var(--sf); border:1px solid var(--bd); border-radius:var(--r); display: flex; flex-direction: column; justify-content: space-between; flex: 1;">
+            <div class="wi-head" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-weight: 700; font-size: 0.78rem; color: var(--tx);">📈 Haftalık Takip</span>
+              <span class="wi-score" id="weeklyIbadetScore" style="color: var(--teal); font-weight: 800; font-size: 0.78rem;">0/35</span>
+            </div>
+            <div class="wi-days" id="weeklyIbadetDays" style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 4px;"></div>
+          </div>
+          
+          <!-- Kaza Namazı Takip (Küçük Kart) -->
+          <div class="ncard qada-card" id="qadaCardCompact" style="margin: 0; padding: 12px; flex: 1;">
+            <div class="qada-head" style="font-weight: 700; font-size: 0.78rem; color: var(--tx); margin-bottom: 6px;">⏳ Kaza Borçlarım</div>
+            <div id="qadaBox"></div>
           </div>
         </div>
       </div>
-      <div class="tpres">
-        <button class="tpre on" onclick="setPreset(25,this)">25dk</button>
-        <button class="tpre" onclick="setPreset(45,this)">45dk</button>
-        <button class="tpre" onclick="setPreset(60,this)">60dk</button>
-        <button class="tpre" onclick="setPreset(5,this)">5dk 🍵</button>
-      </div>
-      <select class="tcat" id="timerCat"></select>
-      <div class="sessrow">
-        <span>Bugünkü seanslar</span>
-        <div class="sdots" id="sdots">
-          <div class="sdot"></div><div class="sdot"></div>
-          <div class="sdot"></div><div class="sdot"></div>
+    </div><!-- /v-prayers -->
+
+    <!-- ALIŞKANLIKLAR -->
+    <div class="view" id="v-habits">
+      <div class="page-hdr">
+        <div>
+          <div class="page-title">🔥 Alışkanlıklar</div>
+          <div class="page-sub">Düzenli tekrarlanan alışkanlıkların takibi</div>
+        </div>
+        <div class="page-acts">
+          <button class="btn" onclick="addHabitPrompt()">+ Yeni Alışkanlık</button>
         </div>
       </div>
-      <div class="tbtns">
-        <button class="tbstart" id="tbstart" onclick="timerToggle()">▶ Başlat</button>
-        <button class="tbreset" onclick="timerReset()">↺ Sıfırla</button>
-      </div>
-    </div>
+      <div id="habitList" class="habits-view-list" style="margin-bottom: 24px;"></div>
+      
+      <!-- ODAKLANMA VE İSTATİSTİKLER (Eski Sağ Panel) -->
+      <div class="habits-footer-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+        <!-- Odaklanma Sayacı -->
+        <div class="rcard">
+          <div class="rcard-title">
+            <span>⏱ Odaklanma Sayacı</span>
+            <span id="timerCatLbl" style="color:var(--teal);font-size:.58rem"></span>
+          </div>
+          <div class="timer-wrap">
+            <div class="trw">
+              <svg width="108" height="108" viewBox="0 0 108 108">
+                <circle cx="54" cy="54" r="44" fill="none" stroke="#2c3550" stroke-width="6"/>
+                <circle id="timerRing" cx="54" cy="54" r="44" fill="none" stroke="#3ecfb0" stroke-width="6" stroke-linecap="round"
+                  stroke-dasharray="276.5" stroke-dashoffset="0" transform="rotate(-90 54 54)"
+                  style="transition:stroke-dashoffset 1s linear"/>
+              </svg>
+              <div class="ti">
+                <div class="tnum" id="tnum">25:00</div>
+                <div class="tph"  id="tph">Hazır</div>
+              </div>
+            </div>
+          </div>
+          <div class="tpres">
+            <button class="tpre on" onclick="setPreset(25,this)">25dk</button>
+            <button class="tpre" onclick="setPreset(45,this)">45dk</button>
+            <button class="tpre" onclick="setPreset(60,this)">60dk</button>
+            <button class="tpre" onclick="setPreset(5,this)">5dk 🍵</button>
+          </div>
+          <select class="tcat" id="timerCat" style="width: 100%; margin-top: 8px;"></select>
+          <div class="sessrow" style="margin-top: 8px;">
+            <span>Bugünkü seanslar</span>
+            <div class="sdots" id="sdots">
+              <div class="sdot"></div><div class="sdot"></div>
+              <div class="sdot"></div><div class="sdot"></div>
+            </div>
+          </div>
+          <div class="tbtns" style="margin-top: 8px;">
+            <button class="tbstart" id="tbstart" onclick="timerToggle()">▶ Başlat</button>
+            <button class="tbreset" onclick="timerReset()">↺ Sıfırla</button>
+          </div>
+        </div>
 
-    <!-- Kategori Süreleri -->
-    <div class="rcard">
-      <div class="rcard-title">⏰ Kategori Süreleri (Bugün)</div>
-      <div id="catTimes"></div>
-    </div>
-
-    <!-- Alışkanlıklar -->
-    <div class="rcard">
-      <div class="rcard-title">
-        <span>🔥 Alışkanlıklar</span>
-        <button class="mini-act" onclick="addHabitPrompt()">+ Ekle</button>
+        <!-- Kategori Süreleri -->
+        <div class="rcard">
+          <div class="rcard-title">⏰ Kategori Süreleri (Bugün)</div>
+          <div id="catTimes" style="margin-top: 10px;"></div>
+        </div>
       </div>
-      <div id="habitList"></div>
-    </div>
-  </div>
+    </div><!-- /v-habits -->
+
+  </div><!-- /center -->
 
 </div><!-- /layout -->
 
@@ -533,7 +629,7 @@
 <!-- ═══ PWA BANNER ═══ -->
 <div class="pwa-banner" id="pwaBanner">
   <div style="font-size:.80rem;font-weight:700;color:var(--gold);margin-bottom:3px">📱 Uygulamayı Yükle</div>
-  <div style="font-size:.70rem;color:var(--tx3);margin-bottom:9px">Hayat Takvimi'ni telefona veya masaüstüne yükleyebilirsiniz.</div>
+  <div style="font-size:.70rem;color:var(--tx3);margin-bottom:9px">Mikat'ı telefona veya masaüstüne yükleyebilirsiniz.</div>
   <div style="display:flex;gap:6px">
     <button class="pwa-install-btn" onclick="pwsInstall()">Yükle</button>
     <button class="pwa-dismiss"     onclick="pwaDismiss()">Kapat</button>
@@ -556,6 +652,13 @@
 
 <!-- ═══ ÇEVRİMDIŞI BANNER ═══ -->
 <div id="offlineBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--rose);color:#fff;text-align:center;padding:8px;font-size:.75rem;z-index:9999;transition:opacity .3s">📡 Çevrimdışısınız — veriler yerel olarak saklanıyor</div>
+
+<!-- GÜNLÜK ÖZET TICKER BANTI -->
+<div class="ticker-wrap">
+  <div class="ticker-label">📈 GÜNLÜK ÖZET</div>
+  <div class="ticker-content" id="dpbarsTicker"></div>
+  <div class="ticker-mood" id="tickerMood">😐 0%</div>
+</div>
 
 <div class="tc" id="tc"></div>
 

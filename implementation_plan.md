@@ -46,11 +46,11 @@
 
 #### FB-02: Namaz Vakitleri bağımsız menü değil
 - **Sorun**: Namaz vakitleri takvim view içine gömülü. Ayrı header menüsü yok.
-- **Çözüm**: Header'a `🕌 Namaz` butonu ekle → ayrı view oluştur.
+- **Çözüm**: Header'a `🕌 Namaz` ve `🔥 Alışkanlıklar` butonları eklenerek bunları ayrı view'ler haline getireceğiz. Sol ve sağ paneller yerinde kalacak.
 
-#### FB-03: Aylık takvim küçük
-- **Sorun**: Takvim `.cal-main` alanı yarım genişlikte, namaz paneli yanında sıkışmış.
-- **Çözüm**: Namaz paneli header menüsüne taşınınca takvim tam genişliğe çıkar.
+#### FB-03: Sol/Sağ Panel ve Arayüz Düzenlemesi
+- **Sorun**: Sol taraftaki görev kategorileri sol panelde yer alıyor, sağ panelde ise alışkanlıklar yer alıyor.
+- **Çözüm**: Sol paneldeki "Görev Kategorileri" bölümü "Görevler" menüsü/görünümü altına taşınacak. Sağ paneldeki "Alışkanlıklar" ise üst bar (header) alanına müstakil bir görünüm olarak taşınacak. Sağ ve sol ana paneller (diğer özet bilgileri ve odaklanma sayacı ile) yerinde kalmaya devam edecek.
 
 #### FB-04: Sayfa ilk açılışında `renderNamaz()` çağrısı gecikiyor
 - **Dosya**: `app.js` satır 1803-1818
@@ -132,12 +132,23 @@
 
 ---
 
-### 🎨 FAZ 1 — Web Yeni Özellikler
+### 🎨 FAZ 1 — Web Yeni Özellikler & İyileştirmeler
 
-- `[ ]` **1.1** Namaz Vakitleri → ayrı header menüsü (`🕌 Namaz`) + view
-- `[ ]` **1.2** Aylık takvim tam genişliğe al
-- `[ ]` **1.3** Takvim gün kartlarını renklendirme (görev yoğunluğuna göre)
-- `[ ]` **1.4** Web sürümü `takvim.komutrotasi.com` subdomainine hazırla (CNAME)
+- `[x]` **1.1** Namaz Vakitleri → ayrı header menüsü (`🕌 Namaz`) + müstakil görünüm (view).
+  - `[x]` **1.1.1** Günlük kılınma oranını gösteren **Yarım Daire Namaz İlerleme Grafiği** (Gauge Chart) ekle.
+  - `[x]` **1.1.2** O anki vakte göre değişen **Vaktin Ayeti / Hadisi** (dinamik) kutusu ekle.
+  - `[x]` **1.1.3** Teheccüd, Duha, Evvabin, Şükür namazlarını içeren **Nafile Namaz Takip Paneli** ekle.
+  - `[x]` **1.1.4** Kerahet vakitlerini hesaplayıp kullanıcıyı uyaran **Kerahet Vakti Uyarı Bandı** ekle.
+- `[x]` **1.2** Sol paneldeki Görev Kategorileri'ni "Görevler" menüsü altına taşı; sağ paneldeki Alışkanlıklar'ı ise üst bar (header) alanına müstakil bir menü/görünüm (`🔥 Alışkanlıklar`) olarak taşı. Sol ve sağ ana paneller yerinde kalacak.
+- `[x]` **1.3** Takvim gün kartlarını renklendirme (görev yoğunluğuna göre ısı haritası/heat-map mantığı).
+- `[x]` **1.4** Zikirmatik ve Kaza Takip iyileştirmeleri:
+  - `[x]` **1.4.1** Zikirmatik için **Titreşim (Vibration API) ve Tık Sesi (Web Audio API)** efektleri ekle.
+  - `[x]` **1.4.2** Kaza borçları için **Akıllı Bitiş Hesaplayıcı** ekle.
+- `[x]` **1.5** Kullanıcı Deneyimi (UX) ve Görsel Wow-Factor:
+  - `[x]` **1.5.1** Bir görev tamamlandığında ekranda tetiklenen **Şık Konfeti Animasyonu** ekle.
+  - `[x]` **1.5.2** Masaüstü görünümde takvim gün hücrelerine **İlk 1-2 Görevin Başlıklarını** sığdır.
+  - `[x]` **1.5.3** Arayüzü **Glassmorphism (Buzlu Cam - backdrop-filter)** teması ile modernize et ve yumuşak geçiş efektleri (micro-interactions) ekle.
+- `[x]` **1.6** Web sürümünü `takvim.komutrotasi.com` subdomainine hazırla (CNAME)
 
 ---
 

@@ -1,6 +1,6 @@
 {
-  "name": "Hayat Takvimi",
-  "short_name": "HayatTakvimi",
+  "name": "Mikat",
+  "short_name": "Mikat",
   "description": "Görev yönetimi, namaz takibi, alışkanlık izleme ve Pomodoro sayacı",
   "start_url": "./",
   "scope": "./",
