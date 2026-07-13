@@ -114,7 +114,6 @@ let S = {
 
 const NAMAZ_DAILY_AYATS = [
   {
-    ar: "حَافِظُوا عَلَى الصَّلَوَATِ وَالصَّLَاةِ الْوُسْطَىٰ وَقُومُوا لِلَّهِ قَانِتِينَ",
     ar: "حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ وَقُومُوا لِلَّهِ قَانِتِينَ",
     t: "Namazlara ve orta namaza devam edin. Allah'a saygı ve bağlılık içinde namaz kılın.",
     s: "Bakara 2/238"
@@ -150,7 +149,6 @@ const NAMAZ_DAILY_AYATS = [
     s: "Bakara 2/45"
   },
   {
-    ar: "اتْلُ مَا أُوحِيَ إِلَيْكَ مِنَ الْكِتَابِ وَأَقِمِ الصَّLَاةَ ۖ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ",
     ar: "اتْلُ مَا أُوحِيَ إِلَيْكَ مِنَ الْكِتَابِ وَأَقِمِ الصَّلَاةَ ۖ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ",
     t: "Kitaptan sana vahyedileni oku ve namazı kıl. Şüphesiz namaz, kötülüklerden ve hayâsızlıktan alıkoyar.",
     s: "Ankebût 29/45"
