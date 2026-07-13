@@ -1,0 +1,26 @@
+# Yedek ve geçici dosyalar
+*.bak
+*.tmp
+*.log
+*.orig
+
+# Editor / IDE
+.vscode/settings.json
+.vscode/launch.json
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node (gelecekte kullanılırsa)
+node_modules/
+dist/
+.env
+.env.local
+
+# Uygulama çıktıları
+*.htbak

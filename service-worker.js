@@ -1,5 +1,5 @@
-// H-12: Cache versiyonu güncellendi — eski cache'ler activate'de temizleniyor
-const CACHE_NAME = 'hayat-takvimi-v19';
+// Mikat v21: Duplicate ar property düzeltmesi, gereksiz dosyalar temizlendi
+const CACHE_NAME = 'mikat-v21';
 const STATIC_ASSETS = [
   './',
   './index.html',

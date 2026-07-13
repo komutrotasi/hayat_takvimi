@@ -62,6 +62,31 @@ const DAILY_ZIKIR=[
   {t:'Elhamdülillâhi alâ külli hâl',n:'33 defa'},
 ];
 
+/* ── GÜNLÜK SÖZ LİSTELERİ ── */
+const DAILY_AYATS = [
+  { t: "Rabbin, kendisinden başkasına kulluk etmemenizi ve anne babaya iyilik etmenizi emretti.", s: "İsrâ 17/23" },
+  { t: "Şüphesiz güçlükle beraber bir kolaylık vardır.", s: "İnşirâh 94/5" },
+  { t: "Allah, hiç kimseye gücünün üstünde bir yük yüklemez.", s: "Bakara 2/286" },
+  { t: "Sabredenleri müjdele!", s: "Bakara 2/155" },
+  { t: "Eğer şükrederseniz, elbette size (nimetimi) artırırım.", s: "İbrâhîm 14/7" }
+];
+
+const DAILY_HADITHS = [
+  { t: "Merhamet etmeyene merhamet olunmaz.", s: "Buhârî, Edeb, 18" },
+  { t: "Kolaylaştırınız, zorlaştırmayınız; müjdeleyiniz, nefret ettirmeyiniz.", s: "Buhârî, Cihâd, 164" },
+  { t: "İki nimet vardır ki, insanların çoğu onlarda aldanmıştır: Sağlık ve boş vakit.", s: "Buhârî, Rikâk, 1" },
+  { t: "Sizin en hayırlınız, ahlakı en güzel olanınızdır.", s: "Buhârî, Edeb, 38" },
+  { t: "Müslüman, dilinden ve elinden müslümanların zarar görmediği kimsedir.", s: "Buhârî, Îmân, 4" }
+];
+
+const DAILY_DUAS = [
+  { t: "Rabbim! Beni namaza devam edenlerden eyle.", s: "İbrâhîm 14/40" },
+  { t: "Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver ve bizi ateş azabından koru.", s: "Bakara 2/201" },
+  { t: "Rabbim! Göğsümü genişlet, işimi kolaylaştır.", s: "Tâhâ 20/25-26" },
+  { t: "Ey kalpleri çekip çeviren Rabbim! Kalbimi dinin üzere sabit kıl.", s: "Tirmizî, Deavât, 89" },
+  { t: "Allah'ım! Faydasız ilimden, ürpermeyen kalpten ve doymayan nefisten sana sığınırım.", s: "Müslim, Zikir, 73" }
+];
+
 /* ── NAMAZ VAKİTLERİ (varsayılan — API yoksa) ── */
 let PRAYERS = [
   {n:'Sabah',  t:'05:30', h:5},
@@ -75,14 +100,70 @@ let PRAYERS = [
 let CATS   = {...DEFAULT_CATS};
 let HABITS = [...DEFAULT_HABITS];
 
+let SUNRISE_TIME = null;
+let AUTH_USER = null;
+
 let S = {
-  tasks:[], prayers:{}, habits:{}, zikirDone:{},
+  tasks:[], prayers:{}, habits:{}, zikirDone:{}, nafile:{}, qada:{},
   catTime:{}, timerSess:{}, theme:'dark',
   cats:null, habitDefs:null, lastReset:'',
   notifEnabled:false, namazCity:'Konya',
   autoBackup:false, lastBackup:'',
   lat:null, lng:null,
 };
+
+const NAMAZ_DAILY_AYATS = [
+  {
+    ar: "حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ وَقُومُوا لِلَّهِ قَانِتِينَ",
+    t: "Namazlara ve orta namaza devam edin. Allah'a saygı ve bağlılık içinde namaz kılın.",
+    s: "Bakara 2/238"
+  },
+  {
+    ar: "وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ",
+    t: "Namazı kılın, zekatı verin ve rüku edenlerle birlikte rüku edin.",
+    s: "Bakara 2/43"
+  },
+  {
+    ar: "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا",
+    t: "Şüphesiz namaz, müminler üzerine belirli vakitlerde yazılmış bir farzdır.",
+    s: "Nisâ 4/103"
+  },
+  {
+    ar: "وَأَقِمِ الصَّلَاةَ طَرَفَيِ النَّهَارِ وَزُلَفًا مِنَ اللَّيْلِ",
+    t: "Gecenin iki tarafında ve gündüzün saçaklarında namaz kıl.",
+    s: "Hûd 11/114"
+  },
+  {
+    ar: "وَسَبِّحْ بِحَمْدِ رَبِّكَ قَبْلَ طُلُوعِ الشَّمْسِ وَقَبْلَ غُرُوبِهَا",
+    t: "Güneşin doğmasından önce ve batmasından önce Rabbini hamd ile tesbih et.",
+    s: "Tâhâ 20/130"
+  },
+  {
+    ar: "أَقِمِ الصَّلَاةَ لِدُلُوكِ الشَّمْسِ إِلَىٰ غَسَقِ اللَّيْلِ وَقُرْآنَ الْفَجْرِ",
+    t: "Güneşin batıya yönelmesinden gecenin karanlığına kadar namaz kıl. Sabah kuranını da unutma.",
+    s: "İsrâ 17/78"
+  },
+  {
+    ar: "وَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى الْخَاشِعِينَ",
+    t: "Sabır ve namazla Allah'tan yardım isteyin. Şüphesiz bu, huşu duyanlardan başkasına ağır gelir.",
+    s: "Bakara 2/45"
+  },
+  {
+    ar: "اتْلُ مَا أُوحِيَ إِلَيْكَ مِنَ الْكِتَابِ وَأَقِمِ الصَّلَاةَ ۖ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ",
+    t: "Kitaptan sana vahyedileni oku ve namazı kıl. Şüphesiz namaz, kötülüklerden ve hayâsızlıktan alıkoyar.",
+    s: "Ankebût 29/45"
+  },
+  {
+    ar: "قَدْ أَفْلَحَ الْمُؤْمِنُونَ الَّذِينَ هُمْ فِي صَلَاتِهِمْ خَاشِعُونَ",
+    t: "Müminler kesinlikle kurtuluşa ermişlerdir; onlar ki namazlarında huşu içindedirler.",
+    s: "Mü'minûn 23/1-2"
+  },
+  {
+    ar: "وَالَّذِينَ هُمْ عَلَىٰ صَلَوَاتِهِمْ يُحَافِظُونَ أُولَٰئِكَ هُمْ الْوَارِثُونَ",
+    t: "Onlar ki namazlarını titizlikle korurlar. İşte varis olacaklar onlardır.",
+    s: "Mü'minûn 23/9-10"
+  }
+];
 
 let editId = null, tmpSubs = [], activeCat = null, statusF = 'all';
 let editCatKey = null, selectedColor = COLOR_PALETTE[0];
@@ -103,6 +184,32 @@ function dOff(n) {
 function dayOfYear() {
   const n = new Date(), s = new Date(n.getFullYear(), 0, 0);
   return Math.floor((n - s) / 86400000);
+}
+function initDailyQuotes() {
+  const dayIdx = dayOfYear();
+  const ayat = DAILY_AYATS[dayIdx % DAILY_AYATS.length];
+  const hadis = DAILY_HADITHS[dayIdx % DAILY_HADITHS.length];
+  const dua = DAILY_DUAS[dayIdx % DAILY_DUAS.length];
+  
+  const ayatText = document.getElementById('dailyAyatText');
+  const ayatSrc = document.getElementById('dailyAyatSrc');
+  const hadisText = document.getElementById('dailyHadisText');
+  const hadisSrc = document.getElementById('dailyHadisSrc');
+  const duaText = document.getElementById('dailyDuaText');
+  const duaSrc = document.getElementById('dailyDuaSrc');
+  
+  if (ayatText && ayatSrc) {
+    ayatText.textContent = ayat.t;
+    ayatSrc.textContent = ayat.s;
+  }
+  if (hadisText && hadisSrc) {
+    hadisText.textContent = hadis.t;
+    hadisSrc.textContent = hadis.s;
+  }
+  if (duaText && duaSrc) {
+    duaText.textContent = dua.t;
+    duaSrc.textContent = dua.s;
+  }
 }
 function parseYmd(s) {
   return /^\d{4}-\d{2}-\d{2}$/.test(s || '') ? new Date(s + 'T00:00:00') : null;
@@ -229,7 +336,7 @@ function sanitizeTask(t) {
 }
 function sanitizeState(raw) {
   const def = {
-    tasks:[], prayers:{}, habits:{}, zikirDone:{},
+    tasks:[], prayers:{}, habits:{}, zikirDone:{}, nafile:{}, qada:{},
     catTime:{}, timerSess:{}, theme:'dark',
     cats:null, habitDefs:null, lastReset:'',
     notifEnabled:false, namazCity:'Konya',
@@ -248,8 +355,11 @@ function sanitizeState(raw) {
   st.cats        = normalizeCats(st.cats || CATS);  CATS = st.cats;
   st.habitDefs   = normalizeHabits(st.habitDefs || HABITS); HABITS = st.habitDefs;
   st.tasks       = Array.isArray(st.tasks) ? st.tasks.slice(0,3000).map(sanitizeTask) : [];
-  ['prayers','habits','zikirDone','catTime','timerSess'].forEach(k => {
+  ['prayers','habits','zikirDone','catTime','timerSess','nafile','qada'].forEach(k => {
     if (!st[k] || typeof st[k] !== 'object' || Array.isArray(st[k])) st[k] = {};
+  });
+  ['sabah','ogle','ikindi','aksam','yatsi','vitir'].forEach(k => {
+    st.qada[k] = Number.isInteger(st.qada[k]) && st.qada[k] >= 0 ? st.qada[k] : 0;
   });
   return st;
 }
@@ -257,11 +367,11 @@ function sanitizeState(raw) {
 /* ── DEPOLAMA ── */
 function load() {
   try {
-    const raw = localStorage.getItem('ht6');
+    const raw = localStorage.getItem('mikat');
     if (raw) Object.assign(S, sanitizeState(JSON.parse(raw)));
     else {
-      // v5 → v6 geçiş
-      const old = localStorage.getItem('ht5');
+      // v5/v6 → mikat geçiş
+      const old = localStorage.getItem('mikat-v5');
       if (old) Object.assign(S, sanitizeState(JSON.parse(old)));
     }
     CATS   = normalizeCats(S.cats || CATS);
@@ -278,7 +388,7 @@ function save() {
     S.habitDefs = normalizeHabits(HABITS);
     // H-02: S nesnesini yeni bir referansla değil, mevcut nesneyi güncelleyerek sakla
     Object.assign(S, sanitizeState({...S}));
-    localStorage.setItem('ht6', JSON.stringify(S));
+    localStorage.setItem('mikat', JSON.stringify(S));
     maybeAutoBackup();
     return true;
   } catch(e) {
@@ -308,11 +418,11 @@ function applyTheme(t) {
 function toggleTheme() { S.theme = S.theme === 'dark' ? 'light' : 'dark'; applyTheme(S.theme); save(); }
 
 /* ── KRİPTO (AES-256-GCM + PBKDF2) ── */
-async function deriveKey(pw, salt) {
+async function deriveKey(pw, salt, iterations = 600000) {
   const enc = new TextEncoder();
   const km = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveKey']);
   return crypto.subtle.deriveKey(
-    {name:'PBKDF2', salt, iterations:310000, hash:'SHA-256'},
+    {name:'PBKDF2', salt, iterations, hash:'SHA-256'},
     km, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']
   );
 }
@@ -329,19 +439,39 @@ async function encData(data, pw) {
   const enc  = new TextEncoder();
   const salt = crypto.getRandomValues(new Uint8Array(32));
   const iv   = crypto.getRandomValues(new Uint8Array(12));
-  const key  = await deriveKey(pw, salt);
+  const key  = await deriveKey(pw, salt, 600000);
   const ct   = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(JSON.stringify(data)));
   const out  = new Uint8Array(44 + ct.byteLength);
   out.set(salt); out.set(iv, 32); out.set(new Uint8Array(ct), 44);
-  return 'HT6:' + uint8ToBase64(out);
+  return 'MK1:' + uint8ToBase64(out);
 }
 async function decData(str, pw) {
-  if (!str.startsWith('HT6:') && !str.startsWith('HT5:') && !str.startsWith('HT4:'))
+  const prefix = str.slice(0, 4);
+  if (prefix !== 'MK1:' && prefix !== 'HT6:' && prefix !== 'HT5:' && prefix !== 'HT4:')
     throw new Error('Geçersiz format');
+  
+  if (prefix === 'HT4:' || prefix === 'HT5:' || prefix === 'HT6:') {
+    toast('Uyarı: Eski yedekleme formatı (HT4/HT5/HT6). Lütfen yeni Mikat yedeği alın.', 'w');
+  }
+  
   const buf = new Uint8Array(atob(str.slice(4)).split('').map(c => c.charCodeAt(0)));
-  const key = await deriveKey(pw, buf.slice(0, 32));
-  const dec = await crypto.subtle.decrypt({name:'AES-GCM', iv:buf.slice(32,44)}, key, buf.slice(44));
-  return JSON.parse(new TextDecoder().decode(dec));
+  const salt = buf.slice(0, 32);
+  const iv = buf.slice(32, 44);
+  const ct = buf.slice(44);
+  
+  try {
+    const key = await deriveKey(pw, salt, 600000);
+    const dec = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, ct);
+    return JSON.parse(new TextDecoder().decode(dec));
+  } catch (e) {
+    try {
+      const key = await deriveKey(pw, salt, 310000);
+      const dec = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, ct);
+      return JSON.parse(new TextDecoder().decode(dec));
+    } catch (e2) {
+      throw new Error('Şifre yanlış veya veri bozuk');
+    }
+  }
 }
 async function doExport() {
   const pw = document.getElementById('epw').value.trim();
@@ -383,7 +513,7 @@ function dlExp() {
   if (!v) return;
   const a = document.createElement('a');
   a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(v);
-  a.download = 'hayat-takvimi-' + today() + '.htbak';
+  a.download = 'mikat-' + today() + '.htbak';
   a.click();
   toast('İndiriliyor...', 'i');
 }
@@ -415,20 +545,20 @@ function toggleAutoBackup(enabled) {
   toast(S.autoBackup ? 'Otomatik yedekleme etkin' : 'Otomatik yedekleme kapatıldı', S.autoBackup ? 's' : 'i');
 }
 function maybeAutoBackup() {
-  // H-01: Sadece backup key'ine yaz; ht6'ya tekrar yazmak save() döngüsüne neden olur
+  // H-01: Sadece backup key'ine yaz; mikat'a tekrar yazmak save() döngüsüne neden olur
   if (!S.autoBackup) return;
   const ts = new Date().toISOString();
   const backup = {ts, data: JSON.parse(JSON.stringify(S))};
-  localStorage.setItem('ht6-auto-backup', JSON.stringify(backup));
+  localStorage.setItem('mikat-auto-backup', JSON.stringify(backup));
   S.lastBackup = ts;
-  // Not: ht6 anahtarına tekrar yazmıyoruz — save() zaten yazdı
+  // Not: mikat anahtarına tekrar yazmıyoruz — save() zaten yazdı
 }
 function doExportJson() {
   const data = JSON.stringify(S, null, 2);
   const blob = new Blob([data], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `hayat-takvimi-${today()}.json`;
+  a.download = `mikat-${today()}.json`;
   a.click();
   toast('JSON indiriliyor...', 's');
 }
@@ -450,15 +580,15 @@ function doExportCsv() {
     ]);
   });
   const csv = rows.map(r => r.map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `hayat-takvimi-${today()}.csv`;
+  a.download = `mikat-${today()}.csv`;
   a.click();
   toast('CSV indiriliyor...', 's');
 }
 function restoreBackup() {
-  const raw = localStorage.getItem('ht6-auto-backup');
+  const raw = localStorage.getItem('mikat-auto-backup');
   if (!raw) { toast('Otomatik yedek bulunamadı', 'e'); return; }
   let backup;
   try { backup = JSON.parse(raw); } catch(e) { toast('Yedek okunamadı: ' + e.message, 'e'); return; }
@@ -572,13 +702,6 @@ function scheduleNotifs() {
           }, diff));
         }
       }
-    } else if (task.due === today()) {
-      notifTimers.push(setTimeout(() => {
-        if (S.notifEnabled && Notification.permission === 'granted' && !task.done) {
-          playSound('bell');
-          new Notification('📋 Görev Hatırlatıcı', {body: task.name, tag: 'task-'+task.id});
-        }
-      }, 5000));
     }
   });
 }
@@ -591,6 +714,7 @@ async function fetchPrayerTimes() {
     if (!r.ok) throw new Error('API hatası');
     const j = await r.json();
     const t = j.data.timings;
+    SUNRISE_TIME = t.Sunrise.slice(0,5);
     PRAYERS = [
       {n:'Sabah',  t:t.Fajr.slice(0,5),    h:parseInt(t.Fajr)},
       {n:'Öğle',   t:t.Dhuhr.slice(0,5),   h:parseInt(t.Dhuhr)},
@@ -599,7 +723,7 @@ async function fetchPrayerTimes() {
       {n:'Yatsı',  t:t.Isha.slice(0,5),     h:parseInt(t.Isha)},
     ];
     // Günlük cache — aynı günde tekrar API çağrısını önler
-    try { localStorage.setItem('ht6-prayer-cache', JSON.stringify({date: today(), prayers: PRAYERS})); } catch(e) {}
+    try { localStorage.setItem('mikat-prayer-cache', JSON.stringify({date: today(), city: S.namazCity || 'Konya', prayers: PRAYERS, sunrise: SUNRISE_TIME})); } catch(e) {}
     document.getElementById('namazSource').textContent = '🌐 Canlı veri — ' + S.namazCity;
     renderNamaz();
     if (S.notifEnabled) scheduleNotifs();
@@ -625,6 +749,20 @@ function autoReset() {
 function isTaskDueToday(t) {
   const td = today();
   if (t.done) return false;
+  if (t.due === td) return true;
+  if (t.due && t.due < td) return true;
+  if (!t.due) return isRepeatDueOn(t, td);
+  return false;
+}
+
+function isTaskForToday(t) {
+  const td = today();
+  if (t.done) {
+    if (t.completedAt && t.completedAt.substring(0, 10) === td) return true;
+    if (t.due === td) return true;
+    if (!t.due && isRepeatDueOn(t, td)) return true;
+    return false;
+  }
   if (t.due === td) return true;
   if (t.due && t.due < td) return true;
   if (!t.due) return isRepeatDueOn(t, td);
@@ -777,6 +915,9 @@ function saveTask() {
 function toggleTask(id) {
   const t = S.tasks.find(x => x.id === id); if (!t) return;
   t.done = !t.done; t.completedAt = t.done ? new Date().toISOString() : null;
+  if (t.done) {
+    triggerConfetti();
+  }
   save(); render();
 }
 function toggleSub(tid, si) {
@@ -840,15 +981,11 @@ document.getElementById('qaInp').addEventListener('keydown', e => { if (e.key ==
 /* ── FİLTRELER ── */
 function filterCat(cat) {
   activeCat = cat;
-  document.getElementById('allcard').classList.toggle('on', !cat);
-  document.querySelectorAll('.ccard').forEach(c => c.classList.remove('on'));
-  // H-04: CSS.escape ile selector injection koruması
-  if (cat) {
-    const selector = '[data-cat="' + (CSS.escape ? CSS.escape(cat) : cat.replace(/"/g,'')) + '"]';
-    const el = document.querySelector(selector);
-    if (el) el.classList.add('on');
-  }
-  renderTasks(); updatePgHdr();
+  const allCard = document.getElementById('allcard');
+  if (allCard) allCard.classList.toggle('on', !cat);
+  renderCatCards();
+  renderTasks();
+  updatePgHdr();
 }
 function setFilter(f, el) {
   statusF = f;
@@ -884,7 +1021,7 @@ function streak(id) {
 const T = {running:false, remain:1500, total:1500, iv:null, startedAt:null, pausedRemain:null};
 function setPreset(m, el) {
   document.querySelectorAll('.tpre').forEach(b => b.classList.remove('on'));
-  el.classList.add('on'); timerReset(); T.remain = m*60; T.total = m*60; drawTimer();
+  el.classList.add('on'); timerReset(); T.pausedRemain = null; T.remain = m*60; T.total = m*60; drawTimer();
 }
 function timerToggle() {
   if (T.running) {
@@ -950,12 +1087,37 @@ function renderSessions() {
 function showView(v, el) {
   document.querySelectorAll('.view').forEach(x => x.classList.remove('on'));
   document.getElementById('v-'+v)?.classList.add('on');
-  document.querySelectorAll('.tnav').forEach(t => t.classList.remove('on'));
-  if (el) el.classList.add('on');
+  
+  // Sync menu items in vertical sidebar menu
+  document.querySelectorAll('.menu-item-vertical').forEach(t => {
+    t.classList.toggle('on', t.getAttribute('onclick').includes(`'${v}'`));
+  });
+  
   if (v === 'analytics') renderAnalytics();
-  if (v === 'calendar')  { renderCalendar(); renderNamaz(); renderHabits(); }
-  if (v === 'tasks')     renderTasks();
+  if (v === 'calendar')  { renderCalendar(); }
+  if (v === 'prayers')   { renderNamaz(); }
+  if (v === 'habits')    { renderHabits(); }
+  if (v === 'tasks')     { renderCatCards(); renderTasks(); }
 }
+
+function toggleMenuDropdown() {
+  const dp = document.getElementById('hamburgerDropdown');
+  if (dp) dp.classList.toggle('on');
+}
+
+function selectMenu(view, btn) {
+  showView(view);
+  document.querySelectorAll('.menu-item').forEach(x => x.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('hamburgerDropdown')?.classList.remove('on');
+}
+
+// Close dropdown on outside click
+window.addEventListener('click', function(e) {
+  if (!e.target.closest('.hamburger-btn') && !e.target.closest('.hamburger-dropdown')) {
+    document.getElementById('hamburgerDropdown')?.classList.remove('on');
+  }
+});
 
 /* ── KATEGORİ YÖNETİMİ ── */
 function openSettings() {
@@ -1076,24 +1238,19 @@ function renderSelects() {
 
 /* ── RENDER: KATEGORİ KARTLARI ── */
 function renderCatCards() {
-  document.getElementById('allnum').textContent = S.tasks.length;
-  document.getElementById('ccards').innerHTML = Object.entries(CATS).map(([k,c]) => {
+  const allNumEl = document.getElementById('allnum');
+  if (allNumEl) allNumEl.textContent = S.tasks.length;
+  const cardsEl = document.getElementById('ccards');
+  if (!cardsEl) return;
+  cardsEl.innerHTML = Object.entries(CATS).map(([k,c]) => {
     const tasks = S.tasks.filter(t => t.cat === k);
-    const done  = tasks.filter(t => t.done).length;
-    const pct   = tasks.length ? Math.round(done/tasks.length*100) : 0;
     const pend  = tasks.filter(t => !t.done).length;
-    return `<div class="ccard${activeCat===k?' on':''}" data-cat="${k}" onclick="filterCat('${k}')">
-      <div class="ccard-stripe" style="background:${safeColor(c.c)}"></div>
-      <div class="ccard-top">
-        <div class="ccard-ico" style="background:${safeColor(c.bg)}">${esc(c.i)}</div>
-        <div class="ccard-nm" style="color:${safeColor(c.c)}">${esc(c.l)}</div>
-        <div class="ccard-n" style="background:${safeColor(c.bg)};color:${safeColor(c.c)}">${pend}</div>
-        <div class="ccard-acts">
-          <button class="ccard-act" onclick="event.stopPropagation();openCatManagerTo('${k}')" title="Düzenle">✏️</button>
-        </div>
-      </div>
-      <div class="ccard-sub">${done}/${tasks.length} tamamlandı</div>
-      <div class="cbar"><div class="cbar-f" style="width:${pct}%;background:${safeColor(c.c)}"></div></div>
+    const isSel = activeCat === k;
+    return `<div class="cat-pill${isSel?' on':''}" data-cat="${k}" onclick="filterCat('${k}')" style="${isSel ? `border-color:${safeColor(c.c)};background:${safeColor(c.bg)};color:${safeColor(c.c)};` : ''}">
+      <span class="cat-pill-ico">${esc(c.i)}</span>
+      <span class="cat-pill-nm" style="${isSel ? `color:${safeColor(c.c)};` : ''}">${esc(c.l)}</span>
+      <span class="cat-pill-n" style="${isSel ? `background:${safeColor(c.c)};color:${safeColor(c.bg)};` : `background:${safeColor(c.bg)};color:${safeColor(c.c)};`}">${pend}</span>
+      <button class="ccard-act" onclick="event.stopPropagation();openCatManagerTo('${k}')" style="background:none;border:none;margin-left:4px;font-size:0.6rem;cursor:pointer;padding:0;" title="Düzenle">✏️</button>
     </div>`;
   }).join('');
 }
@@ -1101,21 +1258,39 @@ function openCatManagerTo(key) { openCatManager(); setTimeout(() => editCat(key)
 
 /* ── RENDER: GÜNLÜK PANEL ── */
 function renderDayProg() {
-  const tdTasks = S.tasks.filter(isTaskDueToday);
+  const tdTasks = S.tasks.filter(isTaskForToday);
   const total = tdTasks.length, done = tdTasks.filter(t => t.done).length;
   const pct = total ? Math.round(done/total*100) : 0;
-  document.getElementById('dscore').textContent = pct + '%';
-  document.getElementById('dmood').textContent = ['😴','😐','🙂','😊','🌟','🔥'][Math.min(5, Math.floor(pct/20))];
-  document.getElementById('dpbars').innerHTML = Object.entries(CATS).map(([k,c]) => {
+  
+  // Mood ve oran güncelleme (Ticker Sağ Köşe)
+  const mood = ['😴','😐','🙂','😊','🌟','🔥'][Math.min(5, Math.floor(pct/20))];
+  const tickerMoodEl = document.getElementById('tickerMood');
+  if (tickerMoodEl) {
+    tickerMoodEl.innerHTML = `<span>${mood}</span> <strong style="color:var(--teal);">${pct}%</strong>`;
+  }
+  
+  const itemsHtml = Object.entries(CATS).map(([k,c]) => {
     const tasks = tdTasks.filter(t => t.cat === k);
     const d = tasks.filter(t => t.done).length;
-    const p = tasks.length ? Math.round(d/tasks.length*100) : 0;
-    return `<div class="prow">
-      <div class="prow-ico">${esc(c.i)}</div>
-      <div class="ptrack"><div class="pfill" style="width:${p}%;background:${safeColor(c.c)}"></div></div>
-      <div class="ptxt">${d}/${tasks.length}</div>
+    return `<div class="ticker-item">
+      <span>${esc(c.i)}</span>
+      <span style="font-weight:700; color:var(--tx);">${esc(c.l)}:</span>
+      <span style="color:var(--gold); font-weight:700;">${d}/${tasks.length}</span>
     </div>`;
   }).join('');
+  
+  // Sonsuz kaydırma için içeriği kopyalayarak ekliyoruz
+  const tickerContainer = document.getElementById('dpbarsTicker');
+  if (tickerContainer) {
+    tickerContainer.innerHTML = `
+      <div class="ticker-items-container">
+        ${itemsHtml}
+        ${itemsHtml}
+        ${itemsHtml}
+      </div>
+    `;
+  }
+  
   renderGeneralStatus(tdTasks);
 }
 function renderGeneralStatus(tdTasks) {
@@ -1143,7 +1318,176 @@ function renderNamaz() {
     if (nowMin >= h*60+m) curIdx = i;
   });
   const done = PRAYERS.filter(p => S.prayers[d]?.[p.n]).length;
-  document.getElementById('namazCnt').textContent = `${done}/5`;
+  const countEl = document.getElementById('namazCnt');
+  if (countEl) countEl.textContent = `${done}/5`;
+  
+  // Vakit Kadranı Güncelleme (24 Saatlik Akıllı Çark)
+  const dialSectors = document.getElementById('dialSectors');
+  const dialNeedle = document.getElementById('dialNeedle');
+  const dialSeparators = document.getElementById('dialSeparators');
+  const dialHours = document.getElementById('dialHours');
+  
+  if (dialSectors && PRAYERS && PRAYERS.length === 5) {
+    const timeToMin = t => t.split(':').map(Number).reduce((a,b)=>a*60+b);
+    
+    // Namaz vakitleri dakikaları
+    const fMin = timeToMin(PRAYERS[0].t);
+    const oMin = timeToMin(PRAYERS[1].t);
+    const iMin = timeToMin(PRAYERS[2].t);
+    const aMin = timeToMin(PRAYERS[3].t);
+    const yMin = timeToMin(PRAYERS[4].t);
+    const sunMin = SUNRISE_TIME ? timeToMin(SUNRISE_TIME) : fMin + 50;
+
+    const minToTime = m => {
+      const h = Math.floor((m % 1440) / 60);
+      const min = Math.floor(m % 60);
+      return String(h).padStart(2, '0') + ':' + String(min).padStart(2, '0');
+    };
+
+    // Sektörleri tanımlayalım: [Açıklama, Başlangıç Dk, Bitiş Dk, Renk] (00:00'dan 24:00'a kronolojik)
+    const getRel = m => m >= 300 ? m - 300 : m + 1440 - 300;
+
+    const sectors = [
+      { name: 'Teheccüd', s: yMin + 120, e: fMin, c: 'rgba(99, 102, 241, 0.18)' },
+      { name: 'Sabah', s: fMin, e: sunMin, c: 'rgba(232, 184, 75, 0.16)' },
+      { name: 'Kerahet', s: sunMin, e: sunMin + 45, c: 'rgba(239, 68, 68, 0.14)' },
+      { name: 'İşrak', s: sunMin + 45, e: sunMin + 90, c: 'rgba(253, 224, 71, 0.18)' },
+      { name: 'Kuşluk', s: sunMin + 90, e: oMin - 20, c: 'rgba(245, 158, 11, 0.18)' },
+      { name: 'Kerahet', s: oMin - 20, e: oMin, c: 'rgba(239, 68, 68, 0.14)' },
+      { name: 'Öğle', s: oMin, e: iMin, c: 'rgba(62, 207, 176, 0.16)' },
+      { name: 'İkindi', s: iMin, e: aMin - 45, c: 'rgba(251, 146, 60, 0.16)' },
+      { name: 'Kerahet', s: aMin - 45, e: aMin, c: 'rgba(239, 68, 68, 0.14)' },
+      { name: 'Akşam', s: aMin, e: aMin + 25, c: 'rgba(240, 104, 120, 0.16)' },
+      { name: 'Evvabîn', s: aMin + 25, e: yMin, c: 'rgba(168, 85, 247, 0.18)' },
+      { name: 'Yatsı', s: yMin, e: yMin + 120, c: 'rgba(91, 156, 246, 0.12)' }
+    ];
+
+    // Helper to generate SVG Annular Sector path with hover attributes
+    const drawAnnularSector = (cx, cy, r_in, r_out, startMin, endMin, color, name) => {
+      let rs = getRel(startMin);
+      let re = getRel(endMin);
+      if (re < rs) re += 1440;
+      
+      const startHour = rs / 60;
+      const endHour = re / 60;
+      
+      const startAngle = 180 + (startHour / 24) * 180;
+      const endAngle = 180 + (endHour / 24) * 180;
+      
+      const startRad = startAngle * Math.PI / 180;
+      const endRad = endAngle * Math.PI / 180;
+      const largeArc = (endAngle - startAngle) > 180 ? 1 : 0;
+      
+      const x1_out = cx + r_out * Math.cos(startRad);
+      const y1_out = cy + r_out * Math.sin(startRad);
+      const x2_out = cx + r_out * Math.cos(endRad);
+      const y2_out = cy + r_out * Math.sin(endRad);
+      
+      const x1_in = cx + r_in * Math.cos(startRad);
+      const y1_in = cy + r_in * Math.sin(startRad);
+      const x2_in = cx + r_in * Math.cos(endRad);
+      const y2_in = cy + r_in * Math.sin(endRad);
+      
+      const durationMins = endMin >= startMin ? endMin - startMin : endMin + 1440 - startMin;
+      const durationHours = Math.floor(durationMins / 60);
+      const durationRemainingMins = durationMins % 60;
+      let durationStr = "";
+      if (durationHours > 0) {
+        durationStr += `${durationHours}sa `;
+      }
+      if (durationRemainingMins > 0 || durationHours === 0) {
+        durationStr += `${durationRemainingMins}dk`;
+      }
+      durationStr = durationStr.trim();
+      
+      const rangeStr = `${minToTime(startMin)} - ${minToTime(endMin)} (${durationStr})`;
+      
+      return `<path d="M ${x1_out} ${y1_out} A ${r_out} ${r_out} 0 ${largeArc} 1 ${x2_out} ${y2_out} L ${x2_in} ${y2_in} A ${r_in} ${r_in} 0 ${largeArc} 0 ${x1_in} ${y1_in} Z" 
+        fill="${color}" 
+        stroke="none" 
+        style="cursor: pointer; transition: opacity 0.2s;" 
+        onmouseenter="window.setDialHoverTitle('${name}', '${rangeStr}')" 
+        onmouseleave="window.clearDialHoverTitle()" />`;
+    };
+    
+    // Helper to draw text labels in the middle of sectors
+    const drawSectorLabel = (name, startMin, endMin) => {
+      let rs = getRel(startMin);
+      let re = getRel(endMin);
+      if (re < rs) re += 1440;
+      if (name === 'Güneş' || name === 'Kerahet' || (re - rs) < 40) return '';
+      
+      const midHour = (rs + (re - rs) / 2) / 60;
+      const angle = 180 + (midHour / 24) * 180;
+      const rad = angle * Math.PI / 180;
+      const rLabel = 63;
+      const x = 100 + rLabel * Math.cos(rad);
+      const y = 110 + rLabel * Math.sin(rad);
+      
+      let textRot = angle + 90;
+      if (textRot > 90 && textRot < 270) textRot += 180;
+      
+      return `<text x="${x}" y="${y}" fill="#ffffff" font-size="7.5" font-weight="900" style="font-weight: 900 !important; text-shadow: 0 1px 2px rgba(0,0,0,0.8); pointer-events: none;" text-anchor="middle" dominant-baseline="central" transform="rotate(${textRot} ${x} ${y})">${name}</text>`;
+    };
+
+    // Helper to draw boundary line
+    const drawSeparatorLine = (min) => {
+      const rMin = getRel(min);
+      const hr = rMin / 60;
+      const angle = 180 + (hr / 24) * 180;
+      const rad = angle * Math.PI / 180;
+      const x1 = 100 + 44 * Math.cos(rad);
+      const y1 = 110 + 44 * Math.sin(rad);
+      const x2 = 100 + 82 * Math.cos(rad);
+      const y2 = 110 + 82 * Math.sin(rad);
+      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#801c1c" stroke-width="1.8" />`;
+    };
+    
+    // Draw sectors & labels
+    dialSectors.innerHTML = sectors.map(sec => drawAnnularSector(100, 110, 44, 82, sec.s, sec.e, sec.c, sec.name) + drawSectorLabel(sec.name, sec.s, sec.e)).join('');
+    
+    // Draw boundary separator lines
+    if (dialSeparators) {
+      dialSeparators.innerHTML = [fMin, sunMin, oMin, iMin, aMin, yMin].map(drawSeparatorLine).join('');
+    }
+    
+    // Draw ticks & hour labels
+    if (dialHours) {
+      const hours = [5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 1, 3];
+      let hoursHtml = '';
+      
+      // Draw ticks for all 24 hours
+      for (let h = 0; h < 24; h++) {
+        const angle = 180 + (h / 24) * 180;
+        const rad = angle * Math.PI / 180;
+        const isMajor = h % 2 === 0;
+        const rStart = isMajor ? 80 : 81.5;
+        const rEnd = 84;
+        const x1 = 100 + rStart * Math.cos(rad);
+        const y1 = 110 + rStart * Math.sin(rad);
+        const x2 = 100 + rEnd * Math.cos(rad);
+        const y2 = 110 + rEnd * Math.sin(rad);
+        hoursHtml += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(164,207,206,0.35)" stroke-width="${isMajor ? 1.2 : 0.6}" />`;
+      }
+      
+      // Draw hour numbers
+      hours.forEach(h => {
+        const rHour = h >= 5 ? h - 5 : h + 24 - 5;
+        const angle = 180 + (rHour / 24) * 180;
+        const rad = angle * Math.PI / 180;
+        const rText = 92;
+        const x = 100 + rText * Math.cos(rad);
+        const y = 110 + rText * Math.sin(rad);
+        const labelStr = String(h).padStart(2, '0');
+        hoursHtml += `<text x="${x}" y="${y}" fill="#ffffff" font-size="8.5" font-family="'Outfit', sans-serif" font-weight="900" style="font-weight: 900 !important; text-shadow: 0 1px 2px rgba(0,0,0,0.8);" text-anchor="middle" dominant-baseline="central">${labelStr}</text>`;
+      });
+      dialHours.innerHTML = hoursHtml;
+    }
+    
+    // Initial update of countdown & needle
+    updateDialCountdownAndNeedle();
+  }
+
   // İbadet özeti
   const cnt = document.getElementById('ibadetCount');
   const bar = document.getElementById('ibadetBar');
@@ -1151,19 +1495,54 @@ function renderNamaz() {
   if (cnt) cnt.textContent = `${done} / 5`;
   if (bar) bar.style.width = Math.max(0, done*20) + '%';
   if (msg) msg.textContent = ['Başlamak için ilk namazı kıl','Güzel başladın 👍','Devam et 💪','Yarısından fazlası 🔥','Son bir adım ✨','Bugünkü hedef tamamlandı 🎉'][done] || '';
-  // Vakit ızgarası
-  document.getElementById('namazGrid').innerHTML = PRAYERS.map((p, i) => {
-    const isDone = !!(S.prayers[d]?.[p.n]);
-    const isCur  = i === curIdx && !isDone;
-    const [ph,pm] = p.t.split(':').map(Number);
-    const diff = ph*60+pm - nowMin;
-    const rem  = diff < 0 ? 'geçti' : `${Math.floor(diff/60)}s ${diff%60}dk`;
-    return `<div class="nitem${isDone?' done':isCur?' cur':''}" onclick="toggleNamaz('${p.n}')">
-      <div class="nn">${p.n}</div>
-      <div class="nt">${p.t}</div>
-      <div class="ns">${isDone?'✓ Kılındı':isCur?'⏰ Vakit':rem}</div>
-    </div>`;
-  }).join('');
+  
+  // Farz Namaz Tikleme Listesi (Namaz Vakitleri & Tikleme Kartı)
+  const checklistEl = document.getElementById('namazChecklist');
+  if (checklistEl && PRAYERS && PRAYERS.length === 5) {
+    checklistEl.innerHTML = PRAYERS.map((p, i) => {
+      const isDone = !!(S.prayers[d]?.[p.n]);
+      const isCur = i === curIdx && !isDone;
+      const highlightStyle = isCur ? 'border-color: var(--gold); background: rgba(212,175,55,0.06);' : '';
+      const textStyle = isCur ? 'color: var(--gold); font-weight: 800;' : 'color: var(--tx2);';
+      const labelStyle = isDone ? 'text-decoration: line-through; opacity: 0.5; color: var(--tx3);' : textStyle;
+      
+      return `<div class="namaz-check-row" onclick="toggleNamaz('${p.n}')" style="display:flex; align-items:center; justify-content:space-between; padding: 6px 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04); cursor:pointer; transition: all var(--tr); ${highlightStyle}">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" ${isDone?'checked':''} style="pointer-events:none; accent-color:var(--teal);" />
+          <span style="font-size:0.78rem; font-weight:600; ${labelStyle}">${p.n}</span>
+        </div>
+        <span style="font-size:0.72rem; font-family:'JetBrains Mono',monospace; opacity:0.65; ${textStyle}">${p.t}</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Kadran Altı Yatay Vakitler Şeridi (Mockup stili)
+  const timesRowEl = document.getElementById('dialPrayerTimesRow');
+  if (timesRowEl && PRAYERS && PRAYERS.length === 5) {
+    const rowList = [
+      { n: 'İmsak', t: PRAYERS[0].t, k: 'Sabah' },
+      { n: 'Güneş', t: SUNRISE_TIME || '--:--', k: '' },
+      { n: 'Öğle', t: PRAYERS[1].t, k: 'Öğle' },
+      { n: 'İkindi', t: PRAYERS[2].t, k: 'İkindi' },
+      { n: 'Akşam', t: PRAYERS[3].t, k: 'Akşam' },
+      { n: 'Yatsı', t: PRAYERS[4].t, k: 'Yatsı' }
+    ];
+    timesRowEl.innerHTML = rowList.map((item, i) => {
+      let isCur = false;
+      if (item.k) {
+        const pIdx = PRAYERS.findIndex(p => p.n === item.k);
+        isCur = pIdx === curIdx;
+      }
+      const labelColor = isCur ? 'color: #2dd4bf; font-weight: 900; text-shadow: 0 0 8px rgba(45,212,191,0.4);' : 'color: rgba(255, 255, 255, 0.45);';
+      const timeColor = isCur ? 'color: #2dd4bf; font-weight: 900; text-shadow: 0 0 8px rgba(45,212,191,0.4);' : 'color: rgba(255, 255, 255, 0.85);';
+      
+      return `<div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+        <span style="font-size: 0.52rem; text-transform: uppercase; font-weight: 900; ${labelColor}">${item.n}</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; ${timeColor}">${item.t}</span>
+      </div>`;
+    }).join('');
+  }
+  
   // Sonraki vakit
   const nextEl = document.getElementById('namazNext');
   if (nextEl) {
@@ -1176,6 +1555,11 @@ function renderNamaz() {
   }
   renderDailyZikir();
   renderWeeklyIbadet();
+  renderNafile();
+  renderKerahet();
+  renderVaktinQuote();
+  renderEsma();
+  renderQada();
 }
 
 /* ── RENDER: ZİKİR ── */
@@ -1444,15 +1828,31 @@ function renderCalendar() {
     const dots = tasks.slice(0,6).map(t =>
       `<div class="wdot" style="background:${safeColor(CATS[t.cat]?.c||'#9aa0b8')};opacity:${t.done?1:.4}"></div>`
     ).join('');
-    const label= tasks.length
-      ? `<div class="wday-tasks">${tasks.length} görev</div>`
-      : `<div class="wday-add">+ ekle</div>`;
-    return `<div class="wday${isT?' today':''}${isSel?' sel':''}${other?' other':''}"
+    
+    // Görev yoğunluğu (heat-map) hesaplama
+    let heatClass = '';
+    if (tasks.length > 0) {
+      if (tasks.length <= 2) heatClass = ' heat-1';
+      else if (tasks.length <= 4) heatClass = ' heat-2';
+      else heatClass = ' heat-3';
+    }
+
+    // Görev başlığı önizlemeleri (Masaüstü için)
+    let titleLines = '';
+    if (tasks.length > 0) {
+      titleLines = `<div class="wday-task-titles-list">
+        ${tasks.slice(0, 2).map(t => `<div class="wday-task-title-line${t.done ? ' done' : ''}">${esc(t.name)}</div>`).join('')}
+        ${tasks.length > 2 ? `<div class="wday-task-more-line">+${tasks.length - 2} daha</div>` : ''}
+      </div>`;
+    }
+
+    return `<div class="wday${isT?' today':''}${isSel?' sel':''}${other?' other':''}${heatClass}"
       onclick="selectCalendarDay('${ds}')"
       ondblclick="selectCalendarDay('${ds}');openAddForSelectedDay()">
       <div class="wday-n">${d.getDate()}</div>
       <div class="wdots">${dots}</div>
-      ${label}
+      ${tasks.length ? `<div class="wday-tasks-count-mobile">${tasks.length} görev</div>` : `<div class="wday-add">+ ekle</div>`}
+      ${titleLines}
     </div>`;
   }).join('');
   document.getElementById('wgrid').innerHTML = heads + days;
@@ -1586,10 +1986,146 @@ function renderAnalytics() {
 
 /* ── RENDER: SAAT ── */
 function renderClock() {
-  const n = new Date();
-  document.getElementById('clockEl').textContent = n.toLocaleTimeString('tr-TR');
-  const dn = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
-  document.getElementById('dateEl').textContent = dn[n.getDay()] + ', ' + n.toLocaleDateString('tr-TR',{day:'numeric',month:'long'});
+  // Header namaz vakti göstergesini güncelle
+  renderHeaderPrayerVakit();
+  updateDialCountdownAndNeedle();
+  renderSmartAssistant();
+}
+
+function updateDialCountdownAndNeedle() {
+  const dialNeedle = document.getElementById('dialNeedle');
+  const dialCountdown = document.getElementById('dialCountdown');
+  if (!PRAYERS || PRAYERS.length !== 5) return;
+  
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const nowSec = now.getSeconds();
+  
+  // Update needle angle on the 5 AM to 5 AM next day scale (relativeMins: 0 to 1440)
+  if (dialNeedle) {
+    const totalMins = nowMin + nowSec / 60;
+    const relativeMins = totalMins >= 300 ? totalMins - 300 : totalMins + 1440 - 300;
+    // Maps relative 12h (17:00 / 720 mins relative) to 0deg (straight up)
+    const needleAngle = ((relativeMins - 720) / 1440) * 180;
+    dialNeedle.setAttribute('transform', `rotate(${needleAngle} 100 110)`);
+  }
+  
+  // Calculate seconds remaining until the active prayer time ends (next prayer starts)
+  if (dialCountdown) {
+    const currentTotalSeconds = (nowMin * 60) + nowSec;
+    const fSec = PRAYERS[0].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const sunSec = (SUNRISE_TIME ? SUNRISE_TIME.split(':').map(Number).reduce((h, m) => h * 60 + m) : (fSec / 60) + 50) * 60;
+    const oSec = PRAYERS[1].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const iSec = PRAYERS[2].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const aSec = PRAYERS[3].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const ySec = PRAYERS[4].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    
+    let targetSec = 0;
+    if (currentTotalSeconds >= fSec && currentTotalSeconds < sunSec) {
+      targetSec = sunSec;
+    } else if (currentTotalSeconds >= sunSec && currentTotalSeconds < oSec) {
+      targetSec = oSec;
+    } else if (currentTotalSeconds >= oSec && currentTotalSeconds < iSec) {
+      targetSec = iSec;
+    } else if (currentTotalSeconds >= iSec && currentTotalSeconds < aSec) {
+      targetSec = aSec;
+    } else if (currentTotalSeconds >= aSec && currentTotalSeconds < ySec) {
+      targetSec = ySec;
+    } else {
+      targetSec = fSec;
+      if (currentTotalSeconds >= ySec) {
+        targetSec += 24 * 3600;
+      }
+    }
+    
+    let diffSec = targetSec - currentTotalSeconds;
+    if (diffSec < 0) diffSec += 24 * 3600;
+    
+    const hh = String(Math.floor(diffSec / 3600)).padStart(2, '0');
+    const mm = String(Math.floor((diffSec % 3600) / 60)).padStart(2, '0');
+    const ss = String(diffSec % 60).padStart(2, '0');
+    
+    dialCountdown.innerHTML = `${hh}:${mm}<span style="font-size: 0.65em; font-weight: 800; vertical-align: super; margin-left: 2px;" id="dialCountdownSec">${ss}</span>`;
+  }
+}
+
+/* ── SİDEBAR DİNAMİK NAMAZ VAKTİ KARTI ── */
+function getCurrentPrayerInfo() {
+  if (!PRAYERS || PRAYERS.length === 0) return null;
+  
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  
+  const times = PRAYERS.map(p => {
+    const [h, m] = p.t.split(':').map(Number);
+    return { name: p.n, minutes: h * 60 + m, timeStr: p.t };
+  });
+  
+  times.sort((a, b) => a.minutes - b.minutes);
+  
+  if (currentMinutes < times[0].minutes) {
+    const yatsı = times[times.length - 1];
+    const sabah = times[0];
+    const diff = sabah.minutes - currentMinutes;
+    return { current: yatsı.name, next: sabah.name, left: diff, nextTime: sabah.timeStr };
+  }
+  
+  let currentIdx = -1;
+  for (let i = 0; i < times.length; i++) {
+    const start = times[i].minutes;
+    const end = (i === times.length - 1) ? (24 * 60 + times[0].minutes) : times[i+1].minutes;
+    if (currentMinutes >= start && currentMinutes < end) {
+      currentIdx = i;
+      break;
+    }
+  }
+  
+  if (currentIdx !== -1) {
+    const cur = times[currentIdx];
+    const nextIdx = (currentIdx + 1) % times.length;
+    const next = times[nextIdx];
+    
+    let diff = 0;
+    if (nextIdx === 0) {
+      diff = (24 * 60 - currentMinutes) + next.minutes;
+    } else {
+      diff = next.minutes - currentMinutes;
+    }
+    return { current: cur.name, next: next.name, left: diff, nextTime: next.timeStr };
+  }
+  
+  return null;
+}
+
+function formatRemainingTime(mins) {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  if (h > 0) {
+    return `${h} sa ${m} dk`;
+  }
+  return `${m} dk`;
+}
+
+function renderHeaderPrayerVakit() {
+  const container = document.getElementById('headerPrayerVakit');
+  if (!container) return;
+  
+  const info = getCurrentPrayerInfo();
+  if (!info) {
+    container.style.display = 'none';
+    return;
+  }
+  
+  container.style.display = 'flex';
+  container.innerHTML = `
+    <div style="text-align: right;">
+      <div style="font-size: 0.82rem; font-weight: 800; color: var(--tx);">${info.current} Vakti</div>
+      <div style="font-size: 0.58rem; color: var(--tx3); margin-top: 1px;">Sıradaki: <strong>${info.next}</strong> (${info.nextTime})</div>
+    </div>
+    <div style="background: var(--tealbg); color: var(--teal); font-size: 0.70rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; white-space: nowrap; margin-left: 6px; display: flex; align-items: center; gap: 3px;">
+      ⏳ ${formatRemainingTime(info.left)}
+    </div>
+  `;
 }
 
 /* ── TOAST ── */
@@ -1654,7 +2190,7 @@ function factoryCheckInput(inp) {
 }
 function doFactoryReset() {
   closeModal('factoryModal');
-  localStorage.removeItem('ht6'); localStorage.removeItem('ht5');
+  localStorage.removeItem('mikat'); localStorage.removeItem('mikat-v5');
   CATS   = JSON.parse(JSON.stringify(DEFAULT_CATS));
   HABITS = JSON.parse(JSON.stringify(DEFAULT_HABITS));
   S = {tasks:[], prayers:{}, habits:{}, zikirDone:{}, catTime:{}, timerSess:{},
@@ -1676,6 +2212,8 @@ function render() {
   renderSessions();
   renderCatTimes();
   drawTimer();
+  initDailyQuotes();
+  renderAuthCard();
   if (document.getElementById('v-analytics').classList.contains('on')) renderAnalytics();
 }
 
@@ -1760,6 +2298,384 @@ if ('serviceWorker' in navigator) {
   }).catch(() => {});
 }
 
+/* ── NAFİLE, KERAHET, VAKTİN HADİSİ, KAZA HESAPLAMA ── */
+const NAFILE_LIST = ['Teheccüd', 'Duha (Kuşluk)', 'Evvabin', 'Şükür Namazı'];
+function renderNafile() {
+  const d = today();
+  const grid = document.getElementById('nafileGrid');
+  if (!grid) return;
+  if (!S.nafile) S.nafile = {};
+  if (!S.nafile[d]) S.nafile[d] = {};
+  grid.innerHTML = NAFILE_LIST.map(n => {
+    const isDone = !!(S.nafile[d][n]);
+    return `<div class="nafile-item${isDone ? ' done' : ''}" onclick="toggleNafile('${n}')">
+      <div class="chk${isDone ? ' done' : ''}"></div>
+      <div class="nn">${n}</div>
+    </div>`;
+  }).join('');
+}
+function toggleNafile(n) {
+  const d = today();
+  if (!S.nafile) S.nafile = {};
+  if (!S.nafile[d]) S.nafile[d] = {};
+  S.nafile[d][n] = !S.nafile[d][n];
+  save();
+  renderNafile();
+}
+function renderKerahet() {
+  const banner = document.getElementById('kerahatBanner');
+  if (!banner) return;
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const ogleTime = PRAYERS.find(p => p.n === 'Öğle')?.t;
+  const aksamTime = PRAYERS.find(p => p.n === 'Akşam')?.t;
+  let isKerahat = false;
+  let msg = '';
+  if (ogleTime) {
+    const [oh, om] = ogleTime.split(':').map(Number);
+    const ogleMin = oh * 60 + om;
+    if (nowMin >= ogleMin - 45 && nowMin < ogleMin) {
+      isKerahat = true;
+      msg = '⚠️ Öğle kerahet vakti (İstiva): Öğle ezanına 45 dakikadan az kaldı. Namaz kılınması mekruhtur.';
+    }
+  }
+  if (!isKerahat && aksamTime) {
+    const [ah, am] = aksamTime.split(':').map(Number);
+    const aksamMin = ah * 60 + am;
+    if (nowMin >= aksamMin - 45 && nowMin < aksamMin) {
+      isKerahat = true;
+      msg = '⚠️ Akşam kerahet vakti (Güneş batışı): Akşam ezanına 45 dakikadan az kaldı. Sadece ikindi namazının farzı kılınabilir, nafile kılınmaz.';
+    }
+  }
+  if (!isKerahat && SUNRISE_TIME) {
+    const [sh, sm] = SUNRISE_TIME.split(':').map(Number);
+    const sunriseMin = sh * 60 + sm;
+    if (nowMin >= sunriseMin && nowMin < sunriseMin + 45) {
+      isKerahat = true;
+      msg = '⚠️ Sabah kerahet vakti (Güneş doğuşu): Güneş yeni doğdu. İlk 45 dakika namaz kılınması mekruhtur.';
+    }
+  }
+  if (isKerahat) {
+    banner.textContent = msg;
+    banner.style.display = 'block';
+  } else {
+    banner.style.display = 'none';
+  }
+}
+const VAKIT_QUOTES = {
+  Sabah: {
+    ar: "وَسَبِّحْ بِحَمْدِ رَبِّكَ قَبْلَ طُلُوعِ الشَّمْسِ وَقَبْلَ غُرُوبِهَا",
+    t: "Güneşin doğmasından önce ve batmasından önce Rabbini hamd ile tesbih et.",
+    s: "Tâhâ 20/130",
+    h: "Sabah namazının iki rekat sünneti, dünyadan ve dünyadaki her şeyden daha hayırlıdır.",
+    hs: "Buhârî, Salât, 12"
+  },
+  Öğle: {
+    ar: "حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ",
+    t: "Namazlara ve orta namaza devam edin.",
+    s: "Bakara 2/238",
+    h: "Öğle namazından önce kılınan dört rekatta gök kapıları açılır.",
+    hs: "Tirmizî, Vitir, 9"
+  },
+  İkindi: {
+    ar: "وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ",
+    t: "Namazı kılın, zekatı verin ve rüku edenlerle birlikte rüku edin.",
+    s: "Bakara 2/43",
+    h: "İkindi namazını kaçıran kimsenin sanki ailesi ve malı elinden alınmış gibidir.",
+    hs: "Buhârî, Mevâkît, 14"
+  },
+  Akşam: {
+    ar: "وَأَقِمِ الصَّلَاةَ طَرَفَيِ النَّهَارِ وَزُلَفًا مِنَ اللَّيْلِ",
+    t: "Gecenin iki tarafında ve gündüzün saçaklarında namaz kıl.",
+    s: "Hûd 11/114",
+    h: "Akşam namazının farzından sonra kılınan iki rekat nafileyi aksatmayın.",
+    hs: "Tirmizî, Salât, 203"
+  },
+  Yatsı: {
+    ar: "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا",
+    t: "Şüphesiz namaz, müminler üzerine belirli vakitlerde yazılmış bir farzdır.",
+    s: "Nisâ 4/103",
+    h: "Yatsı namazını cemaatle kılan, gecenin yarısını ibadetle geçirmiş gibidir.",
+    hs: "Müslim, Mesâcid, 260"
+  }
+};
+function renderVaktinQuote() {
+  const card = document.getElementById('vaktinQuoteCard');
+  const title = document.getElementById('vaktinQuoteTitle');
+  const text = document.getElementById('vaktinQuoteText');
+  const src = document.getElementById('vaktinQuoteSrc');
+  const arabic = document.getElementById('vaktinQuoteArabic');
+  if (!card || !title || !text || !src) return;
+  
+  const dayIdx = dayOfYear();
+  const quote = NAMAZ_DAILY_AYATS[dayIdx % NAMAZ_DAILY_AYATS.length];
+  
+  title.innerHTML = `📖 GÜNÜN AYETİ`;
+  if (arabic) {
+    arabic.style.display = 'block';
+    arabic.textContent = quote.ar || '';
+  }
+  text.textContent = quote.t;
+  src.textContent = quote.s;
+  card.style.borderLeftColor = 'var(--gold)';
+}
+const QADA_NAMES = {
+  sabah: 'Sabah',
+  ogle: 'Öğle',
+  ikindi: 'İkindi',
+  aksam: 'Akşam',
+  yatsi: 'Yatsı',
+  vitir: 'Vitir (Vitir Vacip)'
+};
+function renderQada() {
+  const box = document.getElementById('qadaBox');
+  if (!box) return;
+  if (!S.qada) S.qada = { sabah: 0, ogle: 0, ikindi: 0, aksam: 0, yatsi: 0, vitir: 0 };
+  box.innerHTML = `
+    <div class="qada-grid">
+      ${Object.entries(QADA_NAMES).map(([k, name]) => {
+        const count = S.qada[k] || 0;
+        return `
+          <div class="qada-row">
+            <span class="qada-name">${name}</span>
+            <div class="qada-controls">
+              <button class="qada-btn minus" onclick="changeQada('${k}', -1)" ${count <= 0 ? 'disabled' : ''}>-</button>
+              <span class="qada-count${count > 0 ? ' has-debt' : ''}">${count}</span>
+              <button class="qada-btn plus" onclick="changeQada('${k}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+  renderQadaCalculator();
+}
+function changeQada(k, diff) {
+  if (!S.qada) S.qada = { sabah: 0, ogle: 0, ikindi: 0, aksam: 0, yatsi: 0, vitir: 0 };
+  S.qada[k] = Math.max(0, (S.qada[k] || 0) + diff);
+  save();
+  renderQada();
+}
+function renderQadaCalculator() {
+  const calc = document.getElementById('qadaCalculator');
+  if (!calc) return;
+  if (!S.qada) { calc.innerHTML = ''; return; }
+  const totalDebts = Object.values(S.qada).reduce((a, b) => a + b, 0);
+  if (totalDebts <= 0) {
+    calc.innerHTML = `<div style="font-size:0.7rem;color:var(--grn);text-align:center;font-weight:600;">🎉 Kaza borcunuz bulunmamaktadır!</div>`;
+    return;
+  }
+  const maxDebts = Math.max(...Object.values(S.qada));
+  const date1 = new Date(); date1.setDate(date1.getDate() + maxDebts);
+  const date1Str = date1.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  const halfDays = Math.ceil(maxDebts / 2);
+  const date2 = new Date(); date2.setDate(date2.getDate() + halfDays);
+  const date2Str = date2.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  calc.innerHTML = `
+    <div style="font-size:0.6rem;text-transform:uppercase;color:var(--tx3);font-weight:800;margin-bottom:6px;">📈 Bitiş Öngörüsü</div>
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:0.68rem;color:var(--tx2);">
+      <div>• Günde <strong>1'er vakit</strong> kaza ile: <span style="color:var(--gold);font-weight:700;">${maxDebts} gün</span> sonra (<span style="font-weight:600;">${date1Str}</span>)</div>
+      <div>• Günde <strong>2'er vakit</strong> kaza ile: <span style="color:var(--teal);font-weight:700;">${halfDays} gün</span> sonra (<span style="font-weight:600;">${date2Str}</span>)</div>
+    </div>
+  `;
+}
+
+function toggleQadaPanel() {
+  const panel = document.getElementById('qadaPanelContent');
+  const icon = document.getElementById('qadaToggleIcon');
+  if (!panel || !icon) return;
+  
+  if (panel.style.display === 'none') {
+    panel.style.display = 'grid';
+    icon.textContent = '▲ Gizle';
+    icon.style.color = 'var(--rose)';
+    icon.style.background = 'rgba(240,104,120,0.12)';
+  } else {
+    panel.style.display = 'none';
+    icon.textContent = '▼ Göster';
+    icon.style.color = 'var(--gold)';
+    icon.style.background = 'var(--goldbg)';
+  }
+}
+
+/* ── ZİKİRMATİK MANTIK & SES/TİTREŞİM EFEKTLERİ ── */
+let zikirCount = 0;
+let zikirPhase = 0; // 0: Sübhanallah, 1: Elhamdülillah, 2: Allahu Ekber
+const ZIKIR_PHASES = [
+  { a: 'سُبْحَانَ اللَّهِ', t: 'Sübhanallah' },
+  { a: 'الْحَمْدُ لِلَّهِ', t: 'Elhamdülillah' },
+  { a: 'اللَّهُ أَكْبَرُ', t: 'Allahu Ekber' }
+];
+
+function playClickSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.04);
+    
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.04);
+    
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.04);
+  } catch (e) {
+    console.warn('Audio Context failed', e);
+  }
+}
+
+function playChimeSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.08);
+    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.16);
+    
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+    
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.4);
+  } catch (e) {}
+}
+
+function openZikirmatik() {
+  const modal = document.getElementById('zikirmatikModal');
+  if (modal) {
+    modal.classList.add('on');
+    resetZikirmatik();
+  }
+}
+
+function closeZikirmatik() {
+  const modal = document.getElementById('zikirmatikModal');
+  if (modal) modal.classList.remove('on');
+}
+
+function resetZikirmatik() {
+  zikirCount = 0;
+  zikirPhase = 0;
+  updateZikirDisplay();
+}
+
+function updateZikirDisplay() {
+  const countEl = document.getElementById('zmCount');
+  const arabicEl = document.getElementById('zmArabic');
+  const trEl = document.getElementById('zmTr');
+  const ring = document.getElementById('zmRing');
+  const dots = document.querySelectorAll('.zm-phase-dot');
+  
+  if (countEl) countEl.textContent = `${zikirCount} / 33`;
+  
+  const phase = ZIKIR_PHASES[zikirPhase];
+  if (arabicEl) arabicEl.textContent = phase.a;
+  if (trEl) trEl.textContent = phase.t;
+  
+  if (dots.length === 3) {
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === zikirPhase);
+    });
+  }
+  
+  if (ring) {
+    const pct = zikirCount / 33;
+    const offset = 376.99 - (pct * 376.99);
+    ring.style.strokeDashoffset = offset;
+  }
+}
+
+function tapZikirmatik() {
+  if (navigator.vibrate) {
+    navigator.vibrate(35);
+  }
+  playClickSound();
+  
+  zikirCount++;
+  if (zikirCount >= 33) {
+    if (navigator.vibrate) {
+      navigator.vibrate([80, 40, 80]);
+    }
+    playChimeSound();
+    
+    zikirCount = 0;
+    zikirPhase++;
+    if (zikirPhase >= 3) {
+      zikirPhase = 0;
+      toast('Tesbihat tamamlandı! Allah kabul etsun.', 's');
+      triggerConfetti();
+      if (navigator.vibrate) {
+        navigator.vibrate([120, 40, 120, 40, 180]);
+      }
+    }
+  }
+  updateZikirDisplay();
+}
+
+/* Confetti animation */
+function triggerConfetti() {
+  const canvas = document.createElement('canvas');
+  canvas.style.position = 'fixed';
+  canvas.style.inset = '0';
+  canvas.style.width = '100vw';
+  canvas.style.height = '100vh';
+  canvas.style.pointerEvents = 'none';
+  canvas.style.zIndex = '9999';
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  ctx.scale(dpr, dpr);
+
+  const colors = ['#3ecfb0', '#D4AF37', '#3b82f6', '#f43f5e', '#a855f7', '#10b981'];
+  const particles = Array.from({ length: 80 }, () => ({
+    x: window.innerWidth / 2,
+    y: window.innerHeight + 10,
+    vx: (Math.random() - 0.5) * 15,
+    vy: -Math.random() * 15 - 10,
+    size: Math.random() * 6 + 4,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    r: Math.random() * 360,
+    vr: (Math.random() - 0.5) * 10,
+    g: 0.4
+  }));
+
+  function anim() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    let active = false;
+    particles.forEach(p => {
+      p.vy += p.g;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.r += p.vr;
+      if (p.y < window.innerHeight) active = true;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.r * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      ctx.restore();
+    });
+
+    if (active) requestAnimationFrame(anim);
+    else canvas.remove();
+  }
+  requestAnimationFrame(anim);
+}
+
 /* ── ÇEVRİMDIŞI GÖSTERGESİ ── */
 function updateOnlineStatus() {
   const banner = document.getElementById('offlineBanner');
@@ -1803,11 +2719,12 @@ setInterval(() => {
 // Namaz vakitleri: önce localStorage cache'den dene, sonra API
 (function fetchPrayerWithCache() {
   try {
-    const cached = localStorage.getItem('ht6-prayer-cache');
+    const cached = localStorage.getItem('mikat-prayer-cache');
     if (cached) {
-      const { date, prayers } = JSON.parse(cached);
-      if (date === today() && Array.isArray(prayers)) {
+      const { date, city, prayers, sunrise } = JSON.parse(cached);
+      if (date === today() && city === (S.namazCity || 'Konya') && Array.isArray(prayers)) {
         PRAYERS = prayers;
+        SUNRISE_TIME = sunrise || null;
         document.getElementById('namazSource').textContent = '💾 Önbellek — ' + (S.namazCity||'Konya');
         renderNamaz();
         if (S.notifEnabled) scheduleNotifs();
@@ -1817,4 +2734,51 @@ setInterval(() => {
   } catch(e) {}
   fetchPrayerTimes();
 })();
+
+/* ── BULUT HESAP & SENKRONİZASYON (MOCK AUTH) ── */
+
+function renderAuthCard() {
+  const card = document.getElementById('sidebarAuthCard');
+  if (!card) return;
+  
+  if (AUTH_USER) {
+    card.innerHTML = `
+      <div style="font-size:0.6rem;text-transform:uppercase;color:var(--teal);font-weight:800;margin-bottom:6px;letter-spacing:0.06em;">👤 BULUT HESABI</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--tealbg);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0;">
+          ${AUTH_USER.name[0].toUpperCase()}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${AUTH_USER.name}</div>
+          <div style="font-size:0.56rem;color:var(--grn);font-weight:700;text-transform:uppercase;margin-top:1px;">Senkronize</div>
+        </div>
+        <button onclick="mockLogout()" style="background:none;border:none;color:var(--rose);font-size:0.7rem;cursor:pointer;font-weight:600;padding:2px 6px;">Çıkış</button>
+      </div>
+    `;
+  } else {
+    card.innerHTML = `
+      <div style="font-size:0.6rem;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:6px;letter-spacing:0.06em;">🔒 BULUT HESABI</div>
+      <form id="authForm" onsubmit="mockLogin(event)" style="display:flex;flex-direction:column;gap:6px;">
+        <input type="email" id="authEmail" placeholder="E-posta" required style="width:100%;background:rgba(0,0,0,0.12);border:1px solid var(--bd);border-radius:6px;padding:6px 8px;font-size:0.72rem;color:var(--tx);outline:none;transition:border-color 0.2s;">
+        <input type="password" id="authPassword" placeholder="Şifre" required style="width:100%;background:rgba(0,0,0,0.12);border:1px solid var(--bd);border-radius:6px;padding:6px 8px;font-size:0.72rem;color:var(--tx);outline:none;transition:border-color 0.2s;">
+        <button type="submit" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:6px;font-size:0.74rem;font-weight:700;cursor:pointer;transition:filter 0.2s;">Giriş Yap</button>
+      </form>
+    `;
+  }
+}
+
+function mockLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('authEmail').value;
+  const name = email.split('@')[0];
+  AUTH_USER = { name: name, email: email };
+  toast(`Bulut senkronizasyonu aktif: Hoş geldiniz ${name}!`, 's');
+  renderAuthCard();
+}
+
+function mockLogout() {
+  AUTH_USER = null;
+  toast('Senkronizasyon kapatıldı. Oturum sonlandırıldı.', 'i');
+  renderAuthCard();
+}
 
