@@ -1,6 +1,6 @@
-# 🌐 Hayat Takvimi — Web Sürümü Detaylı Analiz Raporu
+# 🌐 Mikat — Web Sürümü Detaylı Analiz Raporu
 
-> **Sürüm:** v7.0 (index.html) / app.js (1801 satır)  
+> **Sürüm:** v7.0 (index.html) / app.js  
 > **Tarih:** 2026-07-06  
 > **Analiz:** Derinlemesine statik analiz — mimari, özellikler, güvenlik, hatalar
 
@@ -129,11 +129,11 @@ let S = {
 ### 3.8 Yedekleme & Güvenlik
 - [x] AES-256-GCM şifreli yedekleme (Web Crypto API)
 - [x] PBKDF2-SHA256 key türetme (310.000 iterasyon)
-- [x] Format: `HT6:<base64(salt[32]+iv[12]+ciphertext)>`
-- [x] Geriye dönük uyumluluk: HT4, HT5, HT6 formatları
+- [x] Format: `MK1:<base64(salt[32]+iv[12]+ciphertext)>`
+- [x] Geriye dönük uyumluluk: HT4, HT5, HT6 formatları (eski Mikat sürümleri)
 - [x] JSON export (şifresiz)
 - [x] CSV export
-- [x] Otomatik yedekleme (localStorage → `ht6-auto-backup`)
+- [x] Otomatik yedekleme (localStorage → `mikat-auto-backup`)
 - [x] Dosya olarak indirme (.htbak uzantısı)
 
 ### 3.9 PWA
@@ -179,7 +179,7 @@ let S = {
 
 ### BUG-W-06: Prayer Cache doğrulama eksik
 - **Dosya:** `app.js` L601-603
-- **Sorun:** `ht6-prayer-cache` localStorage'dan okunurken şehir değişikliği sonrası eski cache kullanılabilir
+- **Sorun:** `mikat-prayer-cache` localStorage'dan okunurken şehir değişikliği sonrası eski cache kullanılabilir
 - **Risk:** Yanlış şehrin namaz vakitleri görünür
 
 ### BUG-W-07: `isRepeatDueOn` — `her_2_gunde` sabitleme mantığı
@@ -207,7 +207,7 @@ let S = {
 | **Şifreleme Algoritması** | ✅ Güvenli | AES-256-GCM + PBKDF2-SHA256 (310.000 iterasyon) — Web Crypto API (native, donanım hızlandırmalı) |
 | **Salt Randomness** | ✅ Güvenli | `crypto.getRandomValues(new Uint8Array(32))` — 256-bit güvenli rastgelelik |
 | **IV Boyutu** | ✅ Doğru | 12 bayt (96-bit) — GCM için standart |
-| **Format Validasyonu** | ✅ Var | `HT6:` prefix kontrolü, `safeColor()` regex, `safeKey()` whitelist |
+| **Format Validasyonu** | ✅ Var | `MK1:` prefix kontrolü, `safeColor()` regex, `safeKey()` whitelist |
 | **HTTPS Zorunluluğu** | ⚠️ Belirtilmemiş | CSP var ama HSTS yok — sunucu tarafı ayar gerekli |
 | **localStorage Şifresiz** | ⚠️ Kabul edilmiş | Tüm veriler plaintext saklanıyor — cihaz fiziksel erişimi riski |
 
@@ -218,7 +218,7 @@ let S = {
 | **GPS Koordinatları localStorage'da** | Lat/lng plaintext saklanıyor (`S.lat`, `S.lng`) | Koordinatları storage'a yazmaktan kaçın veya sil |
 | **`decData()` HT4/HT5 formatı** | Farklı iterasyon sayılarıyla şifrelenmiş eski backup'lar kabul ediliyor | Legacy format için iterasyon sayısını belge/doğrula |
 | **Şifre doğrulama** | `doExport()` sadece `pw.length >= 6` kontrol ediyor | Minimum güç kontrolü ekle (büyük+küçük+rakam) |
-| **`auto-backup` şifresiz** | `ht6-auto-backup` key'i şifresiz JSON saklıyor | Belgelere "auto-backup güvensiz" notu ekle |
+| **`auto-backup` şifresiz** | `mikat-auto-backup` key'i şifresiz JSON saklıyor | Belgelere "auto-backup güvensiz" notu ekle |
 | **PBKDF2 iterasyon sayısı 310.000** | Yavaş cihazlarda ~1-2 sn gecikme | Kabul edilebilir — 2024 NIST tavsiyesi 600.000, artırılabilir |
 
 #### ❌ Kritik Sorunlar
@@ -261,56 +261,3 @@ let S = {
 - [ ] **W-TODO-12:** Analytics grafiklerini gerçek library ile (Chart.js vb.) güçlendir
 
 ---
-
-## 8. 🆚 Android (Flutter) Sürümüyle Karşılaştırma
-
-| Özellik | Web (v7.0) | Android (v2.0) |
-|---------|------------|----------------|
-| Görev CRUD | ✅ Tam | ✅ Tam |
-| Kategori sistemi | ✅ Özel kategoriler | ⚠️ Sabit 6 kategori |
-| Hızlı görev ekleme | ✅ Var (#tag) | ❌ Yok |
-| Arama | ✅ Var | ❌ Yok |
-| Sıralama (4 seçenek) | ✅ Var | ❌ Yok |
-| Tekrar türleri (7 tür) | ✅ Tam | ✅ Tam |
-| Namaz takibi | ✅ 5 vakit + imsak | ✅ 6 vakit |
-| GPS konum | ✅ Var | ⚠️ Yok (şehir manuel) |
-| Günlük ibadet takibi | ✅ Var | ❌ Yok |
-| Haftalık ibadet grafiği | ✅ Var | ❌ Yok |
-| Zikir takibi | ✅ 20 günlük zikir | ❌ Yok |
-| Günün Ayeti/Hadisi | ✅ Var | ❌ Yok |
-| Alışkanlık takibi | ✅ Var | ✅ Var |
-| Pomodoro sayacı | ✅ Tam | ✅ Temel |
-| Kategori süre takibi | ✅ Var | ✅ Var |
-| Analitik (5 grafik) | ✅ Var | ✅ Var (fl_chart) |
-| Takvim görünümü | ✅ Var | ✅ Var (table_calendar) |
-| Şifreli yedekleme | ✅ AES-256-GCM | ✅ AES-256-GCM |
-| JSON export | ✅ Var | ❌ Yok |
-| CSV export | ✅ Var | ❌ Yok |
-| PWA desteği | ✅ Tam | N/A (native) |
-| Bildirimler | ✅ Browser | ✅ System (flutter_local_notifications) |
-| Çevrimdışı | ✅ SW cache | ✅ Varsayılan (native) |
-
-**Toplam Web: ~85% tamamlama**  
-**Toplam Android: ~65% tamamlama (entegrasyon henüz test edilmedi)**
-
----
-
-## 9. 📊 Özet Değerlendirme
-
-| Kriter | Puan | Yorum |
-|--------|------|-------|
-| **Özellik Zenginliği** | 9/10 | Kapsamlı, iyi düşünülmüş |
-| **Kod Kalitesi** | 7/10 | Prosedürel, büyük dosya — refactor edilebilir |
-| **Güvenlik** | 8/10 | İyi şifreleme, XSS koruması var |
-| **Performans** | 7/10 | Debounce var, SW cache var — render optimizasyonu eksik |
-| **Erişilebilirlik** | 7/10 | ARIA var ama test edilmemiş |
-| **PWA** | 8/10 | Manifest + SW + install prompt |
-| **Test Kapsamı** | 2/10 | Otomatik test yok |
-| **Dokümantasyon** | 6/10 | Inline comment'ler var, API doc yok |
-
-> **Genel Puan: 6.75 / 10**  
-> Web sürümü özellik açısından çok zengin ancak test kapsamı ve kod modülaritesi zayıf.
-
----
-
-*Rapor oluşturulma tarihi: 2026-07-06 20:05 TR*

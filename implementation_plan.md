@@ -1,11 +1,10 @@
-# 🗓️ Hayat Takvimi — Kapsamlı Analiz & Yol Haritası
+# 🗓️ Mikat — Kapsamlı Analiz & Yol Haritası
 
 ## 📊 Proje Genel Durumu
 
 | Bileşen | Durum | Tamamlanma |
 |---------|-------|-----------|
 | **Web Sürümü** | 🟡 Fonksiyonel, hatalar var | ~85% |
-| **Flutter (Android)** | 🔴 Kod yazıldı, derlenmedi | ~60% |
 | **Backend API (PHP)** | 🔴 Yok | 0% |
 | **Bulut Senkronizasyon** | 🔴 Yok | 0% |
 
@@ -79,43 +78,6 @@
 
 ---
 
-### 🔴 Flutter — Kritik Eksikler
-
-#### FA-01: `flutter pub get` hiç çalıştırılmamış
-- **Dosya**: `flutter/pubspec.yaml`
-- **Sorun**: Bağımlılıklar indirilmedi, `pubspec.lock` eksik bağımlılık içeriyor.
-- **Çözüm**: `flutter pub get` → `flutter analyze` çalıştır.
-
-#### FA-02: `AppState` ekranlara bağlanmamış
-- **Dosya**: Tüm `screens/*.dart` dosyaları
-- **Sorun**: Ekranlar `context.watch<AppState>()` kullanmıyor — veri değişince yenilenmiyorlar.
-- **Çözüm**: Her ekrana `Consumer<AppState>` veya `context.watch` ekle.
-
-#### FA-03: Timer `timerTick()` çağrısı yok
-- **Dosya**: `lib/models/app_state.dart` satır 239
-- **Sorun**: `timerTick()` fonksiyonu var ama `TimerScreen`'de `Timer.periodic()` yok.
-- **Çözüm**: `TimerScreen`'de `Timer.periodic(Duration(seconds: 1), ...)` ile tick çağrısı ekle.
-
-#### FA-04: Kategori sistemi web ile uyumsuz
-- **Sorun**: Web'de dinamik kategoriler varken Flutter'da kategori sistemi hiç yok.
-- **Çözüm**: `Category` modeli ve CRUD ekle.
-
-#### FA-05: Namaz kılındı takibi yok
-- **Sorun**: `AppState`'de namaz takip (prayers: {date: {namaz: bool}}) yapısı eksik.
-- **Çözüm**: `prayerLog` haritası ekle, `PrayerCard`'a toggle işlevi bağla.
-
-#### FA-06: `AndroidManifest.xml` izinleri eksik
-- **Dosya**: `flutter/android/app/src/main/AndroidManifest.xml`
-- **Sorun**: INTERNET, VIBRATE, POST_NOTIFICATIONS, ACCESS_FINE_LOCATION izinleri yok.
-- **Çözüm**: İzinleri ekle.
-
-#### FA-07: Şifreli yedekleme sistemi bağlanmamış
-- **Dosya**: `lib/services/crypto_service.dart` (var ama kullanılmıyor)
-- **Sorun**: `CryptoService` var ama `SettingsScreen`'e bağlanmamış.
-- **Çözüm**: Export/import UI ve mantığını settings ekranına bağla.
-
----
-
 ## 📋 Adım Adım Yol Haritası
 
 ---
@@ -154,13 +116,13 @@
 
 ### 🗄️ FAZ 2 — Backend (PHP + MySQL)
 
-- `[ ]` **2.1** cPanel → MySQL → `hayat_takvimi` veritabanı oluştur
+- `[ ]` **2.1** cPanel → MySQL → `mikat` veritabanı oluştur
 - `[ ]` **2.2** SQL dosyasını yükle (6 tablo: users, tasks, habits, categories, timer_sessions, sync_log)
 - `[ ]` **2.3** `api.komutrotasi.com` subdomain oluştur
 - `[ ]` **2.4** PHP dosyaları yaz: `auth.php`, `tasks.php`, `habits.php`, `categories.php`, `sync.php`
 - `[ ]` **2.5** JWT authentication (HS256, 24 saat geçerli)
 - `[ ]` **2.6** Rate limiting (60 istek/dk / IP)
-- `[ ]` **2.7** CORS sadece `takvim.komutrotasi.com` + APK origin'e aç
+- `[ ]` **2.7** CORS sadece `takvim.komutrotasi.com`'a aç
 - `[ ]` **2.8** API'yi test et (Postman/curl)
 
 ---
@@ -175,53 +137,18 @@
 
 ---
 
-### 📱 FAZ 4 — Flutter Hata Düzeltmeleri
+### 🚀 FAZ 4 — Yayın & Dağıtım
 
-- `[ ]` **4.1** FA-06: `AndroidManifest.xml` izinleri ekle
-- `[ ]` **4.2** FA-01: `flutter pub get` + `flutter analyze` çalıştır
-- `[ ]` **4.3** FA-02: Tüm ekranlara `Consumer<AppState>` / `context.watch` ekle
-- `[ ]` **4.4** FA-03: `TimerScreen`'e `Timer.periodic(Duration(seconds:1), ...)` ekle
-- `[ ]` **4.5** FA-04: Kategori modeli + CRUD ekle
-- `[ ]` **4.6** FA-05: Namaz takip `prayerLog` yapısı AppState'e ekle, PrayerCard'a bağla
-- `[ ]` **4.7** FA-07: SettingsScreen'e export/import UI bağla
-
----
-
-### 📱 FAZ 5 — Flutter Bulut Entegrasyonu
-
-- `[ ]` **5.1** `lib/services/api_service.dart` yaz (JWT, HTTP, retry logic)
-- `[ ]` **5.2** Login/Register ekranı (splash sonrası)
-- `[ ]` **5.3** Offline-first: değişiklikler kuyruğa → internet gelince push
-- `[ ]` **5.4** Pull: uygulama açılışında son senkronizasyondan bu yana değişenleri çek
-- `[ ]` **5.5** Çakışma çözümü: `updated_at` bazlı "son kaydeden kazanır"
-
----
-
-### 📦 FAZ 6 — APK Derleme & Test
-
-- `[ ]` **6.1** `flutter analyze` — sıfır hata/uyarı
-- `[ ]` **6.2** `flutter build apk --debug` — debug APK
-- `[ ]` **6.3** Debug APK'yı gerçek cihazda test et
-- `[ ]` **6.4** Kritik akışları doğrula (görev ekle → senkronize → web'de gör)
-- `[ ]` **6.5** `flutter build apk --release` — imzalı release APK
-- `[ ]` **6.6** APK imzalama (keystore oluştur)
-
----
-
-### 🚀 FAZ 7 — Yayın & Dağıtım
-
-- `[ ]` **7.1** Web sürümü `takvim.komutrotasi.com`'a yükle
-- `[ ]` **7.2** SSL sertifikası kontrol et (Let's Encrypt)
-- `[ ]` **7.3** APK dağıtım kanalı: doğrudan indirme linki veya Google Play
-- `[ ]` **7.4** `takvim.komutrotasi.com/indir` sayfası (APK indirme + QR kodu)
-- `[ ]` **7.5** Kullanıcı kayıt sayfası açılışı
+- `[ ]` **4.1** Web sürümü `takvim.komutrotasi.com`'a yükle
+- `[ ]` **4.2** SSL sertifikası kontrol et (Let's Encrypt)
+- `[ ]` **4.3** Kullanıcı kayıt sayfası açılışı
 
 ---
 
 ## 🏗️ Nihai Mimari
 
 ```
-takvim.komutrotasi.com   ←── Web Uygulaması (HTML/CSS/JS)
+takvim.komutrotasi.com   ←── Web Uygulaması (HTML/CSS/JS + PWA)
         │
         │  HTTPS + JWT
         ▼
@@ -230,10 +157,6 @@ api.komutrotasi.com      ←── PHP Backend
         │  PDO + Prepared Statements
         ▼
 MySQL Veritabanı         ←── Tüm kullanıcı verileri (cPanel)
-        ▲
-        │  HTTPS + JWT
-        │
-Android APK (Flutter)   ←── Çevrimdışı çalışır, online'da senkronize eder
 ```
 
 ---
@@ -244,9 +167,6 @@ Android APK (Flutter)   ←── Çevrimdışı çalışır, online'da senkroni
 > **Hangi Fazdan Başlayalım?**
 > Önerim: FAZ 0 (web güvenlik düzeltmeleri) → FAZ 1 (web yeni özellikler) → FAZ 2 (backend) sırasıyla gidelim.
 > Onaylarsan hemen FAZ 0'a başlıyorum.
-
-> [!WARNING]
-> **Flutter bağımlılıkları** (`pubspec.yaml`) henüz indirilmemiş. FAZ 4'e başlamadan önce `flutter pub get` çalıştırman gerekiyor. Birlikte yaparız.
 
 > [!NOTE]
 > **Veri Göçü**: Web'deki `localStorage` verilerini bulut hesabına taşımak için "İlk kez giriş yap → Mevcut yerel veriyi buluta aktar" akışı tasarlanacak. Kullanıcı veri kaybetmez.

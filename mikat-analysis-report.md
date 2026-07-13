@@ -1,7 +1,7 @@
-# Hayat Takvimi - Detaylı Analiz Raporu
+# Mikat - Detaylı Analiz Raporu
 
 ## Genel Bakış
-- Dosya: `hayat-takvimi.html`
+- Dosya: `index.html`
 - Tür: Tek dosyalık web uygulaması (HTML + CSS + JavaScript)
 - Amaç: görev yönetimi, ibadet takibi, alışkanlık izleme, odaklanma sayacı, takvim ve şifreli yedekleme.
 - Depolama: `localStorage` tabanlı, `ht6` anahtarını kullanıyor. Ayrıca eski `ht5` desteği var.

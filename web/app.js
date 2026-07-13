@@ -369,11 +369,11 @@ function sanitizeState(raw) {
 /* ── DEPOLAMA ── */
 function load() {
   try {
-    const raw = localStorage.getItem('ht6');
+    const raw = localStorage.getItem('mikat');
     if (raw) Object.assign(S, sanitizeState(JSON.parse(raw)));
     else {
-      // v5 → v6 geçiş
-      const old = localStorage.getItem('ht5');
+      // v5/v6 → mikat geçiş
+      const old = localStorage.getItem('mikat-v5');
       if (old) Object.assign(S, sanitizeState(JSON.parse(old)));
     }
     CATS   = normalizeCats(S.cats || CATS);
@@ -390,7 +390,7 @@ function save() {
     S.habitDefs = normalizeHabits(HABITS);
     // H-02: S nesnesini yeni bir referansla değil, mevcut nesneyi güncelleyerek sakla
     Object.assign(S, sanitizeState({...S}));
-    localStorage.setItem('ht6', JSON.stringify(S));
+    localStorage.setItem('mikat', JSON.stringify(S));
     maybeAutoBackup();
     return true;
   } catch(e) {
@@ -445,15 +445,15 @@ async function encData(data, pw) {
   const ct   = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(JSON.stringify(data)));
   const out  = new Uint8Array(44 + ct.byteLength);
   out.set(salt); out.set(iv, 32); out.set(new Uint8Array(ct), 44);
-  return 'HT6:' + uint8ToBase64(out);
+  return 'MK1:' + uint8ToBase64(out);
 }
 async function decData(str, pw) {
   const prefix = str.slice(0, 4);
-  if (prefix !== 'HT6:' && prefix !== 'HT5:' && prefix !== 'HT4:')
+  if (prefix !== 'MK1:' && prefix !== 'HT6:' && prefix !== 'HT5:' && prefix !== 'HT4:')
     throw new Error('Geçersiz format');
   
-  if (prefix === 'HT4:' || prefix === 'HT5:') {
-    toast('Uyarı: Eski yedekleme formatı (HT4/HT5). Lütfen yeni şifreli yedek alın.', 'w');
+  if (prefix === 'HT4:' || prefix === 'HT5:' || prefix === 'HT6:') {
+    toast('Uyarı: Eski yedekleme formatı (HT4/HT5/HT6). Lütfen yeni Mikat yedeği alın.', 'w');
   }
   
   const buf = new Uint8Array(atob(str.slice(4)).split('').map(c => c.charCodeAt(0)));
@@ -515,7 +515,7 @@ function dlExp() {
   if (!v) return;
   const a = document.createElement('a');
   a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(v);
-  a.download = 'hayat-takvimi-' + today() + '.htbak';
+  a.download = 'mikat-' + today() + '.htbak';
   a.click();
   toast('İndiriliyor...', 'i');
 }
@@ -547,20 +547,20 @@ function toggleAutoBackup(enabled) {
   toast(S.autoBackup ? 'Otomatik yedekleme etkin' : 'Otomatik yedekleme kapatıldı', S.autoBackup ? 's' : 'i');
 }
 function maybeAutoBackup() {
-  // H-01: Sadece backup key'ine yaz; ht6'ya tekrar yazmak save() döngüsüne neden olur
+  // H-01: Sadece backup key'ine yaz; mikat'a tekrar yazmak save() döngüsüne neden olur
   if (!S.autoBackup) return;
   const ts = new Date().toISOString();
   const backup = {ts, data: JSON.parse(JSON.stringify(S))};
-  localStorage.setItem('ht6-auto-backup', JSON.stringify(backup));
+  localStorage.setItem('mikat-auto-backup', JSON.stringify(backup));
   S.lastBackup = ts;
-  // Not: ht6 anahtarına tekrar yazmıyoruz — save() zaten yazdı
+  // Not: mikat anahtarına tekrar yazmıyoruz — save() zaten yazdı
 }
 function doExportJson() {
   const data = JSON.stringify(S, null, 2);
   const blob = new Blob([data], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `hayat-takvimi-${today()}.json`;
+  a.download = `mikat-${today()}.json`;
   a.click();
   toast('JSON indiriliyor...', 's');
 }
@@ -585,12 +585,12 @@ function doExportCsv() {
   const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `hayat-takvimi-${today()}.csv`;
+  a.download = `mikat-${today()}.csv`;
   a.click();
   toast('CSV indiriliyor...', 's');
 }
 function restoreBackup() {
-  const raw = localStorage.getItem('ht6-auto-backup');
+  const raw = localStorage.getItem('mikat-auto-backup');
   if (!raw) { toast('Otomatik yedek bulunamadı', 'e'); return; }
   let backup;
   try { backup = JSON.parse(raw); } catch(e) { toast('Yedek okunamadı: ' + e.message, 'e'); return; }
@@ -725,7 +725,7 @@ async function fetchPrayerTimes() {
       {n:'Yatsı',  t:t.Isha.slice(0,5),     h:parseInt(t.Isha)},
     ];
     // Günlük cache — aynı günde tekrar API çağrısını önler
-    try { localStorage.setItem('ht6-prayer-cache', JSON.stringify({date: today(), city: S.namazCity || 'Konya', prayers: PRAYERS, sunrise: SUNRISE_TIME})); } catch(e) {}
+    try { localStorage.setItem('mikat-prayer-cache', JSON.stringify({date: today(), city: S.namazCity || 'Konya', prayers: PRAYERS, sunrise: SUNRISE_TIME})); } catch(e) {}
     document.getElementById('namazSource').textContent = '🌐 Canlı veri — ' + S.namazCity;
     renderNamaz();
     if (S.notifEnabled) scheduleNotifs();
@@ -1339,28 +1339,45 @@ function renderNamaz() {
     const aMin = timeToMin(PRAYERS[3].t);
     const yMin = timeToMin(PRAYERS[4].t);
     const sunMin = SUNRISE_TIME ? timeToMin(SUNRISE_TIME) : fMin + 50;
-    
-    // Sektörleri tanımlayalım: [Açıklama, Başlangıç Dk, Bitiş Dk, Renk]
+
+    const minToTime = m => {
+      const h = Math.floor((m % 1440) / 60);
+      const min = Math.floor(m % 60);
+      return String(h).padStart(2, '0') + ':' + String(min).padStart(2, '0');
+    };
+
+    // Sektörleri tanımlayalım: [Açıklama, Başlangıç Dk, Bitiş Dk, Renk] (00:00'dan 24:00'a kronolojik)
+    const getRel = m => m >= 300 ? m - 300 : m + 1440 - 300;
+
     const sectors = [
-      { name: 'Sabah', s: fMin, e: sunMin, c: 'rgba(232, 184, 75, 0.16)' }, 
-      { name: 'Güneş', s: sunMin, e: oMin, c: 'rgba(255, 255, 255, 0.02)' },
-      { name: 'Öğle', s: oMin, e: iMin, c: 'rgba(62, 207, 176, 0.16)' }, 
-      { name: 'İkindi', s: iMin, e: aMin, c: 'rgba(251, 146, 60, 0.16)' }, 
-      { name: 'Akşam', s: aMin, e: yMin, c: 'rgba(240, 104, 120, 0.16)' }, 
-      { name: 'Yatsı', s: yMin, e: fMin, c: 'rgba(91, 156, 246, 0.12)' }
+      { name: 'Teheccüd', s: yMin + 120, e: fMin, c: 'rgba(99, 102, 241, 0.18)' },
+      { name: 'Sabah', s: fMin, e: sunMin, c: 'rgba(232, 184, 75, 0.16)' },
+      { name: 'Kerahet', s: sunMin, e: sunMin + 45, c: 'rgba(239, 68, 68, 0.14)' },
+      { name: 'İşrak', s: sunMin + 45, e: sunMin + 90, c: 'rgba(253, 224, 71, 0.18)' },
+      { name: 'Kuşluk', s: sunMin + 90, e: oMin - 20, c: 'rgba(245, 158, 11, 0.18)' },
+      { name: 'Kerahet', s: oMin - 20, e: oMin, c: 'rgba(239, 68, 68, 0.14)' },
+      { name: 'Öğle', s: oMin, e: iMin, c: 'rgba(62, 207, 176, 0.16)' },
+      { name: 'İkindi', s: iMin, e: aMin - 45, c: 'rgba(251, 146, 60, 0.16)' },
+      { name: 'Kerahet', s: aMin - 45, e: aMin, c: 'rgba(239, 68, 68, 0.14)' },
+      { name: 'Akşam', s: aMin, e: aMin + 25, c: 'rgba(240, 104, 120, 0.16)' },
+      { name: 'Evvabîn', s: aMin + 25, e: yMin, c: 'rgba(168, 85, 247, 0.18)' },
+      { name: 'Yatsı', s: yMin, e: yMin + 120, c: 'rgba(91, 156, 246, 0.12)' }
     ];
-    
-    // Helper to generate SVG Annular Sector path
-    const drawAnnularSector = (cx, cy, r_in, r_out, startMin, endMin, color) => {
-      const startHour = startMin / 60;
-      let endHour = endMin / 60;
-      if (endHour < startHour) endHour += 24;
+
+    // Helper to generate SVG Annular Sector path with hover attributes
+    const drawAnnularSector = (cx, cy, r_in, r_out, startMin, endMin, color, name) => {
+      let rs = getRel(startMin);
+      let re = getRel(endMin);
+      if (re < rs) re += 1440;
       
-      const startAngle = (startHour - 17) * 15;
-      const endAngle = (endHour - 17) * 15;
+      const startHour = rs / 60;
+      const endHour = re / 60;
       
-      const startRad = (startAngle - 90) * Math.PI / 180;
-      const endRad = (endAngle - 90) * Math.PI / 180;
+      const startAngle = 180 + (startHour / 24) * 180;
+      const endAngle = 180 + (endHour / 24) * 180;
+      
+      const startRad = startAngle * Math.PI / 180;
+      const endRad = endAngle * Math.PI / 180;
       const largeArc = (endAngle - startAngle) > 180 ? 1 : 0;
       
       const x1_out = cx + r_out * Math.cos(startRad);
@@ -1373,43 +1390,63 @@ function renderNamaz() {
       const x2_in = cx + r_in * Math.cos(endRad);
       const y2_in = cy + r_in * Math.sin(endRad);
       
-      return `<path d="M ${x1_out} ${y1_out} A ${r_out} ${r_out} 0 ${largeArc} 1 ${x2_out} ${y2_out} L ${x2_in} ${y2_in} A ${r_in} ${r_in} 0 ${largeArc} 0 ${x1_in} ${y1_in} Z" fill="${color}" stroke="none" />`;
+      const durationMins = endMin >= startMin ? endMin - startMin : endMin + 1440 - startMin;
+      const durationHours = Math.floor(durationMins / 60);
+      const durationRemainingMins = durationMins % 60;
+      let durationStr = "";
+      if (durationHours > 0) {
+        durationStr += `${durationHours}sa `;
+      }
+      if (durationRemainingMins > 0 || durationHours === 0) {
+        durationStr += `${durationRemainingMins}dk`;
+      }
+      durationStr = durationStr.trim();
+      
+      const rangeStr = `${minToTime(startMin)} - ${minToTime(endMin)} (${durationStr})`;
+      
+      return `<path d="M ${x1_out} ${y1_out} A ${r_out} ${r_out} 0 ${largeArc} 1 ${x2_out} ${y2_out} L ${x2_in} ${y2_in} A ${r_in} ${r_in} 0 ${largeArc} 0 ${x1_in} ${y1_in} Z" 
+        fill="${color}" 
+        stroke="none" 
+        style="cursor: pointer; transition: opacity 0.2s;" 
+        onmouseenter="window.setDialHoverTitle('${name}', '${rangeStr}')" 
+        onmouseleave="window.clearDialHoverTitle()" />`;
     };
     
     // Helper to draw text labels in the middle of sectors
     const drawSectorLabel = (name, startMin, endMin) => {
-      if (name === 'Güneş') return ''; // Don't draw text for the sunrise gap
-      const startHour = startMin / 60;
-      let endHour = endMin / 60;
-      if (endHour < startHour) endHour += 24;
+      let rs = getRel(startMin);
+      let re = getRel(endMin);
+      if (re < rs) re += 1440;
+      if (name === 'Güneş' || name === 'Kerahet' || (re - rs) < 40) return '';
       
-      const midHour = (startHour + (endHour - startHour) / 2);
-      const angle = (midHour - 17) * 15;
-      const rad = (angle - 90) * Math.PI / 180;
-      const rLabel = 63; // middle radius between 44 and 82
+      const midHour = (rs + (re - rs) / 2) / 60;
+      const angle = 180 + (midHour / 24) * 180;
+      const rad = angle * Math.PI / 180;
+      const rLabel = 63;
       const x = 100 + rLabel * Math.cos(rad);
-      const y = 100 + rLabel * Math.sin(rad);
+      const y = 110 + rLabel * Math.sin(rad);
       
       let textRot = angle + 90;
       if (textRot > 90 && textRot < 270) textRot += 180;
       
-      return `<text x="${x}" y="${y}" fill="rgba(255,255,255,0.6)" font-size="7" font-weight="700" text-anchor="middle" dominant-baseline="central" transform="rotate(${textRot} ${x} ${y})">${name}</text>`;
+      return `<text x="${x}" y="${y}" fill="#ffffff" font-size="7.5" font-weight="900" style="font-weight: 900 !important; text-shadow: 0 1px 2px rgba(0,0,0,0.8); pointer-events: none;" text-anchor="middle" dominant-baseline="central" transform="rotate(${textRot} ${x} ${y})">${name}</text>`;
     };
 
     // Helper to draw boundary line
     const drawSeparatorLine = (min) => {
-      const hr = min / 60;
-      const angle = (hr - 17) * 15;
-      const rad = (angle - 90) * Math.PI / 180;
+      const rMin = getRel(min);
+      const hr = rMin / 60;
+      const angle = 180 + (hr / 24) * 180;
+      const rad = angle * Math.PI / 180;
       const x1 = 100 + 44 * Math.cos(rad);
-      const y1 = 100 + 44 * Math.sin(rad);
+      const y1 = 110 + 44 * Math.sin(rad);
       const x2 = 100 + 82 * Math.cos(rad);
-      const y2 = 100 + 82 * Math.sin(rad);
+      const y2 = 110 + 82 * Math.sin(rad);
       return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#801c1c" stroke-width="1.8" />`;
     };
     
     // Draw sectors & labels
-    dialSectors.innerHTML = sectors.map(sec => drawAnnularSector(100, 100, 44, 82, sec.s, sec.e, sec.c) + drawSectorLabel(sec.name, sec.s, sec.e)).join('');
+    dialSectors.innerHTML = sectors.map(sec => drawAnnularSector(100, 110, 44, 82, sec.s, sec.e, sec.c, sec.name) + drawSectorLabel(sec.name, sec.s, sec.e)).join('');
     
     // Draw boundary separator lines
     if (dialSeparators) {
@@ -1418,32 +1455,33 @@ function renderNamaz() {
     
     // Draw ticks & hour labels
     if (dialHours) {
-      const hours = [17, 19, 21, 23, 1, 3, 5, 7, 9, 11, 13, 15];
+      const hours = [5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 1, 3];
       let hoursHtml = '';
       
       // Draw ticks for all 24 hours
       for (let h = 0; h < 24; h++) {
-        const angle = (h - 17) * 15;
-        const rad = (angle - 90) * Math.PI / 180;
-        const isMajor = h % 2 !== 0; // odd hours are major
+        const angle = 180 + (h / 24) * 180;
+        const rad = angle * Math.PI / 180;
+        const isMajor = h % 2 === 0;
         const rStart = isMajor ? 80 : 81.5;
         const rEnd = 84;
         const x1 = 100 + rStart * Math.cos(rad);
-        const y1 = 100 + rStart * Math.sin(rad);
+        const y1 = 110 + rStart * Math.sin(rad);
         const x2 = 100 + rEnd * Math.cos(rad);
-        const y2 = 100 + rEnd * Math.sin(rad);
+        const y2 = 110 + rEnd * Math.sin(rad);
         hoursHtml += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(164,207,206,0.35)" stroke-width="${isMajor ? 1.2 : 0.6}" />`;
       }
       
-      // Draw odd hour numbers
+      // Draw hour numbers
       hours.forEach(h => {
-        const angle = (h - 17) * 15;
-        const rad = (angle - 90) * Math.PI / 180;
+        const rHour = h >= 5 ? h - 5 : h + 24 - 5;
+        const angle = 180 + (rHour / 24) * 180;
+        const rad = angle * Math.PI / 180;
         const rText = 92;
         const x = 100 + rText * Math.cos(rad);
-        const y = 100 + rText * Math.sin(rad);
+        const y = 110 + rText * Math.sin(rad);
         const labelStr = String(h).padStart(2, '0');
-        hoursHtml += `<text x="${x}" y="${y}" fill="#a4cfce" font-size="8.5" font-family="'Outfit', sans-serif" font-weight="700" text-anchor="middle" dominant-baseline="central">${labelStr}</text>`;
+        hoursHtml += `<text x="${x}" y="${y}" fill="#ffffff" font-size="8.5" font-family="'Outfit', sans-serif" font-weight="900" style="font-weight: 900 !important; text-shadow: 0 1px 2px rgba(0,0,0,0.8);" text-anchor="middle" dominant-baseline="central">${labelStr}</text>`;
       });
       dialHours.innerHTML = hoursHtml;
     }
@@ -1460,39 +1498,49 @@ function renderNamaz() {
   if (bar) bar.style.width = Math.max(0, done*20) + '%';
   if (msg) msg.textContent = ['Başlamak için ilk namazı kıl','Güzel başladın 👍','Devam et 💪','Yarısından fazlası 🔥','Son bir adım ✨','Bugünkü hedef tamamlandı 🎉'][done] || '';
   
-  // Vakit ızgarası (6 Column: İmsak, Güneş, Öğle, İkindi, Akşam, Yatsı)
-  const gridEl = document.getElementById('namazGrid');
-  if (gridEl && PRAYERS && PRAYERS.length === 5) {
-    const list = [
-      { n: 'İmsak', t: PRAYERS[0].t, k: 'Sabah', type: 'prayer' },
-      { n: 'Güneş', t: SUNRISE_TIME || '--:--', k: '', type: 'sunrise' },
-      { n: 'Öğle', t: PRAYERS[1].t, k: 'Öğle', type: 'prayer' },
-      { n: 'İkindi', t: PRAYERS[2].t, k: 'İkindi', type: 'prayer' },
-      { n: 'Akşam', t: PRAYERS[3].t, k: 'Akşam', type: 'prayer' },
-      { n: 'Yatsı', t: PRAYERS[4].t, k: 'Yatsı', type: 'prayer' }
+  // Farz Namaz Tikleme Listesi (Namaz Vakitleri & Tikleme Kartı)
+  const checklistEl = document.getElementById('namazChecklist');
+  if (checklistEl && PRAYERS && PRAYERS.length === 5) {
+    checklistEl.innerHTML = PRAYERS.map((p, i) => {
+      const isDone = !!(S.prayers[d]?.[p.n]);
+      const isCur = i === curIdx && !isDone;
+      const highlightStyle = isCur ? 'border-color: var(--gold); background: rgba(212,175,55,0.06);' : '';
+      const textStyle = isCur ? 'color: var(--gold); font-weight: 800;' : 'color: var(--tx2);';
+      const labelStyle = isDone ? 'text-decoration: line-through; opacity: 0.5; color: var(--tx3);' : textStyle;
+      
+      return `<div class="namaz-check-row" onclick="toggleNamaz('${p.n}')" style="display:flex; align-items:center; justify-content:space-between; padding: 6px 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04); cursor:pointer; transition: all var(--tr); ${highlightStyle}">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" ${isDone?'checked':''} style="pointer-events:none; accent-color:var(--teal);" />
+          <span style="font-size:0.78rem; font-weight:600; ${labelStyle}">${p.n}</span>
+        </div>
+        <span style="font-size:0.72rem; font-family:'JetBrains Mono',monospace; opacity:0.65; ${textStyle}">${p.t}</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Kadran Altı Yatay Vakitler Şeridi (Mockup stili)
+  const timesRowEl = document.getElementById('dialPrayerTimesRow');
+  if (timesRowEl && PRAYERS && PRAYERS.length === 5) {
+    const rowList = [
+      { n: 'İmsak', t: PRAYERS[0].t, k: 'Sabah' },
+      { n: 'Güneş', t: SUNRISE_TIME || '--:--', k: '' },
+      { n: 'Öğle', t: PRAYERS[1].t, k: 'Öğle' },
+      { n: 'İkindi', t: PRAYERS[2].t, k: 'İkindi' },
+      { n: 'Akşam', t: PRAYERS[3].t, k: 'Akşam' },
+      { n: 'Yatsı', t: PRAYERS[4].t, k: 'Yatsı' }
     ];
-    gridEl.innerHTML = list.map((item, i) => {
-      const isDone = item.type === 'prayer' ? !!(S.prayers[d]?.[item.k]) : false;
+    timesRowEl.innerHTML = rowList.map((item, i) => {
       let isCur = false;
-      if (item.type === 'prayer') {
+      if (item.k) {
         const pIdx = PRAYERS.findIndex(p => p.n === item.k);
-        isCur = pIdx === curIdx && !isDone;
+        isCur = pIdx === curIdx;
       }
+      const labelColor = isCur ? 'color: #2dd4bf; font-weight: 900; text-shadow: 0 0 8px rgba(45,212,191,0.4);' : 'color: rgba(255, 255, 255, 0.45);';
+      const timeColor = isCur ? 'color: #2dd4bf; font-weight: 900; text-shadow: 0 0 8px rgba(45,212,191,0.4);' : 'color: rgba(255, 255, 255, 0.85);';
       
-      let clickAttr = item.type === 'prayer' ? `onclick="toggleNamaz('${item.k}')"` : '';
-      let styleAttr = item.type === 'sunrise' ? 'cursor: default;' : '';
-      
-      let statusText = '';
-      if (item.type === 'prayer') {
-        statusText = isDone ? '✓ Kılındı' : isCur ? '⏰ Vakit' : 'Bekliyor';
-      } else {
-        statusText = '☀️ Güneş';
-      }
-      
-      return `<div class="nitem${isDone?' done':isCur?' cur':''}" ${clickAttr} style="${styleAttr}">
-        <div class="nn">${item.n.toUpperCase()}</div>
-        <div class="nt" style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">${item.t}</div>
-        <div class="ns" style="font-size: 0.58rem;">${statusText}</div>
+      return `<div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+        <span style="font-size: 0.52rem; text-transform: uppercase; font-weight: 900; ${labelColor}">${item.n}</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; ${timeColor}">${item.t}</span>
       </div>`;
     }).join('');
   }
@@ -1512,6 +1560,7 @@ function renderNamaz() {
   renderNafile();
   renderKerahet();
   renderVaktinQuote();
+  renderEsma();
   renderQada();
 }
 
@@ -1942,6 +1991,7 @@ function renderClock() {
   // Header namaz vakti göstergesini güncelle
   renderHeaderPrayerVakit();
   updateDialCountdownAndNeedle();
+  renderSmartAssistant();
 }
 
 function updateDialCountdownAndNeedle() {
@@ -1953,40 +2003,44 @@ function updateDialCountdownAndNeedle() {
   const nowMin = now.getHours() * 60 + now.getMinutes();
   const nowSec = now.getSeconds();
   
-  // Update Needle position (24h dial rotated so 17:00 is at 0 degrees/top)
+  // Update needle angle on the 5 AM to 5 AM next day scale (relativeMins: 0 to 1440)
   if (dialNeedle) {
     const totalMins = nowMin + nowSec / 60;
-    const needleAngle = (totalMins - 17 * 60) * 0.25; // 360 degrees / 1440 mins = 0.25 deg/min
-    dialNeedle.setAttribute('transform', `rotate(${needleAngle} 100 100)`);
+    const relativeMins = totalMins >= 300 ? totalMins - 300 : totalMins + 1440 - 300;
+    // Maps relative 12h (17:00 / 720 mins relative) to 0deg (straight up)
+    const needleAngle = ((relativeMins - 720) / 1440) * 180;
+    dialNeedle.setAttribute('transform', `rotate(${needleAngle} 100 110)`);
   }
   
   // Calculate seconds remaining until the active prayer time ends (next prayer starts)
   if (dialCountdown) {
     const currentTotalSeconds = (nowMin * 60) + nowSec;
-    const times = PRAYERS.map((p, idx) => {
-      const [h, m] = p.t.split(':').map(Number);
-      return { name: p.n, index: idx, seconds: (h * 60 + m) * 60 };
-    });
-    times.sort((a, b) => a.seconds - b.seconds);
+    const fSec = PRAYERS[0].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const sunSec = (SUNRISE_TIME ? SUNRISE_TIME.split(':').map(Number).reduce((h, m) => h * 60 + m) : (fSec / 60) + 50) * 60;
+    const oSec = PRAYERS[1].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const iSec = PRAYERS[2].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const aSec = PRAYERS[3].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
+    const ySec = PRAYERS[4].t.split(':').map(Number).reduce((h, m) => (h * 60 + m) * 60);
     
-    let nextVakit = null;
-    if (currentTotalSeconds < times[0].seconds) {
-      nextVakit = times[0];
+    let targetSec = 0;
+    if (currentTotalSeconds >= fSec && currentTotalSeconds < sunSec) {
+      targetSec = sunSec;
+    } else if (currentTotalSeconds >= sunSec && currentTotalSeconds < oSec) {
+      targetSec = oSec;
+    } else if (currentTotalSeconds >= oSec && currentTotalSeconds < iSec) {
+      targetSec = iSec;
+    } else if (currentTotalSeconds >= iSec && currentTotalSeconds < aSec) {
+      targetSec = aSec;
+    } else if (currentTotalSeconds >= aSec && currentTotalSeconds < ySec) {
+      targetSec = ySec;
     } else {
-      let found = false;
-      for (let i = 0; i < times.length - 1; i++) {
-        if (currentTotalSeconds >= times[i].seconds && currentTotalSeconds < times[i+1].seconds) {
-          nextVakit = times[i+1];
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        nextVakit = { ...times[0], seconds: times[0].seconds + 24 * 3600 };
+      targetSec = fSec;
+      if (currentTotalSeconds >= ySec) {
+        targetSec += 24 * 3600;
       }
     }
     
-    let diffSec = nextVakit.seconds - currentTotalSeconds;
+    let diffSec = targetSec - currentTotalSeconds;
     if (diffSec < 0) diffSec += 24 * 3600;
     
     const hh = String(Math.floor(diffSec / 3600)).padStart(2, '0');
@@ -2138,7 +2192,7 @@ function factoryCheckInput(inp) {
 }
 function doFactoryReset() {
   closeModal('factoryModal');
-  localStorage.removeItem('ht6'); localStorage.removeItem('ht5');
+  localStorage.removeItem('mikat'); localStorage.removeItem('mikat-v5');
   CATS   = JSON.parse(JSON.stringify(DEFAULT_CATS));
   HABITS = JSON.parse(JSON.stringify(DEFAULT_HABITS));
   S = {tasks:[], prayers:{}, habits:{}, zikirDone:{}, catTime:{}, timerSess:{},
@@ -2667,7 +2721,7 @@ setInterval(() => {
 // Namaz vakitleri: önce localStorage cache'den dene, sonra API
 (function fetchPrayerWithCache() {
   try {
-    const cached = localStorage.getItem('ht6-prayer-cache');
+    const cached = localStorage.getItem('mikat-prayer-cache');
     if (cached) {
       const { date, city, prayers, sunrise } = JSON.parse(cached);
       if (date === today() && city === (S.namazCity || 'Konya') && Array.isArray(prayers)) {
