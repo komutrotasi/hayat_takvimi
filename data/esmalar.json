@@ -1,0 +1,497 @@
+[
+  {
+    "ar": "الرَّحْمَنُ",
+    "tr": "Er-Rahmân",
+    "m": "Dünyada tüm yaratıklara sonsuz rahmet eden."
+  },
+  {
+    "ar": "الرَّحِيمُ",
+    "tr": "Er-Rahîm",
+    "m": "Ahirette müminlere özel merhamet eden."
+  },
+  {
+    "ar": "الْمَلِكُ",
+    "tr": "El-Melik",
+    "m": "Gerçek hükümdar, mutlak otorite sahibi."
+  },
+  {
+    "ar": "الْقُدُّوسُ",
+    "tr": "El-Kuddûs",
+    "m": "Her türlü noksanlıktan münezzeh, en pak olan."
+  },
+  {
+    "ar": "السَّلَامُ",
+    "tr": "Es-Selâm",
+    "m": "Esenlik kaynağı, kusursuz barış veren."
+  },
+  {
+    "ar": "الْمُؤْمِنُ",
+    "tr": "El-Mü'min",
+    "m": "İman veren, güven ve emniyet bahşeden."
+  },
+  {
+    "ar": "الْمُهَيْمِنُ",
+    "tr": "El-Müheymin",
+    "m": "Her şeye hâkim olan, gözetip koruyan."
+  },
+  {
+    "ar": "الْعَزِيزُ",
+    "tr": "El-Azîz",
+    "m": "Benzersiz güç ve yenilmez üstünlük sahibi."
+  },
+  {
+    "ar": "الْجَبَّارُ",
+    "tr": "El-Cebbâr",
+    "m": "Zulme uğrayanları haklarına kavuşturan."
+  },
+  {
+    "ar": "الْمُتَكَبِّرُ",
+    "tr": "El-Mütekebbir",
+    "m": "Sınırsız büyüklük ve yücelik sahibi."
+  },
+  {
+    "ar": "الْخَالِقُ",
+    "tr": "El-Hâlık",
+    "m": "Yoktan her şeyi yaratan, var eden."
+  },
+  {
+    "ar": "الْبَارِئُ",
+    "tr": "El-Bâri'",
+    "m": "Yarattıklarını birbirinden ayırıp düzenleyen."
+  },
+  {
+    "ar": "الْمُصَوِّرُ",
+    "tr": "El-Musavvir",
+    "m": "Varlıklara biçim ve şekil veren."
+  },
+  {
+    "ar": "الْغَفَّارُ",
+    "tr": "El-Ğaffâr",
+    "m": "Günahları tekrar tekrar bağışlayan."
+  },
+  {
+    "ar": "الْقَهَّارُ",
+    "tr": "El-Kahhâr",
+    "m": "Her şeye üstün gelen, her şeyi emri altında tutan."
+  },
+  {
+    "ar": "الْوَهَّابُ",
+    "tr": "El-Vehhâb",
+    "m": "Karşılıksız ve sürekli bağışlayan, ihsan eden."
+  },
+  {
+    "ar": "الرَّزَّاقُ",
+    "tr": "Er-Razzâk",
+    "m": "Tüm varlıkların rızkını veren."
+  },
+  {
+    "ar": "الْفَتَّاحُ",
+    "tr": "El-Fettâh",
+    "m": "Her güçlüğü açan, her sorunun çözümünü veren."
+  },
+  {
+    "ar": "الْعَلِيمُ",
+    "tr": "El-Alîm",
+    "m": "Her şeyi en ince ayrıntısına kadar bilen."
+  },
+  {
+    "ar": "الْقَابِضُ",
+    "tr": "El-Kâbız",
+    "m": "Rızkı daraltan, dilediğinden alan."
+  },
+  {
+    "ar": "الْبَاسِطُ",
+    "tr": "El-Bâsıt",
+    "m": "Rızkı genişleten, dilediğine bol veren."
+  },
+  {
+    "ar": "الْخَافِضُ",
+    "tr": "El-Hâfız",
+    "m": "Zalimleri ve kâfirleri alçaltan."
+  },
+  {
+    "ar": "الرَّافِعُ",
+    "tr": "Er-Râfi'",
+    "m": "Müminleri ve evliyasını yükselten."
+  },
+  {
+    "ar": "الْمُعِزُّ",
+    "tr": "El-Muizz",
+    "m": "Dilediğine izzet ve şeref veren."
+  },
+  {
+    "ar": "الْمُذِلُّ",
+    "tr": "El-Müzill",
+    "m": "Dilediğini zillete düşüren."
+  },
+  {
+    "ar": "السَّمِيعُ",
+    "tr": "Es-Semî'",
+    "m": "Her sesi ve duayı işiten."
+  },
+  {
+    "ar": "الْبَصِيرُ",
+    "tr": "El-Basîr",
+    "m": "Her şeyi gören, gizlisini ve aşikâresini bilen."
+  },
+  {
+    "ar": "الْحَكَمُ",
+    "tr": "El-Hakem",
+    "m": "En adil hüküm veren, hakkın ta kendisi."
+  },
+  {
+    "ar": "الْعَدْلُ",
+    "tr": "El-Adl",
+    "m": "Mutlak adalet sahibi, asla haksızlık etmeyen."
+  },
+  {
+    "ar": "اللَّطِيفُ",
+    "tr": "El-Latîf",
+    "m": "En ince sırları bilen, lütufkâr davranan."
+  },
+  {
+    "ar": "الْخَبِيرُ",
+    "tr": "El-Habîr",
+    "m": "Her şeyin iç yüzünden haberdar olan."
+  },
+  {
+    "ar": "الْحَلِيمُ",
+    "tr": "El-Halîm",
+    "m": "Çok sabırlı, acele etmeden ceza vermeyen."
+  },
+  {
+    "ar": "الْعَظِيمُ",
+    "tr": "El-Azîm",
+    "m": "Sınırsız büyüklük sahibi."
+  },
+  {
+    "ar": "الْغَفُورُ",
+    "tr": "El-Ğafûr",
+    "m": "Günahları çokça ve tam olarak bağışlayan."
+  },
+  {
+    "ar": "الشَّكُورُ",
+    "tr": "Eş-Şekûr",
+    "m": "Az ameli çok değerlendiren, mükâfatlandıran."
+  },
+  {
+    "ar": "الْعَلِيُّ",
+    "tr": "El-Aliyy",
+    "m": "En yüce, pek yüksek olan."
+  },
+  {
+    "ar": "الْكَبِيرُ",
+    "tr": "El-Kebîr",
+    "m": "Büyüklükte sınır tanımayan."
+  },
+  {
+    "ar": "الْحَفِيظُ",
+    "tr": "El-Hafîz",
+    "m": "Her şeyi koruyup muhafaza eden."
+  },
+  {
+    "ar": "الْمُقِيتُ",
+    "tr": "El-Mukît",
+    "m": "Her varlığa gücünü ve kuvvetini veren."
+  },
+  {
+    "ar": "الْحَسِيبُ",
+    "tr": "El-Hasîb",
+    "m": "Her şeyin hesabını gören, yetip artan."
+  },
+  {
+    "ar": "الْجَلِيلُ",
+    "tr": "El-Celîl",
+    "m": "Ulu ve sonsuz ihtişam sahibi."
+  },
+  {
+    "ar": "الْكَرِيمُ",
+    "tr": "El-Kerîm",
+    "m": "Sonsuz cömert, ikram sahibi."
+  },
+  {
+    "ar": "الرَّقِيبُ",
+    "tr": "Er-Rakîb",
+    "m": "Her şeyi gözetip takip eden."
+  },
+  {
+    "ar": "الْمُجِيبُ",
+    "tr": "El-Mücîb",
+    "m": "Duaları kabul eden, çağrıya cevap veren."
+  },
+  {
+    "ar": "الْوَاسِعُ",
+    "tr": "El-Vâsi'",
+    "m": "Rahmeti ve ilmi her şeyi kuşatan."
+  },
+  {
+    "ar": "الْحَكِيمُ",
+    "tr": "El-Hakîm",
+    "m": "En derin hikmet sahibi, her işi yerli yerinde."
+  },
+  {
+    "ar": "الْوَدُودُ",
+    "tr": "El-Vedûd",
+    "m": "Kullarını seven, sevilmeye layık."
+  },
+  {
+    "ar": "الْمَجِيدُ",
+    "tr": "El-Mecîd",
+    "m": "Yüce şeref ve sonsuz kerem sahibi."
+  },
+  {
+    "ar": "الْبَاعِثُ",
+    "tr": "El-Bâis",
+    "m": "Ölüleri dirilten, peygamberler gönderen."
+  },
+  {
+    "ar": "الشَّهِيدُ",
+    "tr": "Eş-Şehîd",
+    "m": "Her zaman ve her yerde hâzır ve nâzır."
+  },
+  {
+    "ar": "الْحَقُّ",
+    "tr": "El-Hak",
+    "m": "Varlığı zorunlu olan gerçek, değişmeyen."
+  },
+  {
+    "ar": "الْوَكِيلُ",
+    "tr": "El-Vekîl",
+    "m": "Her şeyin vekilliğini üstlenen, güvenilir."
+  },
+  {
+    "ar": "الْقَوِيُّ",
+    "tr": "El-Kaviyy",
+    "m": "Sonsuz güç ve kuvvet sahibi."
+  },
+  {
+    "ar": "الْمَتِينُ",
+    "tr": "El-Metîn",
+    "m": "Sağlamlıkta ve güçte rakipsiz."
+  },
+  {
+    "ar": "الْوَلِيُّ",
+    "tr": "El-Veliyy",
+    "m": "Müminlerin dostu ve yardımcısı."
+  },
+  {
+    "ar": "الْحَمِيدُ",
+    "tr": "El-Hamîd",
+    "m": "Her türlü övgü ve hamd'e layık olan."
+  },
+  {
+    "ar": "الْمُحْصِي",
+    "tr": "El-Muhsî",
+    "m": "Her şeyi sayıp kaydeden."
+  },
+  {
+    "ar": "الْمُبْدِئُ",
+    "tr": "El-Mübdi'",
+    "m": "Yaratmaya başlayan, ilk var eden."
+  },
+  {
+    "ar": "الْمُعِيدُ",
+    "tr": "El-Muîd",
+    "m": "Yok olanı yeniden var eden."
+  },
+  {
+    "ar": "الْمُحْيِي",
+    "tr": "El-Muhyî",
+    "m": "Hayat veren, canlılık bağışlayan."
+  },
+  {
+    "ar": "الْمُمِيتُ",
+    "tr": "El-Mümît",
+    "m": "Ölümü yaratan, her canlıyı öldüren."
+  },
+  {
+    "ar": "الْحَيُّ",
+    "tr": "El-Hayy",
+    "m": "Ebedî hayat sahibi, her zaman diri."
+  },
+  {
+    "ar": "الْقَيُّومُ",
+    "tr": "El-Kayyûm",
+    "m": "Kendi kendine var olan, her şeyi ayakta tutan."
+  },
+  {
+    "ar": "الْوَاجِدُ",
+    "tr": "El-Vâcid",
+    "m": "Her şeyi bulan, hiçbir şey kendisine gizli kalmayan."
+  },
+  {
+    "ar": "الْمَاجِدُ",
+    "tr": "El-Mâcid",
+    "m": "Şeref ve büyüklük sahibi."
+  },
+  {
+    "ar": "الْوَاحِدُ",
+    "tr": "El-Vâhid",
+    "m": "Tek olan, ortağı ve benzeri bulunmayan."
+  },
+  {
+    "ar": "الأَحَدُ",
+    "tr": "El-Ehad",
+    "m": "Mutlak birlik sahibi, bölünmez."
+  },
+  {
+    "ar": "الصَّمَدُ",
+    "tr": "Es-Samed",
+    "m": "Her şey ona muhtaç, o hiçbir şeye muhtaç değil."
+  },
+  {
+    "ar": "الْقَادِرُ",
+    "tr": "El-Kâdir",
+    "m": "Her şeye güç yetiren, sonsuz kudret sahibi."
+  },
+  {
+    "ar": "الْمُقْتَدِرُ",
+    "tr": "El-Muktedir",
+    "m": "Dilediği her şeyi yapmaya muktedir."
+  },
+  {
+    "ar": "الْمُقَدِّمُ",
+    "tr": "El-Mukaddim",
+    "m": "Dilediğini öne geçiren, yükselten."
+  },
+  {
+    "ar": "الْمُؤَخِّرُ",
+    "tr": "El-Muahhir",
+    "m": "Dilediğini geri bırakan, geciktiren."
+  },
+  {
+    "ar": "الأَوَّلُ",
+    "tr": "El-Evvel",
+    "m": "Başlangıcı olmayan, her şeyden önce var olan."
+  },
+  {
+    "ar": "الآخِرُ",
+    "tr": "El-Âhir",
+    "m": "Sonu olmayan, her şeyden sonra da var olan."
+  },
+  {
+    "ar": "الظَّاهِرُ",
+    "tr": "Ez-Zâhir",
+    "m": "Varlığının delilleri her yerde açıkça görünen."
+  },
+  {
+    "ar": "الْبَاطِنُ",
+    "tr": "El-Bâtın",
+    "m": "Akılların kavrayamayacağı kadar gizli olan."
+  },
+  {
+    "ar": "الْوَالِي",
+    "tr": "El-Vâlî",
+    "m": "Tüm evreni yöneten ve idare eden."
+  },
+  {
+    "ar": "الْمُتَعَالِي",
+    "tr": "El-Müteâlî",
+    "m": "Sıfatlarıyla her şeyin üzerinde yükselen."
+  },
+  {
+    "ar": "الْبَرُّ",
+    "tr": "El-Berr",
+    "m": "İyilik ve lütuf kaynağı."
+  },
+  {
+    "ar": "التَّوَّابُ",
+    "tr": "Et-Tevvâb",
+    "m": "Tövbeleri kabul eden, dönüşü kolaylaştıran."
+  },
+  {
+    "ar": "الْمُنْتَقِمُ",
+    "tr": "El-Müntakim",
+    "m": "Haksızlıkları cezalandıran."
+  },
+  {
+    "ar": "الْعَفُوُّ",
+    "tr": "El-Afüvv",
+    "m": "Günahları affeden, silen."
+  },
+  {
+    "ar": "الرَّؤُوفُ",
+    "tr": "Er-Raûf",
+    "m": "Çok şefkatli, yumuşak davranan."
+  },
+  {
+    "ar": "مَالِكُ الْمُلْكِ",
+    "tr": "Mâlikü'l-Mülk",
+    "m": "Mülkün ve hükümranlığın gerçek sahibi."
+  },
+  {
+    "ar": "ذُو الْجَلَالِ وَالإِكْرَامِ",
+    "tr": "Zü'l-Celâl",
+    "m": "Büyüklük ve ikram sahibi."
+  },
+  {
+    "ar": "الْمُقْسِطُ",
+    "tr": "El-Muksît",
+    "m": "Adaletli davranan, hakkaniyetle hükmeden."
+  },
+  {
+    "ar": "الْجَامِعُ",
+    "tr": "El-Câmi'",
+    "m": "Her şeyi bir araya getiren, toplayan."
+  },
+  {
+    "ar": "الْغَنِيُّ",
+    "tr": "El-Ğaniyy",
+    "m": "Hiçbir şeye muhtaç olmayan, zenginliği sonsuz."
+  },
+  {
+    "ar": "الْمُغْنِي",
+    "tr": "El-Muğnî",
+    "m": "Zenginlik ve yeterlilik veren."
+  },
+  {
+    "ar": "الْمَانِعُ",
+    "tr": "El-Mâni'",
+    "m": "Dilediğini engelleyen, zarar dokundurmayan."
+  },
+  {
+    "ar": "الضَّارُّ",
+    "tr": "Ed-Dârr",
+    "m": "Hikmeti gereği zarar verebilen."
+  },
+  {
+    "ar": "النَّافِعُ",
+    "tr": "En-Nâfi'",
+    "m": "Fayda veren, yararlı kılan."
+  },
+  {
+    "ar": "النُّورُ",
+    "tr": "En-Nûr",
+    "m": "Gökleri ve yeri nurlandıran."
+  },
+  {
+    "ar": "الْهَادِي",
+    "tr": "El-Hâdî",
+    "m": "Doğru yolu gösteren, hidayet eden."
+  },
+  {
+    "ar": "الْبَدِيعُ",
+    "tr": "El-Bedî'",
+    "m": "Eşsiz ve benzersiz biçimde yaratan."
+  },
+  {
+    "ar": "الْبَاقِي",
+    "tr": "El-Bâkî",
+    "m": "Ebedî olarak var olan, yok olmayan."
+  },
+  {
+    "ar": "الْوَارِثُ",
+    "tr": "El-Vâris",
+    "m": "Her şeyin gerçek varisi, sonunda her şey ona döner."
+  },
+  {
+    "ar": "الرَّشِيدُ",
+    "tr": "Er-Reşîd",
+    "m": "Doğru yolu gösteren, işleri en güzel şekilde yürüten."
+  },
+  {
+    "ar": "الصَّبُورُ",
+    "tr": "Es-Sabûr",
+    "m": "Son derece sabırlı, acele etmeden muamele eden."
+  }
+]
