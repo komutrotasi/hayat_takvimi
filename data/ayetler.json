@@ -1,0 +1,596 @@
+[
+  {
+    "ar": "وَرَبَّكَ فَكَبِّرۡ",
+    "t": "Rabbini yücelt",
+    "s": "Müddessir 74/3",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَلِرَبِّكَ فَٱصۡبِرۡ",
+    "t": "Rabbin için sabret",
+    "s": "Müddessir 74/7",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ",
+    "t": "Bizi doğru yola eriştir",
+    "s": "Fâtiha 1/6",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "قُلۡ هُوَ ٱللَّهُ أَحَدٌ",
+    "t": "De ki: O Allah bir tektir",
+    "s": "İhlâs 112/1",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ إِلَىٰ رَبِّكَ ٱلرُّجۡعَىٰٓ",
+    "t": "Dönüş şüphesiz Rabbinedir",
+    "s": "Alak 96/8",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّهُۥ مِنۡ عِبَادِنَا ٱلۡمُؤۡمِنِينَ",
+    "t": "O, inanmış kullarımızdandı",
+    "s": "Sâffât 37/132",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱلَّذِينَ هُمۡ عَلَىٰ صَلَاتِهِمۡ يُحَافِظُونَ",
+    "t": "Namazlarına riayet edenler",
+    "s": "Meâric 70/34",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱلَّذِينَ هُمۡ عَلَىٰ صَلَوَٰتِهِمۡ يُحَافِظُونَ",
+    "t": "Namazlarına riayet ederler",
+    "s": "Mü'minûn 23/9",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِلَىٰ رَبِّكَ مُنتَهَىٰهَآ",
+    "t": "Onun bilgisi Rabbine aittir",
+    "s": "Naziât 79/44",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَمَا ذَٰلِكَ عَلَى ٱللَّهِ بِعَزِيزٖ",
+    "t": "Bu, Allah için güç değildir",
+    "s": "İbrâhîm 14/20",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ٱقۡرَأۡ بِٱسۡمِ رَبِّكَ ٱلَّذِي خَلَقَ",
+    "t": "Yaratan Rabbinin adıyla oku",
+    "s": "Alak 96/1",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَأَنَّ إِلَىٰ رَبِّكَ ٱلۡمُنتَهَىٰ",
+    "t": "Doğrusu son varış Rabbinedir",
+    "s": "Necm 53/42",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "سَبِّحِ ٱسۡمَ رَبِّكَ ٱلۡأَعۡلَى",
+    "t": "Yüce Rabbinin adını tesbih et",
+    "s": "A'lâ 87/1",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِلَىٰ رَبِّكَ يَوۡمَئِذٍ ٱلۡمَسَاقُ",
+    "t": "O gün sevk Rabbin huzurunadır",
+    "s": "Kıyâmet 75/30",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِذۡ نَادَىٰ رَبَّهُۥ نِدَآءً خَفِيّٗا",
+    "t": "O Rabbine içinden yalvarmıştı",
+    "s": "Meryem 19/3",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱذۡكُرِ ٱسۡمَ رَبِّكَ بُكۡرَةٗ وَأَصِيلٗا",
+    "t": "Rabbinin adını sabah akşam an",
+    "s": "İnsân 76/25",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱذۡكُرُواْ ٱللَّهَ ذِكۡرٗا كَثِيرٗا",
+    "t": "Ey inananlar! Allah'ı çok anın",
+    "s": "Ahzâb 33/41",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "سَيَذَّكَّرُ مَن يَخۡشَىٰ",
+    "t": "Allah'tan korkan öğüt alacaktır",
+    "s": "A'lâ 87/10",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "مِنۡ أَيِّ شَيۡءٍ خَلَقَهُۥ",
+    "t": "Allah onu hangi şeyden yaratmış",
+    "s": "Abese 80/18",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ٱلَّذِينَ هُمۡ فِي صَلَاتِهِمۡ خَٰشِعُونَ",
+    "t": "Onlar namazda huşu içindedirler",
+    "s": "Mü'minûn 23/2",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَوَيۡلٞ لِّلۡمُصَلِّينَ",
+    "t": "Vay o namaz kılanların haline ki",
+    "s": "Maûn 107/4",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "قَالَ أَلۡقِهَا يَٰمُوسَىٰ",
+    "t": "Allah: \"Ey Musa! Bırak onu\" dedi",
+    "s": "Tâhâ 20/19",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَمَا لَهُمۡ لَا يُؤۡمِنُونَ",
+    "t": "Onlara ne oluyor da inanmıyorlar",
+    "s": "İnşikâk 84/20",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَأَمَّا بِنِعۡمَةِ رَبِّكَ فَحَدِّثۡ",
+    "t": "Yalnızca Rabbinin nimetini anlat",
+    "s": "Duhâ 93/11",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّهُۥ كَانَ لَا يُؤۡمِنُ بِٱللَّهِ ٱلۡعَظِيمِ",
+    "t": "Çünkü, o, yüce Allah'a inanmazdı",
+    "s": "Hâkka 69/33",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ٱلرَّحۡمَٰنُ",
+    "t": "Rahman olan Allah Kuran'ı öğretti",
+    "s": "Rahmân 55/1",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "عَلَّمَ ٱلۡقُرۡءَانَ",
+    "t": "Rahman olan Allah Kuran'ı öğretti",
+    "s": "Rahmân 55/2",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ فِي ذَٰلِكَ لَأٓيَةٗ لِّلۡمُؤۡمِنِينَ",
+    "t": "Bunda inananlar için ibret vardır",
+    "s": "Hicr 15/77",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ رَبَّكَ لَبِٱلۡمِرۡصَادِ",
+    "t": "Doğrusu Rabbin hep gözetlemektedir",
+    "s": "Fecr 89/14",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَقَالَ أَنَا۠ رَبُّكُمُ ٱلۡأَعۡلَىٰ",
+    "t": "Sizin en yüce rabbiniz benim\" dedi",
+    "s": "Naziât 79/24",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ",
+    "t": "Hamd de Alemlerin Rabbi Allah'adır",
+    "s": "Sâffât 37/182",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ هَٰذَا لَهُوَ ٱلۡفَوۡزُ ٱلۡعَظِيمُ",
+    "t": "İşte büyük kurtuluş şüphesiz budur",
+    "s": "Sâffât 37/60",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَلِلَّهِ ٱلۡأٓخِرَةُ وَٱلۡأُولَىٰ",
+    "t": "Hayatın ilki de sonu da Allah'ındır",
+    "s": "Necm 53/25",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَإِن لَّمۡ تُؤۡمِنُواْ لِي فَٱعۡتَزِلُونِ",
+    "t": "Bana inanmazsanız, başımdan çekilin",
+    "s": "Duhân 44/21",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+    "t": "Rahman ve Rahim olan Allah'ın adıyla",
+    "s": "Fâtiha 1/1",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ٱلَّذِينَ هُمۡ عَن صَلَاتِهِمۡ سَاهُونَ",
+    "t": "Onlar kıldıkları namazdan gafildirler",
+    "s": "Maûn 107/5",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ بَطۡشَ رَبِّكَ لَشَدِيدٌ",
+    "t": "Doğrusu Rabbinin yakalaması amansızdır",
+    "s": "Burûc 85/12",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "قَالَ فَمَن رَّبُّكُمَا يَٰمُوسَىٰ",
+    "t": "Firavun: \"Musa! Rabbiniz kimdir?\" dedi",
+    "s": "Tâhâ 20/49",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِذۡ جَآءَ رَبَّهُۥ بِقَلۡبٖ سَلِيمٍ",
+    "t": "Nitekim Rabbine temiz bir kalple geldi",
+    "s": "Sâffât 37/84",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَبِأَيِّ حَدِيثِۭ بَعۡدَهُۥ يُؤۡمِنُونَ",
+    "t": "Kuran'dan başka hangi söze inanacaklar",
+    "s": "Mürselât 77/50",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَأَوۡحَىٰٓ إِلَىٰ عَبۡدِهِۦ مَآ أَوۡحَىٰ",
+    "t": "Allah o anda kuluna vahyedeceğini etti",
+    "s": "Necm 53/10",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَإِنَّ رَبَّكَ لَهُوَ ٱلۡعَزِيزُ ٱلرَّحِيمُ",
+    "t": "Doğrusu Rabbin güçlüdür, merhametlidir",
+    "s": "Şuarâ 26/140",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَإِلَىٰ رَبِّكَ فَٱرۡغَب",
+    "t": "Ve ümit edeceğini yalnız Rabbinden iste",
+    "s": "İnşirâh 94/8",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "تَنزِيلٞ مِّن رَّبِّ ٱلۡعَٰلَمِينَ",
+    "t": "Kuran, Alemlerin Rabbinden indirilmedir",
+    "s": "Hâkka 69/43",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ",
+    "t": "Hamd, Alemlerin Rabbi Allah'a mahsustur",
+    "s": "Fâtiha 1/2",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "أَصۡطَفَى ٱلۡبَنَاتِ عَلَى ٱلۡبَنِينَ",
+    "t": "Allah kızları, oğullara tercih mi etmiş",
+    "s": "Sâffât 37/153",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَهَدَيۡنَٰهُمَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ",
+    "t": "Her ikisini de doğru yola eriştirmiştik",
+    "s": "Sâffât 37/118",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَٱسۡجُدُواْۤ لِلَّهِۤ وَٱعۡبُدُواْ۩",
+    "t": "Artık secdeye varın, Allah'a kulluk edin",
+    "s": "Necm 53/62",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَبِٱلۡأَسۡحَارِ هُمۡ يَسۡتَغۡفِرُونَ",
+    "t": "Seher vakitlerinde bağışlanma dilerlerdi",
+    "s": "Zâriyât 51/18",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ رَبَّكَ هُوَ ٱلۡخَلَّـٰقُ ٱلۡعَلِيمُ",
+    "t": "Doğrusu yaratan ve bilen ancak Rabbindir",
+    "s": "Hicr 15/86",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَتَوَكَّلۡ عَلَى ٱللَّهِۚ وَكَفَىٰ بِٱللَّهِ وَكِيلٗا",
+    "t": "Allah'a güven, Allah, vekil olarak yeter",
+    "s": "Ahzâb 33/3",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَٱلۡيَوۡمَ ٱلَّذِينَ ءَامَنُواْ مِنَ ٱلۡكُفَّارِ يَضۡحَكُونَ",
+    "t": "Bugün de, inananlar inkarcılara gülerler",
+    "s": "Mutaffifîn 83/34",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ عَلَيۡنَا لَلۡهُدَىٰ",
+    "t": "Bize düşen sadece doğru yolu göstermektir",
+    "s": "Leyl 92/12",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَصَلِّ لِرَبِّكَ وَٱنۡحَرۡ",
+    "t": "Öyleyse Rabbin için namaz kıl, kurban kes",
+    "s": "Kevser 108/2",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱللَّهُ مِن وَرَآئِهِم مُّحِيطُۢ",
+    "t": "Oysa Allah onları ardlarından çevirmiştir",
+    "s": "Burûc 85/20",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "أَلَكُمُ ٱلذَّكَرُ وَلَهُ ٱلۡأُنثَىٰ",
+    "t": "Demek erkekler sizin, dişiler Allah'ın mı",
+    "s": "Necm 53/21",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "لَيۡسَ لَهَا مِن دُونِ ٱللَّهِ كَاشِفَةٌ",
+    "t": "Onu Allah'tan başka ortaya koyacak yoktur",
+    "s": "Necm 53/58",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّهُمَا مِنۡ عِبَادِنَا ٱلۡمُؤۡمِنِينَ",
+    "t": "İkisi de şüphesiz inanmış kullarımızdandı",
+    "s": "Sâffât 37/122",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَمَن يَعۡمَلۡ مِثۡقَالَ ذَرَّةٍ خَيۡرٗا يَرَهُۥ",
+    "t": "Kim zerre kadar iyilik yapmışsa onu görür",
+    "s": "Zilzâl 99/7",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱلۡعَٰدِيَٰتِ ضَبۡحٗا",
+    "t": "And olsun Allah yolunda koştukça koşanlara",
+    "s": "Âdiyât 100/1",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَسَبِّحۡ بِٱسۡمِ رَبِّكَ ٱلۡعَظِيمِ",
+    "t": "Öyleyse çok büyük Rabbinin adını tesbih et",
+    "s": "Vâkıa 56/74",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَتَوَلَّ عَنۡهُمۡ فَمَآ أَنتَ بِمَلُومٖ",
+    "t": "Onlardan yüz çevir; sen kınanacak değilsin",
+    "s": "Zâriyât 51/54",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "فَصَبَّ عَلَيۡهِمۡ رَبُّكَ سَوۡطَ عَذَابٍ",
+    "t": "Rabbin onları azap kırbacından geçirmiştir",
+    "s": "Fecr 89/13",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَمَا هُوَ بِقَوۡلِ شَاعِرٖۚ قَلِيلٗا مَّا تُؤۡمِنُونَ",
+    "t": "O, şair sözü değildir; ne az inanıyorsunuz",
+    "s": "Hâkka 69/41",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "قَالَ إِنَّكَ مِنَ ٱلۡمُنظَرِينَ",
+    "t": "Allah; \"Sen erteye bırakılanlardansın\" dedi",
+    "s": "A'râf 7/15",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ ٱلۡإِنسَٰنَ لِرَبِّهِۦ لَكَنُودٞ",
+    "t": "İnsan gerçekten Rabbine karşı pek nankördür",
+    "s": "Âdiyât 100/6",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "هَلۡ جَزَآءُ ٱلۡإِحۡسَٰنِ إِلَّا ٱلۡإِحۡسَٰنُ",
+    "t": "İyiliğin karşılığı ancak iyilik değil midir",
+    "s": "Rahmân 55/60",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ",
+    "t": "Rabbin seni ne bıraktı ve ne de sana darıldı",
+    "s": "Duhâ 93/3",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "قَالُواْ لَمۡ نَكُ مِنَ ٱلۡمُصَلِّينَ",
+    "t": "Onlar derler ki: \"Namaz kılanlardan değildik",
+    "s": "Müddessir 74/43",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "أَمۡ لَهُ ٱلۡبَنَٰتُ وَلَكُمُ ٱلۡبَنُونَ",
+    "t": "Demek kızlar Allah'ın, oğullar sizin öyle mi",
+    "s": "Tûr 52/39",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِلَىٰ رَبِّكَ يَوۡمَئِذٍ ٱلۡمُسۡتَقَرُّ",
+    "t": "O gün, sen, Rabbinin huzuruna varıp durursun",
+    "s": "Kıyâmet 75/12",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "كَلَّا لَا تُطِعۡهُ وَٱسۡجُدۡۤ وَٱقۡتَرِب۩",
+    "t": "Sakın ona uyma; sen secde et, Rabbine yaklaş",
+    "s": "Alak 96/19",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "أَلَمۡ يَعۡلَم بِأَنَّ ٱللَّهَ يَرَىٰ",
+    "t": "Allah'ın her şeyi görmekte olduğunu bilmez mi",
+    "s": "Alak 96/14",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنِّيٓ ءَامَنتُ بِرَبِّكُمۡ فَٱسۡمَعُونِ",
+    "t": "Şüphesiz ben Rabbinize inandım, beni dinleyin",
+    "s": "Yâsîn 36/25",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "قَالَ عَمَّا قَلِيلٖ لَّيُصۡبِحُنَّ نَٰدِمِينَ",
+    "t": "Allah da: \"Az sonra pişman olacaklar\" buyurdu",
+    "s": "Mü'minûn 23/40",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱللَّهُ أَنۢبَتَكُم مِّنَ ٱلۡأَرۡضِ نَبَاتٗا",
+    "t": "Allah sizi yerden bitirir gibi yetiştirmiştir",
+    "s": "Nûh 71/17",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَذَكِّرۡ فَإِنَّ ٱلذِّكۡرَىٰ تَنفَعُ ٱلۡمُؤۡمِنِينَ",
+    "t": "Öğüt ver; doğrusu öğüt inananlara fayda verir",
+    "s": "Zâriyât 51/55",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ذُو ٱلۡعَرۡشِ ٱلۡمَجِيدُ",
+    "t": "Yüce arşın sahibi, çok seven, bağışlayan O'dur",
+    "s": "Burûc 85/15",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَهُوَ ٱلۡغَفُورُ ٱلۡوَدُودُ",
+    "t": "Yüce arşın sahibi, çok seven, bağışlayan O'dur",
+    "s": "Burûc 85/14",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَوَجَدَكَ ضَآلّٗا فَهَدَىٰ",
+    "t": "Seni şaşırmış bulup, doğru yola eriştirmedi mi",
+    "s": "Duhâ 93/7",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَإِنَّ ٱلۡفُجَّارَ لَفِي جَحِيمٖ",
+    "t": "Allah'ın buyruğundan çıkanlar cehennemdedirler",
+    "s": "İnfitâr 82/14",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَإِنَّهُۥ لَتَنزِيلُ رَبِّ ٱلۡعَٰلَمِينَ",
+    "t": "Şüphesiz Kuran Alemlerin Rabbinin indirmesidir",
+    "s": "Şuarâ 26/192",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "عَبۡدًا إِذَا صَلَّىٰٓ",
+    "t": "Sen, namaz kılan kulu bundan menedeni gördün mü",
+    "s": "Alak 96/10",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "أَرَءَيۡتَ ٱلَّذِي يَنۡهَىٰ",
+    "t": "Sen, namaz kılan kulu bundan menedeni gördün mü",
+    "s": "Alak 96/9",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "سُبۡحَٰنَ ٱللَّهِ عَمَّا يَصِفُونَ",
+    "t": "Allah onların vasıflandırmalarından münezzehtir",
+    "s": "Sâffât 37/159",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَمَآ أَرۡسَلۡنَٰكَ إِلَّا رَحۡمَةٗ لِّلۡعَٰلَمِينَ",
+    "t": "Biz seni ancak alemlere rahmet olarak gönderdik",
+    "s": "Enbiyâ 21/107",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَمَا يُؤۡمِنُ أَكۡثَرُهُم بِٱللَّهِ إِلَّا وَهُم مُّشۡرِكُونَ",
+    "t": "Onların çoğu, ortak koşmadan Allah'a inanmazlar",
+    "s": "Yûsuf 12/106",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ ٱلَّذِينَ أَجۡرَمُواْ كَانُواْ مِنَ ٱلَّذِينَ ءَامَنُواْ يَضۡحَكُونَ",
+    "t": "Suçlular, şüphesiz, inanmış olanlara gülerlerdi",
+    "s": "Mutaffifîn 83/29",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وُجُوهٞ يَوۡمَئِذٖ نَّاعِمَةٞ",
+    "t": "İnanmış olanların yüzleri, o gün, pırıl pırıldır",
+    "s": "Gâşiye 88/8",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "وَٱلۡأَرۡضَ وَضَعَهَا لِلۡأَنَامِ",
+    "t": "Allah, yeri yaratıkları için meydana getirmiştir",
+    "s": "Rahmân 55/10",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "سَلَٰمٞ قَوۡلٗا مِّن رَّبّٖ رَّحِيمٖ",
+    "t": "Merhametli olan Rab katından onlara selam vardır",
+    "s": "Yâsîn 36/58",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِلَّا عِبَادَ ٱللَّهِ ٱلۡمُخۡلَصِينَ",
+    "t": "Allah'ın içten bağlı kulları bunların dışındadır",
+    "s": "Sâffât 37/160",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "أَئِفۡكًا ءَالِهَةٗ دُونَ ٱللَّهِ تُرِيدُونَ",
+    "t": "Allah'ı bırakıp uydurma tanrılar mı istiyorsunuz",
+    "s": "Sâffât 37/86",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "تَبَٰرَكَ ٱسۡمُ رَبِّكَ ذِي ٱلۡجَلَٰلِ وَٱلۡإِكۡرَامِ",
+    "t": "Büyük ve pek cömert olan Rabbinin adı ne yücedir",
+    "s": "Rahmân 55/78",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "أَلَمۡ تَرَ كَيۡفَ فَعَلَ رَبُّكَ بِأَصۡحَٰبِ ٱلۡفِيلِ",
+    "t": "Fil sahiplerine Rabbinin ne ettiğini görmedin mi",
+    "s": "Fîl 105/1",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "لَعَلَّكَ بَٰخِعٞ نَّفۡسَكَ أَلَّا يَكُونُواْ مُؤۡمِنِينَ",
+    "t": "İnanmıyorlar diye nerdeyse kendini mahvedeceksin",
+    "s": "Şuarâ 26/3",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "ذَٰلِكَ ٱلۡفَضۡلُ مِنَ ٱللَّهِۚ وَكَفَىٰ بِٱللَّهِ عَلِيمٗا",
+    "t": "Bu nimet, Allah'tandır. Bilen olarak Allah yeter",
+    "s": "Nisâ 4/70",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِلَى ٱللَّهِ مَرۡجِعُكُمۡۖ وَهُوَ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرٌ",
+    "t": "Dönüşünüz ancak Allah'adır. O her şeye Kadir'dir",
+    "s": "Hûd 11/4",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  },
+  {
+    "ar": "إِنَّ فِي ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِ لَأٓيَٰتٖ لِّلۡمُؤۡمِنِينَ",
+    "t": "Göklerde ve yerde inananlara nice dersler vardır",
+    "s": "Câsiye 45/3",
+    "source": "Kur’an-ı Kerim — Diyanet İşleri Başkanlığı meali; Uthmânî Arapça metin"
+  }
+]

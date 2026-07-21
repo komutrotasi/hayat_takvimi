@@ -1,12 +1,16 @@
 // Mikat v21: Duplicate ar property düzeltmesi, gereksiz dosyalar temizlendi
-const CACHE_NAME = 'mikat-v21';
+const CACHE_NAME = 'mikat-v24';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './favicon.ico',
   './styles.css',
-  './app.js'
+  './app.js',
+  './data/ayetler.json',
+  './data/hadisler.json',
+  './data/dualar.json',
+  './data/esmalar.json'
 ];
 
 self.addEventListener('install', event => {
