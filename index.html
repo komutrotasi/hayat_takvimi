@@ -46,11 +46,11 @@
       </div>
     </div>
 
-    <!-- Ortadaki Akıllı Canlı İstatistik Kartı (Geri Eklendi) -->
+    <!-- Ortadaki Akıllı Canlı İstatistik Kartı (Tüm İbadet ve Görev Çipleri) -->
     <div class="header-dua" id="headerAssistant"
-      style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+      style="display: flex; align-items: center; justify-content: center; gap: 6px;">
       <div id="headerAssistantMsg"
-        style="display:flex; align-items:center; gap:6px; padding:6px 14px; background:var(--sf2); border:1px solid var(--bd); border-radius:10px; font-size:0.80rem; font-weight:800; color:var(--tx); transition:all 0.35s ease; box-shadow:var(--sh);">
+        style="display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap; background:none; border:none;">
         Yükleniyor...</div>
     </div>
 
@@ -87,6 +87,12 @@
             <button class="menu-item-vertical" onclick="showView('zikir', this)">📿 Zikir & Esmâ</button>
             <button class="menu-item-vertical" onclick="showView('quran', this)">📖 Kuran</button>
             <button class="menu-item-vertical" onclick="showView('habits', this)">📊 Analiz</button>
+            <button class="menu-item-vertical" onclick="showView('dua', this)">🤲 Dua & Münâcât</button>
+            <button class="menu-item-vertical" onclick="showView('hadis', this)">📜 40 Hadis</button>
+            <button class="menu-item-vertical" onclick="showView('books', this)">📚 Kitaplık</button>
+            <button class="menu-item-vertical" onclick="showView('komutrotasi', this)">🌐 Komut Rotası</button>
+            <button class="menu-item-vertical" onclick="showView('teacher', this)">🏫 Bilişimci Hocam</button>
+            <button class="menu-item-vertical" onclick="showView('finance', this)">💰 Finans & Bütçe</button>
           </div>
         </div>
 
@@ -179,7 +185,8 @@
               </div>
             </div>
             <div class="tpres">
-              <button class="tpre on" onclick="setPreset(25,this)">25dk</button>
+              <button class="tpre" onclick="setPreset(25,this)">25dk</button>
+              <button class="tpre on" onclick="setPreset(30,this)">30dk 📚</button>
               <button class="tpre" onclick="setPreset(45,this)">45dk</button>
               <button class="tpre" onclick="setPreset(60,this)">60dk</button>
               <button class="tpre" onclick="setPreset(5,this)">5dk 🍵</button>
@@ -428,6 +435,32 @@
 
         </div>
 
+        <!-- ── NAMAZ SONRASI TESBİHAT & DUALAR REHBERİ (AKORDİYON / SEKME KARTI) ── -->
+        <div class="ncard"
+          style="margin-bottom: 10px; padding: 14px 16px; background: linear-gradient(135deg, #111a28 0%, #0a101b 100%); border: 1.5px solid var(--bd); border-radius: 14px;">
+          <!-- Kart Başlığı ve Sekme Butonları -->
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:10px;">
+            <div
+              style="font-weight:800; font-size:0.75rem; color:var(--gold); letter-spacing:0.08em; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+              <span>📿 NAMAZ SONRASI TESBİHAT & DUALAR REHBERİ</span>
+            </div>
+            <div class="fbar-segmented" style="margin:0;">
+              <button class="fchip on" id="tesbihatTabBtn-tesbihat" onclick="switchTesbihatTab('tesbihat', this)">📿
+                33'lük Tesbihat</button>
+              <button class="fchip" id="tesbihatTabBtn-ayetelkursi" onclick="switchTesbihatTab('ayetelkursi', this)">📜
+                Ayete'l-Kürsî</button>
+              <button class="fchip" id="tesbihatTabBtn-namazDualari"
+                onclick="switchTesbihatTab('namazDualari', this)">🤲 Namaz Duaları</button>
+            </div>
+          </div>
+
+          <!-- Sekme İçerikleri -->
+          <div id="tesbihatTabContent">
+            <!-- JS renderTesbihatTab tarafından doldurulur -->
+          </div>
+        </div>
+
       </div><!-- /v-prayers -->
 
       <!-- 📿 ZİKİR & ESMÂ-ÜL HÜSNA MENÜSÜ -->
@@ -442,46 +475,43 @@
           </div>
         </div>
 
-        <!-- ÜST GRİD: GÜNÜN ESMASI & GÜNÜN ZİKRİ -->
+        <!-- ÜST GRİD: GÜNÜN ESMASI & GÜNÜN ZİKİR AYETİ -->
         <div class="zikir-top-grid"
           style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
           <!-- 1. Günün Esması -->
           <div class="ncard esma-highlight-card" id="esmaCard"
-            style="display: flex; flex-direction: column; justify-content: space-between; gap: 8px; margin: 0; padding: 14px 18px; border: 2px solid #4a1b6d; border-radius: 14px; background: linear-gradient(135deg, #160d23 0%, #0a0610 100%);">
+            style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px; margin: 0; padding: 16px 20px; border: 2px solid rgba(212, 175, 55, 0.4); border-radius: 14px; background: linear-gradient(135deg, rgba(22, 13, 35, 0.95) 0%, rgba(10, 6, 16, 0.95) 100%); position: relative; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
               <span class="daily-title"
-                style="color:var(--gold); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em;">✨ GÜNÜN
-                ESMASI</span>
+                style="color:var(--gold); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; display: flex; align-items: center; gap: 6px;">
+                ✨ GÜNÜN ESMASI
+              </span>
             </div>
-            <div
-              style="display: flex; flex-direction: column; align-items: flex-end; text-align: right; gap: 4px; width: 100%;">
+            <div style="display: flex; flex-direction: column; gap: 4px; width: 100%;">
               <div id="esmaArabic"
-                style="font-family:'Amiri',serif; font-size: clamp(1.6rem, 2vw, 2.2rem); color: var(--gold); line-height: 1.3; font-weight: 700; text-align: right; word-break: break-word; max-width: 100%; direction: rtl;">
+                style="font-family:'Amiri',serif; font-size: clamp(1.8rem, 2.2vw, 2.4rem); color: var(--gold); line-height: 1.3; font-weight: 700; text-align: right; direction: rtl;">
                 —</div>
+              <div id="esmaTranslit"
+                style="font-size: 1.05rem; font-weight: 800; color: var(--teal); text-align: left;">—</div>
               <div id="esmaMeaning"
-                style="font-size: 0.88rem; line-height: 1.4; font-weight: 600; color: var(--tx); text-align: right; width: 100%;">
+                style="font-size: 0.88rem; line-height: 1.4; font-weight: 500; color: var(--tx2); font-style: italic; text-align: left;">
                 —</div>
             </div>
           </div>
 
-          <!-- 2. Günün Zikri & Tesbihat -->
+          <!-- 2. Günün Zikir Ayeti -->
           <div class="ncard zikir-widget" id="zikirCard"
-            style="display: flex; flex-direction: column; justify-content: space-between; gap: 8px; margin: 0; padding: 14px 18px; border: 2px solid #144e5b; border-radius: 14px; background: linear-gradient(135deg, #09252c 0%, #041216 100%);">
+            style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px; margin: 0; padding: 16px 20px; border: 2px solid rgba(62, 207, 176, 0.4); border-radius: 14px; background: linear-gradient(135deg, rgba(9, 37, 44, 0.95) 0%, rgba(4, 18, 22, 0.95) 100%); position: relative; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
               <span class="daily-title"
-                style="color:var(--teal); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em;">📿 GÜNÜN
-                ZİKRİ</span>
-            </div>
-            <div
-              style="display: flex; flex-direction: column; align-items: flex-end; text-align: right; gap: 4px; width: 100%;">
-              <div id="zikirText" style="width:100%; text-align:right;">—</div>
-            </div>
-            <div
-              style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 2px;">
+                style="color:var(--teal); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; display: flex; align-items: center; gap: 6px;">
+                📖 GÜNÜN ZİKİR AYETİ
+              </span>
               <span id="zikirCountLabel"
-                style="font-size: 0.78rem; font-weight: 800; color: var(--teal); background: rgba(62,207,176,0.12); padding: 3px 10px; border-radius: 12px; font-family: 'JetBrains Mono', monospace;">—</span>
-              <div id="zikirNote" style="font-size: 0.78rem; color: var(--tx2); font-weight: 600; text-align: right;">
-              </div>
+                style="font-size:0.75rem; font-weight:800; color:var(--teal); background:rgba(62,207,176,0.15); padding:2px 8px; border-radius:10px; border:1px solid rgba(62,207,176,0.3); font-family:'JetBrains Mono',monospace;">Ayet</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px; width: 100%;">
+              <div id="zikirText" style="width:100%;">—</div>
             </div>
           </div>
         </div>
@@ -539,7 +569,49 @@
             style="display: flex; align-items: center; justify-content: space-between; gap: 8px;"></div>
         </div>
 
-        <!-- 3. ALIŞKANLIK & KATEGORİ SERİ ZİNCİRLERİ (STREAKS) -->
+        <!-- 3. HAFTALIK GÜNLÜK ZİKİR & TESBİHAT ANALİZİ -->
+        <div class="weekly-ibadet" id="weeklyZikirAnalysis"
+          style="margin-bottom: 24px; padding:16px; background:var(--sf); border:1px solid var(--bd); border-radius:var(--r); display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="wi-head"
+            style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <span
+              style="font-weight: 700; font-size: 0.88rem; color: var(--tx); display:flex; align-items:center; gap:6px;">
+              📿 Haftalık Günlük Zikir & Tesbihat Analizi
+            </span>
+            <span class="wi-score" id="weeklyZikirScore"
+              style="color: #60a5fa; font-weight: 800; font-size: 0.88rem;">0/35 zikir (0/3500 defa)</span>
+          </div>
+          <div class="wi-days" id="weeklyZikirDays"
+            style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px;">
+          </div>
+          <!-- Bugünkü 5 Zikrin Detaylı Dağılım Kartları -->
+          <div id="dailyZikirBreakdown"
+            style="padding-top:12px; border-top:1px dashed var(--bd); display:flex; flex-direction:column; gap:8px;">
+          </div>
+        </div>
+
+        <!-- 4. HAFTALIK KURAN TİLÂVETİ & HATİM ANALİZİ -->
+        <div class="weekly-ibadet" id="weeklyQuranAnalysis"
+          style="margin-bottom: 24px; padding:16px; background:var(--sf); border:1px solid var(--bd); border-radius:var(--r); display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="wi-head"
+            style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <span
+              style="font-weight: 700; font-size: 0.88rem; color: var(--tx); display:flex; align-items:center; gap:6px;">
+              📖 Haftalık Kuran Tilâveti & Hatim Analizi
+            </span>
+            <span class="wi-score" id="weeklyQuranScore"
+              style="color: var(--teal); font-weight: 800; font-size: 0.88rem;">0/36 sure okuması</span>
+          </div>
+          <div class="wi-days" id="weeklyQuranDays"
+            style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px;">
+          </div>
+          <!-- Bugünkü 6 Sure Rutininin Detaylı Dağılım Kartları -->
+          <div id="dailyQuranBreakdown"
+            style="padding-top:12px; border-top:1px dashed var(--bd); display:flex; flex-direction:column; gap:8px;">
+          </div>
+        </div>
+
+        <!-- 5. ALIŞKANLIK & KATEGORİ SERİ ZİNCİRLERİ (STREAKS) -->
         <div id="aperf" style="margin-bottom: 24px;"></div>
       </div><!-- /v-habits -->
 
@@ -556,7 +628,7 @@
           </div>
         </div>
 
-        <div class="quran-dashboard">
+        <div class="quran-dashboard" style="display:flex; flex-direction:column; gap:16px; width:100%; height:auto; overflow:visible;">
           <!-- ÜST SATIR: GÜNÜN AYETİ & AKILLI AYRAÇ (KOMPAKT) -->
           <div class="quran-top-row">
             <!-- GÜNÜN AYETİ KARTI -->
@@ -577,7 +649,7 @@
             <!-- AKILLI AYRAÇ & HATİM TAKİBİ -->
             <div class="qcard quran-bookmark-card">
               <div class="qcard-hdr">
-                <div class="qcard-title">📍 Akıllı Ayraç</div>
+                <div class="qcard-title">📍 Akıllı Ayraç & Hatim Takibi</div>
                 <button class="tbtn" onclick="openBookmarkModal()" title="Ayraç Düzenle">✏️ Düzenle</button>
               </div>
               <div class="qbm-compact-row">
@@ -599,7 +671,7 @@
               <div class="quran-prog-wrap">
                 <div class="quran-prog-info">
                   <span>Hatim İlerlemesi</span>
-                  <span id="hatimProgVal">%0.2 (1/604)</span>
+                  <span id="hatimProgVal">%0.2 (1/604 Sayfa)</span>
                 </div>
                 <div class="task-prog-track">
                   <div class="task-prog-fill" id="hatimProgFill" style="width: 0.2%"></div>
@@ -619,12 +691,306 @@
               <div class="qcard-title">📋 Günlük Rutin Sureler & Sünnet Okumaları</div>
               <span class="quran-badge" id="quranRoutineBadge">0/6 Tamamlandı</span>
             </div>
-            <div class="quran-routines-grid" id="quranRoutinesList">
+            <div class="quran-routines-grid" id="quranRoutinesList" style="display:flex; flex-direction:column; gap:16px; margin-top:14px; width:100%;">
               <!-- JS ile yüklenecek -->
             </div>
           </div>
         </div>
       </div>
+
+      <!-- DUA & MÜNÂCÂT -->
+      <div class="view" id="v-dua">
+        <div class="page-hdr">
+          <div>
+            <div class="page-title">🤲 Dua & Münâcât Defteri</div>
+            <div class="page-sub">Resulullah (s.a.v.) ve Peygamber Efendilerimizin duaları, Me'sûrât ve kişisel dua notlarınız</div>
+          </div>
+          <div class="page-acts">
+            <button class="btn btn-primary" onclick="openAddDuaModal()">+ Yeni Dua Ekle</button>
+          </div>
+        </div>
+
+        <!-- KURAN MENÜSÜ STİLİNDE ÜST KARTLAR PANELİ -->
+        <div class="quran-dashboard" style="display:flex; flex-direction:column; gap:16px; width:100%; margin-bottom:16px;">
+          <div class="quran-top-row">
+            <!-- GÜNÜN NİYAZ & DUASI KARTI -->
+            <div class="qcard quran-verse-card">
+              <div class="qcard-hdr">
+                <div class="qcard-title">
+                  ✨ Günün Niyazı <span class="quran-verse-ref" id="duaFeaturedRef">Me'sûrât</span>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                  <button class="tbtn" onclick="nextDailyDua()" title="Başka Dua Getir">Rastgele Dua</button>
+                  <button class="tbtn" onclick="copyFeaturedDuaText()" style="white-space:nowrap; flex-shrink:0;">📋 Kopyala</button>
+                </div>
+              </div>
+              <div class="quran-verse-ar" id="duaFeaturedAr">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ</div>
+              <div class="quran-verse-tr" id="duaFeaturedTr">"Sabaha erdik, mülk de Allah'ın olarak sabaha erdi. Hamd Allah'a mahsustur."</div>
+            </div>
+
+            <!-- DUA İLERLEME & ÇETELE KARTI -->
+            <div class="qcard quran-bookmark-card">
+              <div class="qcard-hdr">
+                <div class="qcard-title">🤲 Günlük Dua Çetelesi & İlerleme</div>
+                <span class="quran-badge" id="duaBadgeVal">0/0 Okundu</span>
+              </div>
+              <div class="qbm-compact-row">
+                <div class="qbm-box">
+                  <div class="qbm-lbl">Tüm Dualar</div>
+                  <div class="qbm-val" id="duaCountTotal">0</div>
+                </div>
+                <div class="qbm-box">
+                  <div class="qbm-lbl">Okunan</div>
+                  <div class="qbm-val" id="duaCountDone" style="color:var(--teal);">0</div>
+                </div>
+                <div class="qbm-box">
+                  <div class="qbm-lbl">Kalan</div>
+                  <div class="qbm-val" id="duaCountPending" style="color:var(--gold);">0</div>
+                </div>
+              </div>
+
+              <!-- Dua İlerleme Barı -->
+              <div class="quran-prog-wrap">
+                <div class="quran-prog-info">
+                  <span>Günlük Okuma Oranı</span>
+                  <span id="duaProgVal">%0</span>
+                </div>
+                <div class="task-prog-track">
+                  <div class="task-prog-fill" id="duaProgFill" style="width:0%; background:linear-gradient(90deg, var(--teal), var(--gold));"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fbar-compact" style="margin-bottom: 14px;">
+          <div class="fbar-top-row">
+            <div class="sw">
+              <span class="sw-i">🔍</span>
+              <input type="text" id="searchDuaInp" placeholder="Dua, meâl veya başlık ara..." oninput="renderDuaView()" />
+            </div>
+          </div>
+          <div class="fbar-segmented">
+            <button class="fchip on" onclick="switchDuaTab('all', this)" id="duatab-all">🤲 Tüm Dualar</button>
+            <button class="fchip" onclick="switchDuaTab('daily', this)" id="duatab-daily">🌅 Sabah-Akşam Duaları</button>
+            <button class="fchip" onclick="switchDuaTab('prophet', this)" id="duatab-prophet">✨ Peygamber Duaları</button>
+            <button class="fchip" onclick="switchDuaTab('custom', this)" id="duatab-custom">📝 Kişisel Dualarım</button>
+          </div>
+        </div>
+
+        <div id="duaGridContainer" style="display:flex; flex-direction:column; gap:14px; width:100%;"></div>
+      </div><!-- /v-dua -->
+
+      <!-- 40 HADİS-İ ŞERİF -->
+      <div class="view" id="v-hadis">
+        <div class="page-hdr">
+          <div>
+            <div class="page-title">📜 40 Hadis-i Şerif & Ezber Takibi</div>
+            <div class="page-sub">Peygamber Efendimizin (s.a.v.) mübarek hadisleri, konu anlatımları ve ezber çetelesi</div>
+          </div>
+        </div>
+
+        <!-- KURAN MENÜSÜ STİLİNDE ÜST KARTLAR PANELİ -->
+        <div class="quran-dashboard" style="display:flex; flex-direction:column; gap:16px; width:100%; margin-bottom:16px;">
+          <div class="quran-top-row">
+            <!-- GÜNÜN HADİS-İ ŞERİFİ KARTI -->
+            <div class="qcard quran-verse-card">
+              <div class="qcard-hdr">
+                <div class="qcard-title">
+                  ✨ Günün Hadis-i Şerifi <span class="quran-verse-ref" id="hadisFeaturedRef">Buhârî 1</span>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                  <button class="tbtn" onclick="nextDailyHadis()" title="Rastgele Hadis Getir">Rastgele Hadis</button>
+                  <button class="tbtn" onclick="copyFeaturedHadisText()" style="white-space:nowrap; flex-shrink:0;">📋 Kopyala</button>
+                </div>
+              </div>
+              <div class="quran-verse-ar" id="hadisFeaturedAr">إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ</div>
+              <div class="quran-verse-tr" id="hadisFeaturedTr">"Ameller ancak niyetlere göredir. Herkes için ancak niyet ettiğinin karşılığı vardır."</div>
+            </div>
+
+            <!-- HADİS EZBER & ÇETELE KARTI -->
+            <div class="qcard quran-bookmark-card">
+              <div class="qcard-hdr">
+                <div class="qcard-title">🧠 Hadis Ezber Takibi & Çetelesi</div>
+                <span class="quran-badge" id="hadisBadgeVal">0/40 Ezberlendi</span>
+              </div>
+              <div class="qbm-compact-row">
+                <div class="qbm-box">
+                  <div class="qbm-lbl">Toplam Hadis</div>
+                  <div class="qbm-val" id="hadisCountTotal">40</div>
+                </div>
+                <div class="qbm-box">
+                  <div class="qbm-lbl">Ezberlenen</div>
+                  <div class="qbm-val" id="hadisCountMem" style="color:var(--teal);">0</div>
+                </div>
+                <div class="qbm-box">
+                  <div class="qbm-lbl">Kalan</div>
+                  <div class="qbm-val" id="hadisCountPend" style="color:var(--gold);">40</div>
+                </div>
+              </div>
+
+              <!-- Hadis Ezber Barı -->
+              <div class="quran-prog-wrap">
+                <div class="quran-prog-info">
+                  <span>Hafızlık / Ezber İlerlemesi</span>
+                  <span id="hadisProgVal">%0</span>
+                </div>
+                <div class="task-prog-track">
+                  <div class="task-prog-fill" id="hadisProgFill" style="width:0%; background:linear-gradient(90deg, var(--teal), var(--gold));"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fbar-compact" style="margin-bottom: 14px;">
+          <div class="fbar-top-row">
+            <div class="sw">
+              <span class="sw-i">🔍</span>
+              <input type="text" id="searchHadisInp" placeholder="Hadis-i Şerif veya konu ara..." oninput="renderHadisView()" />
+            </div>
+          </div>
+          <div class="fbar-segmented">
+            <button class="fchip on" onclick="switchHadisTab('all', this)" id="htab-all">📜 Tüm Hadisler (40)</button>
+            <button class="fchip" onclick="switchHadisTab('mem', this)" id="htab-mem">🧠 Ezberlenenler (<span id="hcnt-mem">0</span>)</button>
+            <button class="fchip" onclick="switchHadisTab('pend', this)" id="htab-pend">⏳ Ezberlenecekler (<span id="hcnt-pend">40</span>)</button>
+          </div>
+        </div>
+
+        <div id="hadisGridContainer" style="display:flex; flex-direction:column; gap:14px; width:100%;"></div>
+      </div><!-- /v-hadis -->
+
+      <!-- KİTAPLIK & OKUMA TAKİBİ -->
+      <div class="view" id="v-books">
+        <div class="page-hdr">
+          <div>
+            <div class="page-title">📚 Kitaplık & Okuma Takibi</div>
+            <div class="page-sub">Okumakta olduğunuz kitaplar, sayfa hedefleri, okuma notları ve alıntı defteriniz</div>
+          </div>
+          <div class="page-acts" style="display:flex; gap:8px;">
+            <button class="btn" onclick="openAddQuoteModal()">📝 Alıntı Ekle</button>
+            <button class="btn btn-primary" onclick="openAddBookModal()">+ Yeni Kitap Ekle</button>
+          </div>
+        </div>
+
+        <div class="fbar-compact" style="margin-bottom: 14px;">
+          <div class="fbar-segmented">
+            <button class="fchip on" onclick="switchBookTab('reading', this)" id="btab-reading">📖 Okumakta Olduklarım</button>
+            <button class="fchip" onclick="switchBookTab('finished', this)" id="btab-finished">✅ Bitirilen Kitaplar</button>
+            <button class="fchip" onclick="switchBookTab('quotes', this)" id="btab-quotes">📝 Alıntı Defterim</button>
+          </div>
+        </div>
+
+        <div id="booksGridContainer" style="display:flex; flex-direction:column; gap:14px; width:100%;"></div>
+      </div><!-- /v-books -->
+
+      <!-- KOMUT ROTASI -->
+      <div class="view" id="v-komutrotasi">
+        <div class="page-hdr">
+          <div>
+            <div class="page-title">🌐 Komut Rotası — Web & Kod Defteri</div>
+            <div class="page-sub">komutrotasi.com içerik fikirleri, geliştirme notları, kod snippet'ları ve hızlı araçlar</div>
+          </div>
+          <div class="page-acts">
+            <button class="btn" onclick="openAddWebToolModal()">🌐 Webmaster Aracı Ekle</button>
+            <button class="btn btn-primary" onclick="openAddSnippetModal()">+ Snippet / Blog Fikri Ekle</button>
+          </div>
+        </div>
+
+        <div class="fbar-compact" style="margin-bottom: 14px;">
+          <div class="fbar-top-row">
+            <div class="sw">
+              <span class="sw-i">🔍</span>
+              <input type="text" id="searchKomutInp" placeholder="Kod, not veya içerik ara..." oninput="renderKomutRotasiView()" />
+            </div>
+          </div>
+          <div class="fbar-segmented">
+            <button class="fchip on" onclick="switchKomutTab('snippets', this)" id="ktab-snippets">💻 Kod Snippet'ları</button>
+            <button class="fchip" onclick="switchKomutTab('ideas', this)" id="ktab-ideas">💡 İçerik & Blog Fikirleri</button>
+            <button class="fchip" onclick="switchKomutTab('tools', this)" id="ktab-tools">🔗 Webmaster Araçları</button>
+            <button class="fchip" onclick="switchKomutTab('subdomains', this)" id="ktab-subdomains">🌐 Subdomain'ler</button>
+          </div>
+        </div>
+
+        <div id="komutGridContainer" style="display:flex; flex-direction:column; gap:14px; width:100%;"></div>
+      </div><!-- /v-komutrotasi -->
+
+      <!-- BİLİŞİMCİ HOCAM PANELİ -->
+      <div class="view" id="v-teacher">
+        <div class="page-hdr">
+          <div>
+            <div class="page-title">🏫 Bilişimci Hocam — Ders & Müfredat Paneli</div>
+            <div class="page-sub">Bilgisayar Teknolojileri ve Yazılım ders planları, sınıf çetelesi, sınav ve lab hazırlık takibi</div>
+          </div>
+          <div class="page-acts">
+            <button class="btn btn-primary" onclick="openAddTeacherTaskModal()">+ Ders / Görev Ekle</button>
+          </div>
+        </div>
+
+        <div class="fbar-compact" style="margin-bottom: 14px;">
+          <div class="fbar-top-row">
+            <div class="sw">
+              <span class="sw-i">🔍</span>
+              <input type="text" id="searchTeacherInp" placeholder="Sınıf, konu, sınav veya ödev ara..." oninput="renderTeacherView()" />
+            </div>
+          </div>
+          <div class="fbar-segmented">
+            <button class="fchip on" onclick="switchTeacherTab('classes', this)" id="ttab-classes">📚 Sınıflar & Müfredat</button>
+            <button class="fchip" onclick="switchTeacherTab('exams', this)" id="ttab-exams">📝 Sınav & Ödev Takibi</button>
+            <button class="fchip" onclick="switchTeacherTab('lab', this)" id="ttab-lab">🖥️ Bilişim Lab & Akıllı Tahta</button>
+          </div>
+        </div>
+
+        <div id="teacherGridContainer" style="display:flex; flex-direction:column; gap:14px; width:100%;"></div>
+      </div><!-- /v-teacher -->
+
+      <!-- KİŞİSEL FİNANS & BÜTÇE TAKİBİ -->
+      <div class="view" id="v-finance">
+        <div class="page-hdr">
+          <div>
+            <div class="page-title">💰 Kişisel Finans & Bütçe Takibi</div>
+            <div class="page-sub">Aylık maaş/ek ders gelirleri, hosting/domain giderleri, düzenli abonelikler ve birikim takibi</div>
+          </div>
+          <div class="page-acts">
+            <button class="btn" onclick="openManageFinanceCategoriesModal()">⚙️ Kategorileri Yönet</button>
+            <button class="btn btn-primary" onclick="openAddFinanceModal()">+ Gelir / Gider Ekle</button>
+          </div>
+        </div>
+
+        <!-- FİNANS ÖZET KARTLARI -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:14px; width:100%;">
+          <div style="background:var(--sf); border:1px solid var(--bd); padding:16px 18px; border-radius:14px;">
+            <div style="font-size:0.78rem; font-weight:800; color:var(--tx2); margin-bottom:4px;">📥 Toplam Aylık Gelir</div>
+            <div style="font-size:1.4rem; font-weight:900; color:var(--teal);" id="finTotalIncome">0,00 ₺</div>
+          </div>
+          <div style="background:var(--sf); border:1px solid var(--bd); padding:16px 18px; border-radius:14px;">
+            <div style="font-size:0.78rem; font-weight:800; color:var(--tx2); margin-bottom:4px;">📤 Toplam Aylık Gider</div>
+            <div style="font-size:1.4rem; font-weight:900; color:#ef4444;" id="finTotalExpense">0,00 ₺</div>
+          </div>
+          <div style="background:var(--sf); border:1px solid var(--bd); padding:16px 18px; border-radius:14px;">
+            <div style="font-size:0.78rem; font-weight:800; color:var(--tx2); margin-bottom:4px;">📈 Net Bütçe / Birikim</div>
+            <div style="font-size:1.4rem; font-weight:900; color:var(--gold);" id="finNetBalance">0,00 ₺</div>
+          </div>
+        </div>
+
+        <div class="fbar-compact" style="margin-bottom: 14px;">
+          <div class="fbar-top-row">
+            <div class="sw">
+              <span class="sw-i">🔍</span>
+              <input type="text" id="searchFinanceInp" placeholder="İşlem adı, kategori veya açıklama ara..." oninput="renderFinanceView()" />
+            </div>
+          </div>
+          <div class="fbar-segmented">
+            <button class="fchip on" onclick="switchFinanceTab('all', this)" id="ftab-all">📊 Tüm İşlemler</button>
+            <button class="fchip" onclick="switchFinanceTab('income', this)" id="ftab-income">📥 Gelirler</button>
+            <button class="fchip" onclick="switchFinanceTab('expense', this)" id="ftab-expense">📤 Giderler</button>
+            <button class="fchip" onclick="switchFinanceTab('installments', this)" id="ftab-installments">💳 Taksitler & Borçlar</button>
+            <button class="fchip" onclick="switchFinanceTab('sub', this)" id="ftab-sub">🔄 Abonelikler</button>
+          </div>
+        </div>
+
+        <div id="financeGridContainer" style="display:flex; flex-direction:column; gap:12px; width:100%;"></div>
+      </div><!-- /v-finance -->
 
     </div><!-- /center -->
 
@@ -758,6 +1124,192 @@
       <div class="mfooter">
         <button class="mcancel" onclick="closeModal('taskModal')">İptal</button>
         <button class="msave" onclick="saveTask()">💾 Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ YENİ DUA EKLE MODAL ═══ -->
+  <div class="mov" id="addDuaModal" onclick="if(event.target===this)closeModal('addDuaModal')">
+    <div class="modal">
+      <div class="modal-title">🤲 Yeni Dua / Niyaz Ekle</div>
+      <div class="fgrid">
+        <div class="fg s2">
+          <label class="flbl">Dua Başlığı</label>
+          <input type="text" class="finp" id="duaTitleInp" placeholder="Örn: Sıkıntı Anında Okunacak Dua">
+        </div>
+        <div class="fg s2">
+          <label class="flbl">Arapça Metin (İsteğe Bağlı)</label>
+          <textarea class="finp" id="duaArInp" rows="2" style="font-family:'Amiri',serif; font-size:1.2rem; direction:rtl;" placeholder="Arapça metin..."></textarea>
+        </div>
+        <div class="fg s2">
+          <label class="flbl">Türkçe Meâl & Açıklama</label>
+          <textarea class="finp" id="duaTrInp" rows="3" placeholder="Duayla ne istenir, Türkçe anlamı..."></textarea>
+        </div>
+      </div>
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn" onclick="closeModal('addDuaModal')">İptal</button>
+        <button class="btn btn-primary" onclick="saveCustomDua()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ KİTAP EKLE MODAL ═══ -->
+  <div class="mov" id="addBookModal" onclick="if(event.target===this)closeModal('addBookModal')">
+    <div class="modal">
+      <div class="modal-title">📚 Yeni Kitap Ekle</div>
+      <div class="fgrid">
+        <div class="fg s2">
+          <label class="flbl">Kitap Adı</label>
+          <input type="text" class="finp" id="bookTitleInp" placeholder="Örn: Mesnevi, İhya, Nutuk vb.">
+        </div>
+        <div class="fg">
+          <label class="flbl">Yazar</label>
+          <input type="text" class="finp" id="bookAuthorInp" placeholder="Örn: Mevlânâ Celâleddîn-i Rûmî">
+        </div>
+        <div class="fg">
+          <label class="flbl">Toplam Sayfa</label>
+          <input type="number" min="1" class="finp" id="bookTotalPagesInp" placeholder="350">
+        </div>
+        <div class="fg">
+          <label class="flbl">Kaldığın Sayfa</label>
+          <input type="number" min="0" class="finp" id="bookCurrentPageInp" placeholder="1">
+        </div>
+      </div>
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn" onclick="closeModal('addBookModal')">İptal</button>
+        <button class="btn btn-primary" onclick="saveBookModal()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ALINTI EKLE MODAL ═══ -->
+  <div class="mov" id="addQuoteModal" onclick="if(event.target===this)closeModal('addQuoteModal')">
+    <div class="modal">
+      <div class="modal-title">📝 Kitap Alıntısı Ekle</div>
+      <div class="fgrid">
+        <div class="fg s2">
+          <label class="flbl">Kitap Adı</label>
+          <input type="text" class="finp" id="quoteBookInp" placeholder="Hangi kitaptan alıntı aldınız?">
+        </div>
+        <div class="fg s2">
+          <label class="flbl">Alıntı / Hikmetli Söz</label>
+          <textarea class="finp" id="quoteTextInp" rows="3" placeholder="Sizi etkileyen güzel cümle..."></textarea>
+        </div>
+        <div class="fg">
+          <label class="flbl">Sayfa No (İsteğe Bağlı)</label>
+          <input type="number" class="finp" id="quotePageInp" placeholder="42">
+        </div>
+      </div>
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn" onclick="closeModal('addQuoteModal')">İptal</button>
+        <button class="btn btn-primary" onclick="saveQuoteModal()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ KOMUT ROTASI SNIPPET / NOT EKLE MODAL ═══ -->
+  <div class="mov" id="addSnippetModal" onclick="if(event.target===this)closeModal('addSnippetModal')">
+    <div class="modal">
+      <div class="modal-title">💻 Kod Snippet / Not Ekle</div>
+      <div class="fgrid">
+        <div class="fg s2">
+          <label class="flbl">Başlık</label>
+          <input type="text" class="finp" id="snipTitleInp" placeholder="Örn: CSS Glassmorphism efekti veya Python liste sıralama">
+        </div>
+        <div class="fg">
+          <label class="flbl">Kategori / Dil</label>
+          <select class="fsel" id="snipLangInp">
+            <option value="HTML">HTML / CSS</option>
+            <option value="JS">JavaScript</option>
+            <option value="Python">Python</option>
+            <option value="SQL">SQL</option>
+            <option value="Kodlama">Genel Bilişim / Kod</option>
+            <option value="İçerik">İçerik / Blog Fikri</option>
+          </select>
+        </div>
+        <div class="fg s2">
+          <label class="flbl">Kod / Not İçeriği</label>
+          <textarea class="finp" id="snipCodeInp" rows="4" style="font-family:'JetBrains Mono',monospace; font-size:0.85rem;" placeholder="Kod bloğu veya not buraya..."></textarea>
+        </div>
+      </div>
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn" onclick="closeModal('addSnippetModal')">İptal</button>
+        <button class="btn btn-primary" onclick="saveSnippetModal()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WEBMASTER ARACI EKLE MODAL ═══ -->
+  <div class="mov" id="addWebToolModal" onclick="if(event.target===this)closeModal('addWebToolModal')">
+    <div class="modal">
+      <div class="modal-title">🌐 Webmaster Aracı / Site Bağlantısı Ekle</div>
+      <div class="fgrid">
+        <div class="fg s2">
+          <label class="flbl">Araç / Site Adı</label>
+          <input type="text" class="finp" id="webToolTitleInp" placeholder="Örn: Google Analytics, Cloudflare, WordPress Admin">
+        </div>
+        <div class="fg s2">
+          <label class="flbl">Web Adresi (URL)</label>
+          <input type="url" class="finp" id="webToolUrlInp" placeholder="https://analytics.google.com">
+        </div>
+        <div class="fg">
+          <label class="flbl">Simge / İkon</label>
+          <select class="fsel" id="webToolIconInp">
+            <option value="🌐">🌐 Web / Genel</option>
+            <option value="🔍">🔍 Arama / SEO</option>
+            <option value="📊">📊 Analiz / İstatistik</option>
+            <option value="⚡">⚡ Performans / Hız</option>
+            <option value="⚙️">⚙️ Yönetim / Panel</option>
+            <option value="🔒">🔒 Güvenlik / SSL</option>
+            <option value="📝">📝 Blog / İçerik</option>
+          </select>
+        </div>
+        <div class="fg s2">
+          <label class="flbl">Açıklama / Not (İsteğe Bağlı)</label>
+          <input type="text" class="finp" id="webToolNoteInp" placeholder="Örn: Sitenin anlık ziyaretçi trafiğini takip et">
+        </div>
+      </div>
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn" onclick="closeModal('addWebToolModal')">İptal</button>
+        <button class="btn btn-primary" onclick="saveWebToolModal()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DERS / ÖĞRETMENLİK GÖREVİ EKLE MODAL ═══ -->
+  <div class="mov" id="addTeacherTaskModal" onclick="if(event.target===this)closeModal('addTeacherTaskModal')">
+    <div class="modal">
+      <div class="modal-title">🏫 Ders / Sınıf Görevi Ekle</div>
+      <div class="fgrid">
+        <div class="fg s2">
+          <label class="flbl">Ders / Görev Başlığı</label>
+          <input type="text" class="finp" id="ttaskTitleInp" placeholder="Örn: 5-A Scratch Değişkenler Konusu veya 1. Dönem 1. Yazılı Okuma">
+        </div>
+        <div class="fg">
+          <label class="flbl">Sınıf / Kategori</label>
+          <select class="fsel" id="ttaskClassInp">
+            <option value="5. Sınıf">5. Sınıf Bilişim</option>
+            <option value="6. Sınıf">6. Sınıf Bilişim</option>
+            <option value="7. Sınıf">7. Sınıf Bilişim</option>
+            <option value="8. Sınıf">8. Sınıf Bilişim</option>
+            <option value="Kodlama Kulübü">Kodlama Kulübü</option>
+            <option value="Robotik Takımı">Robotik Takımı</option>
+            <option value="Laboratuvar">Bilişim Lab / Akıllı Tahta</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="flbl">Tür</label>
+          <select class="fsel" id="ttaskTypeInp">
+            <option value="Müfredat">Müfredat / Ders Planı</option>
+            <option value="Sınav">Sınav / Okuma</option>
+            <option value="Ödev">Ödev / Proje</option>
+            <option value="Lab">Lab / Akıllı Tahta Bakım</option>
+          </select>
+        </div>
+      </div>
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn" onclick="closeModal('addTeacherTaskModal')">İptal</button>
+        <button class="btn btn-primary" onclick="saveTeacherTaskModal()">Kaydet</button>
       </div>
     </div>
   </div>
@@ -1197,6 +1749,92 @@ Alışverişe çık #aile" style="font-family:inherit; font-size:0.85rem; resize
   </div><!-- /center -->
   </div><!-- /layout -->
 
+  <!-- ═══ FİNANS İŞLEMİ EKLE / DÜZENLE MODAL ═══ -->
+  <div class="mov" id="addFinanceModal" onclick="if(event.target===this)closeModal('addFinanceModal')">
+    <div class="modal">
+      <div class="modal-title">💰 Finans İşlemi Ekle</div>
+      <div class="fgrid">
+        <div class="fg s2">
+          <label class="flbl">İşlem Adı / Başlık *</label>
+          <input type="text" class="finp" id="finTitleInp" placeholder="Örn: Öğretmenlik Maaşı, Hosting Ödemesi, Mutfak Alışverişi">
+        </div>
+        <div class="fg">
+          <label class="flbl">İşlem Türü</label>
+          <select class="fsel" id="finTypeInp">
+            <option value="income">📥 Gelir (+)</option>
+            <option value="expense" selected>📤 Gider (-)</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="flbl">Tutar (₺) *</label>
+          <input type="number" step="0.01" min="0" class="finp" id="finAmountInp" placeholder="500">
+        </div>
+        <div class="fg">
+          <label class="flbl">Kategori</label>
+          <select class="fsel" id="finCategoryInp">
+            <option value="Maaş / Ek Ders">Maaş / Ek Ders</option>
+            <option value="Hosting / Domain">Hosting / Domain / Server</option>
+            <option value="Abonelik / Yazılım">Abonelik / Yazılım</option>
+            <option value="Fatura / Ev">Fatura / Ev Masrafları</option>
+            <option value="Okul / Eğitim">Okul / Ders Materyalleri</option>
+            <option value="Mutfak / Market">Mutfak / Market</option>
+            <option value="Ulaşım / Yakıt">Ulaşım / Yakıt</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="flbl">Tarih</label>
+          <input type="date" class="finp" id="finDateInp">
+        </div>
+        <div class="fg">
+          <label class="flbl">Taksit Durumu</label>
+          <select class="fsel" id="finInstallmentCountInp" onchange="toggleInstallmentDetails()">
+            <option value="1" selected>Tek Çekim (Taksitsiz)</option>
+            <option value="2">2 Taksit</option>
+            <option value="3">3 Taksit</option>
+            <option value="6">6 Taksit</option>
+            <option value="9">9 Taksit</option>
+            <option value="12">12 Taksit</option>
+            <option value="18">18 Taksit</option>
+            <option value="24">24 Taksit</option>
+          </select>
+        </div>
+        <div class="fg" id="finPaidInstallmentsRow" style="display:none;">
+          <label class="flbl">Ödenen Taksit Sayısı</label>
+          <input type="number" min="0" max="24" class="finp" id="finPaidInstallmentsInp" placeholder="0" value="0">
+        </div>
+        <div class="fg s2">
+          <label class="flbl">Not / Açıklama (İsteğe Bağlı)</label>
+          <input type="text" class="finp" id="finNoteInp" placeholder="Örn: Sunucu ödemesi veya laptop taksiti">
+        </div>
+      </div>
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn" onclick="closeModal('addFinanceModal')">İptal</button>
+        <button class="btn btn-primary" onclick="saveFinanceModal()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FİNANS KATEGORİLERİNİ YÖNET MODAL ═══ -->
+  <div class="mov" id="manageFinanceCategoriesModal" onclick="if(event.target===this)closeModal('manageFinanceCategoriesModal')">
+    <div class="modal">
+      <div class="modal-title">⚙️ Bütçe Kategorilerini Yönet</div>
+      <div class="modal-sub">Gelir ve gider işlemleriniz için özel kategoriler tanımlayın veya mevcutları silin</div>
+      
+      <div style="display:flex; gap:8px; margin-top:12px; margin-bottom:14px;">
+        <input type="text" class="finp" id="newFinCatInp" placeholder="Yeni kategori adı (Örn: Araba / Yakıt, Freelance Projeler)">
+        <button class="btn btn-primary" onclick="addCustomFinanceCategory()" style="white-space:nowrap; flex-shrink:0;">+ Kategori Ekle</button>
+      </div>
+
+      <div class="slbl" style="margin-bottom:8px;">Mevcut Bütçe Kategorileri</div>
+      <div id="finCategoryManagerList" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; padding-right:4px;"></div>
+
+      <div class="macts" style="margin-top:16px;">
+        <button class="btn btn-primary" onclick="closeModal('manageFinanceCategoriesModal')">Tamam</button>
+      </div>
+    </div>
+  </div>
+
   <div class="tc" id="tc"></div>
 
   <!-- TAKVİM HOVER POP-UP KARTI -->
@@ -1225,6 +1863,22 @@ Alışverişe çık #aile" style="font-family:inherit; font-size:0.85rem; resize
     <button class="mb-nav-item" onclick="showView('quran', this)">
       <span class="mb-nav-ico">📖</span>
       <span class="mb-nav-lbl">Kuran</span>
+    </button>
+    <button class="mb-nav-item" onclick="showView('teacher', this)">
+      <span class="mb-nav-ico">🏫</span>
+      <span class="mb-nav-lbl">Ders</span>
+    </button>
+    <button class="mb-nav-item" onclick="showView('komutrotasi', this)">
+      <span class="mb-nav-ico">🌐</span>
+      <span class="mb-nav-lbl">Komut</span>
+    </button>
+    <button class="mb-nav-item" onclick="showView('finance', this)">
+      <span class="mb-nav-ico">💰</span>
+      <span class="mb-nav-lbl">Finans</span>
+    </button>
+    <button class="mb-nav-item" onclick="showView('books', this)">
+      <span class="mb-nav-ico">📚</span>
+      <span class="mb-nav-lbl">Kitaplık</span>
     </button>
     <button class="mb-nav-item" onclick="showView('habits', this)">
       <span class="mb-nav-ico">📊</span>

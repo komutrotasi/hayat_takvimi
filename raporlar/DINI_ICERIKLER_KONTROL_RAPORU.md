@@ -15,7 +15,8 @@
 5. [Kur'an-ı Kerim Duaları (`data/dualar.json`)](#5-kuran-ı-kerim-duaları-datadualarjson)
 6. [Hadis-i Şerifler (`data/hadisler.json`)](#6-hadis-i-şerifler-datahadislerjson)
 7. [Kur'an Rutinleri ve Sure Faziletleri (`QURAN_ROUTINES_DEF`)](#7-kuran-rutinleri-ve-sure-faziletleri-quran_routines_def)
-8. [Denetim Sonuç Notları ve Doğrulama İmzası](#8-denetim-sonuç-notları-ve-doğrulama-imzası)
+8. [Namaz Sonrası Tesbihat ve Dualar Rehberi Kontrolü (`v-prayers` / `app.js`)](#9-namaz-sonrası-tesbihat-ve-dualar-rehberi-kontrolü-v-prayers--appjs)
+9. [Denetim Sonuç Notları ve Doğrulama İmzası](#8-denetim-sonuç-notları-ve-doğrulama-imzası)
 
 ---
 
@@ -80,28 +81,15 @@
 
 ## 📿 2. ZİKİRLER VE ZİKİRMATİK İÇERİKLERİ (`data/zikirler.json`)
 
-| # | Harekeli Arapça Metin | Türkçe Okunuşu (Transkripsiyon) | Adet | Türkçe Meali / Açıklaması |
-|---|---|---|---|---|
-| 1 | سُبْحَانَ اللَّهِ | Subhânallâh | 33 defa | Allah her türlü noksan sıfattan münezzehtir. |
-| 2 | الْحَمْدُ لِلَّهِ | Elhamdülillâh | 33 defa | Hamd ve övgü yalnızca Allah'a aittir. |
-| 3 | اللَّهُ أَكْبَرُ | Allâhu Ekber | 33 defa | Allah en büyüktür. |
-| 4 | لَا إِلٰهَ إِلَّا اللَّهُ | Lâ ilâhe illallâh | 100 defa | Allah'tan başka ilâh yoktur. |
-| 5 | أَسْتَغْفِرُ اللَّهَ | Estağfirullâh | 100 defa | Allah'tan bağışlanma dilerim. |
-| 6 | يَا حَيُّ يَا قَيُّومُ | Yâ Hayyu Yâ Kayyûm | 21 defa | Ey daima diri olan Hayy ve her şeyi ayakta tutan Kayyûm! |
-| 7 | لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ | Lâ havle velâ kuvvete illâ billâhil aliyyil azîm | 21 defa | Güç ve kuvvet ancak yüce ve büyük olan Allah'ın yardımıyladır. |
-| 8 | سُبْحَانَ اللَّهِ وَبِحَمْدِهِ | Sübhânallâhi ve bihamdihî | 100 defa | Allah'ı noksan sıfatlardan tenzih eder, hamd ile tesbih ederim. |
-| 9 | اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ | Allâhümme salli alâ seyyidinâ Muhammed | 33 defa | Allah'ım! Efendimiz Muhammed'e salât ve selâm eyle. |
-| 10 | حَسْبِيَ اللَّهُ لَا إِلٰهَ إِلَّا هُوَ | Hasbiyallâhu lâ ilâhe illâ Hû | 7 defa | Allah bana yeter, O'ndan başka ilâh yoktur. |
-| 11 | رَبِّ زِدْنِي عِلْمًا | Rabbi zidnî ilmâ | 21 defa | Rabbim! İlmimi artır. |
-| 12 | يَا لَطِيفُ | Yâ Latîf | 129 defa | Ey kullarına lütufkâr, lütfu ve keremi bol olan! |
-| 13 | يَا رَحْمٰنُ يَا رَحِيمُ | Yâ Rahmân Yâ Rahîm | 33 defa | Ey dünyada ve ahirette merhameti sonsuz olan Allah'ım! |
-| 14 | سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلٰهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ | Sübhânellâhi velhamdülillâhi ve lâ ilâhe illallâhu vallâhu ekber | 33 defa | Allah eksikliklerden münezzehtir, hamd O'na mahsustur, O'ndan başka ilâh yoktur ve Allah en büyüktür. |
-| 15 | حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ | Hasbünallâhu ve ni'mel vekîl | 33 defa | Allah bize yeter, O ne güzel vekildir. |
-| 16 | رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ | Rabbenâ âtinâ fid-dünyâ haseneten ve fil-âhirati haseneten ve kinâ azâben-nâr | 7 defa | Rabbimiz! Bize dünyada da güzellik ver, ahirette de güzellik ver ve bizi cehennem azabından koru. |
-| 17 | يَا فَتَّاحُ | Yâ Fettâh | 33 defa | Ey tüm kapalılıkları ve zorlukları açan! |
-| 18 | يَا وَدُودُ | Yâ Vedûd | 33 defa | Ey kullarını çok seven ve sevilmeye en lâyık olan! |
-| 19 | بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ | Bismillâhirrahmânirrahîm | 100 defa | Rahmân ve Rahîm olan Allah'ın adıyla. |
-| 20 | الْحَمْدُ لِلَّهِ عَلَى كُلِّ حَالٍ | Elhamdülillâhi alâ külli hâl | 33 defa | Her hal ve şartta Allah'a hamdolsun. |
+*Açıklama: Günlük zikirler 5 temel zikre güncellenmiş, hedef çekim adetleri 100'er defa olarak ayarlanmış ve Arapça/Meal eşleşmeleri doğrulanmıştır.*
+
+| # | Harekeli Arapça Metin | Türkçe Okunuşu (Transkripsiyon) | Adet | Türkçe Meali / Açıklaması | Durum |
+|---|---|---|---|---|---|
+| 1 | أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ | Estağfirullâhel Azîm | 100 defa | Yüce Allah'tan bağışlanma dilerim. | ✅ %100 Doğrulandı |
+| 2 | سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ | Sübhânallâhi ve bihamdihî sübhânallâhil azîm | 100 defa | Allah'ı hamd ile tesbih ederim, Yüce Allah'ı noksan sıfatlardan tenzih ederim. | ✅ %100 Doğrulandı |
+| 3 | لَا إِلَٰهَ إِلَّا اللَّهُ | Lâ ilâhe illallâh | 100 defa | Allah'tan başka ilah yoktur. | ✅ %100 Doğrulandı |
+| 4 | لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ | Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehül-mülkü ve lehül-hamdü ve hüve alâ külli şey'in kadîr | 100 defa | Allah'tan başka ilah yoktur, O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır ve O her şeye gücü yetendir. | ✅ %100 Doğrulandı |
+| 5 | اللَّهُمَّ صَلِّ عَلَىٰ سَيِّدِنَا مُحَمَّدٍ وَعَلَىٰ آلِ سَيِّدِنَا مُحَمَّدٍ | Allâhümme salli alâ seyyidinâ Muhammedin ve alâ âli seyyidinâ Muhammed | 100 defa | Allah'ım! Efendimiz Muhammed'e ve efendimiz Muhammed'in ailesine salât ve selâm eyle. | ✅ %100 Doğrulandı |
 
 ---
 
@@ -274,9 +262,27 @@
 
 ---
 
+## 📿 9. NAMAZ SONRASI TESBİHAT VE DUALAR REHBERİ KONTROLÜ (`v-prayers` / `app.js`)
+
+*Açıklama: Namaz menüsü alt kısmında yer alan "Namaz Sonrası Tesbihat ve Dualar Rehberi" sekmelerinde sunulan tüm ayet, dua ve tesbihat metinlerinin harf, uzatma (med) ve hareke denetimi.*
+
+| # | Dua / İbadet Adı | Harekeli Arapça Metin | Türkçe Okunuşu (Transkripsiyon) | Türkçe Meali | Referans / Kaynak | Denetim Durumu |
+|---|---|---|---|---|---|---|
+| 1 | **Ayete'l-Kürsî** | اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ | Allâhu lâ ilâhe illâ hüvel hayyul kayyûm... | "Allah, O'ndan başka ilah yoktur. O diridir, kayyûmdur..." | Bakara 2/255 | ✅ %100 Doğrulandı |
+| 2 | **Sübhaneke Duası** | سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَىٰ جَدُّكَ وَلَا إِلَٰهَ غَيْرُكَ | Sübhânekellâhümme ve bihamdike ve tebârakesmuk ve teâlâ ceddüke ve lâ ilâhe gayruk | "Allah'ım! Sen her türlü noksanlıktan münezzehsin..." | Namaz Giriş Duası | ✅ %100 Doğrulandı |
+| 3 | **Ettehiyyâtü Duası** | التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ 🤲 اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ 🤲 اَلسَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ 🤲 أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ | Et-tehiyyâtu lillâhi ves-salavâtu vet-tayyibât... | "Bütün hürmetler, ibadetler ve güzel sözler Allah'a mahsustur..." | Oturuş (Teşehhüd) Duası | ✅ %100 Doğrulandı |
+| 4 | **Salli & Bârik Duaları** | اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ 🤲 اللَّهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ | Allâhümme salli alâ Muhammedin ve alâ âli Muhammed... | "Allah'ım! Hz. İbrahim'e ve ailesine salât ve bereket ihsan ettiğin gibi..." | Salavat Duaları | ✅ %100 Doğrulandı |
+| 5 | **Rabbenâ Âtinâ Duası** | رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ | Rabbenâ âtinâ fid-dünyâ haseneten ve fil-âhirati haseneten ve kinâ azâben-nâr | "Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver..." | Bakara 2/201 | ✅ %100 Doğrulandı |
+| 6 | **Rabbenâğfirlî Duası** | رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ | Rabbenâgfirlî ve li-vâlideyye ve lil-mü'minîne yevme yekûmul hisâb | "Rabbimiz! Hesabın görüleceği gün beni, anne-babamı ve bütün müminleri bağışla." | İbrâhîm 14/41 | ✅ %100 Doğrulandı |
+| 7 | **Rabbenâ C'alnî Duası** | رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ | Rabbic'alnî mukîmes-salâti ve min zurriyyetî, Rabbenâ ve tekabbel duâ' | "Rabbim! Beni ve neslimi namazı dosdoğru kılanlardan eyle. Rabbimiz! Duamı kabul buyur." | İbrâhîm 14/40 | ✅ %100 Doğrulandı |
+| 8 | **Namaz Tesbihatı (33x)** | سُبْحَانَ اللَّهِ • الْحَمْدُ لِلَّهِ • اللَّهُ أَكْبَرُ | Subhânallâh (33x), Elhamdülillâh (33x), Allâhu Ekber (33x) | "Allah noksansızdır", "Hamd Allah'adır", "Allah en büyüktür" | Namaz Sonrası Tesbihat | ✅ %100 Doğrulandı |
+| 9 | **Kelime-i Tevhid Bitiriş** | لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ | Lâ ilâhe illallâhu vahdehû lâ şerîke leh... | "Allah'tan başka ilah yoktur, O tektir, ortağı yoktur..." | Tesbihat Bitiriş Duası | ✅ %100 Doğrulandı |
+
+---
+
 ## 📋 8. DENETİM SONUÇ NOTLARI VE DOĞRULAMA İMZASI
 
-- **Arapça İmla ve Harekeler:** Projedeki tüm Arapça yazılışlar (Fâtiha, İhlâs, Zikirler, Esmâ-ül Hüsna ve Dualar) Uthmânî/İmla kaidelerine göre kontrol edilmiş, harekesiz veya eksik şeddeli metin kalmamıştır.
+- **Arapça İmla ve Harekeler:** Projedeki tüm Arapça yazılışlar (Fâtiha, İhlâs, Zikirler, Esmâ-ül Hüsna, Namaz Duaları ve Tesbihatlar) Uthmânî/İmla kaidelerine göre kontrol edilmiş, harekesiz veya eksik şeddeli metin kalmamıştır.
 - **Transkripsiyon Düzeltmeleri:** Uzun sesliler (`â`, `î`, `û`) ve özel ünsüzler (`ğ`, `ş`, `ç`) standart Latin transkripsiyon alfabesine uygun hale getirilmiştir.
 - **Kaynak Atıfları:** Hadis-i şeriflerin Kütüb-i Sitte (Buhârî, Müslim, Tirmizî vb.) cilt ve numara kayıtları ile ayetlerin sure/ayet sayıları doğrulanmıştır.
 

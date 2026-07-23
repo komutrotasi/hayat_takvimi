@@ -1,122 +1,32 @@
 [
   {
-    "ar": "سُبْحَانَ اللَّهِ",
-    "t": "Subhânallâh",
-    "n": "33 defa",
-    "m": "Allah her türlü noksan sıfattan münezzehtir."
+    "ar": "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ",
+    "t": "Estağfirullâhel Azîm",
+    "n": "100 defa",
+    "m": "Yüce Allah'tan bağışlanma dilerim."
   },
   {
-    "ar": "الْحَمْدُ لِلَّهِ",
-    "t": "Elhamdülillâh",
-    "n": "33 defa",
-    "m": "Hamd ve övgü yalnızca Allah'a aittir."
+    "ar": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ",
+    "t": "Sübhânallâhi ve bihamdihî sübhânallâhil azîm",
+    "n": "100 defa",
+    "m": "Allah'ı hamd ile tesbih ederim, Yüce Allah'ı noksan sıfatlardan tenzih ederim."
   },
   {
-    "ar": "اللَّهُ أَكْبَرُ",
-    "t": "Allâhu Ekber",
-    "n": "33 defa",
-    "m": "Allah en büyüktür."
-  },
-  {
-    "ar": "لَا إِلٰهَ إِلَّا اللَّهُ",
+    "ar": "لَا إِلَٰهَ إِلَّا اللَّهُ",
     "t": "Lâ ilâhe illallâh",
     "n": "100 defa",
-    "m": "Allah'tan başka ilâh yoktur."
+    "m": "Allah'tan başka ilah yoktur."
   },
   {
-    "ar": "أَسْتَغْفِرُ اللَّهَ",
-    "t": "Estağfirullâh",
+    "ar": "لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+    "t": "Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehül-mülkü ve lehül-hamdü ve hüve alâ külli şey'in kadîr",
     "n": "100 defa",
-    "m": "Allah'tan bağışlanma dilerim."
+    "m": "Allah'tan başka ilah yoktur, O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır ve O her şeye gücü yetendir."
   },
   {
-    "ar": "يَا حَيُّ يَا قَيُّومُ",
-    "t": "Yâ Hayyu Yâ Kayyûm",
-    "n": "21 defa",
-    "m": "Ey daima diri olan Hayy ve her şeyi ayakta tutan Kayyûm!"
-  },
-  {
-    "ar": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ",
-    "t": "Lâ havle velâ kuvvete illâ billâhil aliyyil azîm",
-    "n": "21 defa",
-    "m": "Güç ve kuvvet ancak yüce ve büyük olan Allah'ın yardımıyladır."
-  },
-  {
-    "ar": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
-    "t": "Sübhânallâhi ve bihamdihî",
+    "ar": "اللَّهُمَّ صَلِّ عَلَىٰ سَيِّدِنَا مُحَمَّدٍ وَعَلَىٰ آلِ سَيِّدِنَا مُحَمَّدٍ",
+    "t": "Allâhümme salli alâ seyyidinâ Muhammedin ve alâ âli seyyidinâ Muhammed",
     "n": "100 defa",
-    "m": "Allah'ı noksan sıfatlardan tenzih eder, hamd ile tesbih ederim."
-  },
-  {
-    "ar": "اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ",
-    "t": "Allâhümme salli alâ seyyidinâ Muhammed",
-    "n": "33 defa",
-    "m": "Allah'ım! Efendimiz Muhammed'e salât ve selâm eyle."
-  },
-  {
-    "ar": "حَسْبِيَ اللَّهُ لَا إِلٰهَ إِلَّا هُوَ",
-    "t": "Hasbiyallâhu lâ ilâhe illâ Hû",
-    "n": "7 defa",
-    "m": "Allah bana yeter, O'ndan başka ilâh yoktur."
-  },
-  {
-    "ar": "رَبِّ زِدْنِي عِلْمًا",
-    "t": "Rabbi zidnî ilmâ",
-    "n": "21 defa",
-    "m": "Rabbim! İlmimi artır."
-  },
-  {
-    "ar": "يَا لَطِيفُ",
-    "t": "Yâ Latîf",
-    "n": "129 defa",
-    "m": "Ey kullarına lütufkâr, lütfu ve keremi bol olan!"
-  },
-  {
-    "ar": "يَا رَحْمٰنُ يَا رَحِيمُ",
-    "t": "Yâ Rahmân Yâ Rahîm",
-    "n": "33 defa",
-    "m": "Ey dünyada ve ahirette merhameti sonsuz olan Allah'ım!"
-  },
-  {
-    "ar": "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلٰهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ",
-    "t": "Sübhânellâhi velhamdülillâhi ve lâ ilâhe illallâhu vallâhu ekber",
-    "n": "33 defa",
-    "m": "Allah eksikliklerden münezzehtir, hamd O'na mahsustur, O'ndan başka ilâh yoktur ve Allah en büyüktür."
-  },
-  {
-    "ar": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
-    "t": "Hasbünallâhu ve ni'mel vekîl",
-    "n": "33 defa",
-    "m": "Allah bize yeter, O ne güzel vekildir."
-  },
-  {
-    "ar": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
-    "t": "Rabbenâ âtinâ fid-dünyâ haseneten ve fil-âhirati haseneten ve kinâ azâben-nâr",
-    "n": "7 defa",
-    "m": "Rabbimiz! Bize dünyada da güzellik ver, ahirette de güzellik ver ve bizi cehennem azabından koru."
-  },
-  {
-    "ar": "يَا فَتَّاحُ",
-    "t": "Yâ Fettâh",
-    "n": "33 defa",
-    "m": "Ey her türlü kapalılığı açan, hayır kapılarını aralayan!"
-  },
-  {
-    "ar": "يَا وَدُودُ",
-    "t": "Yâ Vedûd",
-    "n": "33 defa",
-    "m": "Ey kullarını çok seven ve sevilmeye en layık olan!"
-  },
-  {
-    "ar": "بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ",
-    "t": "Bismillâhirrahmânirrahîm",
-    "n": "100 defa",
-    "m": "Rahmân ve Rahîm olan Allah'ın adıyla."
-  },
-  {
-    "ar": "الْحَمْدُ لِلَّهِ عَلَى كُلِّ حَالٍ",
-    "t": "Elhamdülillâhi alâ külli hâl",
-    "n": "33 defa",
-    "m": "Her hal üzere Allah'a hamdolsun."
+    "m": "Allah'ım! Efendimiz Muhammed'e ve efendimiz Muhammed'in ailesine salât ve selâm eyle."
   }
 ]

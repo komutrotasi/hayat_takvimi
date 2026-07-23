@@ -260,16 +260,23 @@ textarea:focus-visible {
 }
 
 .tbtn {
-  width: 34px;
-  height: 34px;
+  height: 32px;
+  min-width: 32px;
+  width: auto;
+  padding: 0 10px;
   border-radius: var(--rs);
   background: var(--sf2);
   border: 1px solid var(--bd);
   color: var(--tx2);
-  font-size: .95rem;
-  display: flex;
+  font-size: .82rem;
+  font-weight: 700;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
   transition: all var(--tr);
 }
 
@@ -348,7 +355,8 @@ textarea:focus-visible {
 }
 
 .center {
-  overflow: hidden;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
@@ -608,29 +616,19 @@ textarea:focus-visible {
   display: flex;
 }
 
-/* Görevler, Analitik, Takvim, Namaz, Zikir & Alışkanlıklar: kaydırılabilir */
+/* Görevler, Analitik, Takvim, Namaz, Zikir, Alışkanlıklar & Kuran: kaydırılabilir */
 #v-tasks.view.on,
 #v-analytics.view.on,
 #v-calendar.view.on,
 #v-prayers.view.on,
 #v-zikir.view.on,
-#v-habits.view.on {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 3px;
-}
-
-/* Kuran Görünümü: non-scrolling dashboard */
+#v-habits.view.on,
 #v-quran.view.on {
   flex: 1 1 auto;
   min-height: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 100%;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 3px;
 }
 
 .page-hdr {
@@ -5794,7 +5792,17 @@ body.light #timelineHourRuler {
   }
 
   .header-dua {
-    display: none !important;
+    display: flex !important;
+    font-size: 0.72rem;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  #headerAssistantMsg {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+    gap: 4px !important;
+    white-space: nowrap;
   }
 
   .fab-wrapper {
@@ -5815,10 +5823,19 @@ body.light #timelineHourRuler {
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.25);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .mobile-bottom-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .mb-nav-item {
-    flex: 1;
+    flex: 0 0 auto;
+    min-width: 64px;
+    padding: 4px 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -5830,7 +5847,7 @@ body.light #timelineHourRuler {
     font-weight: 700;
     cursor: pointer;
     transition: all 0.15s ease;
-    padding: 4px 0;
+    scroll-snap-align: start;
   }
 
   .mb-nav-item.on {
@@ -5910,4 +5927,245 @@ body.smartboard-mode .page-title {
 body.smartboard-mode .chk {
   width: 26px !important;
   height: 26px !important;
+}
+
+/* 4. NAFİLE NAMAZ ÇİPLERİ, TESBİHAT VE AYLIK TAKVİM STİLLERİ */
+.nafile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--sf2);
+  border: 1px solid var(--bd);
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tx2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.nafile-chip:hover {
+  border-color: var(--gold);
+  color: var(--tx);
+  transform: translateY(-1px);
+}
+
+.nafile-chip.on {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--gold);
+  color: var(--gold);
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.tesbihat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tesbihat-item {
+  padding: 10px 14px;
+  background: var(--sf2);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+}
+
+.tesbihat-ar {
+  font-family: 'Amiri', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  direction: rtl;
+  text-align: right;
+  line-height: 1.6;
+}
+
+.tesbihat-tr {
+  font-size: 0.90rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-top: 4px;
+}
+
+.tesbihat-m {
+  font-size: 0.78rem;
+  color: var(--tx3);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.monthly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.monthly-table th,
+.monthly-table td {
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.monthly-table th {
+  background: var(--sf3);
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 0.70rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.monthly-table tr.today-row {
+  background: rgba(20, 184, 166, 0.12);
+  font-weight: 800;
+  color: var(--teal);
+}
+
+.monthly-table td {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--tx2);
+}
+
+/* 5. GÜNLÜK ZİKİR YATAY KART STİLLERİ */
+.zikir-grid-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+.zikir-item-card {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  padding: 16px 18px !important;
+  border-radius: 14px !important;
+  background: var(--sf2) !important;
+  border: 1px solid var(--bd) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.zikir-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-color: var(--teal) !important;
+}
+
+.zikir-card-tr,
+.zikir-card-meaning {
+  text-align: left !important;
+}
+
+.zikir-card-ar {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* 6. ESMÂ-ÜL HÜSNA DİKEY KART GRİD STİLLERİ */
+.esma-grid-container {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+.esma-item-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  padding: 16px 12px !important;
+  border-radius: 14px !important;
+  background: var(--sf2) !important;
+  border: 1px solid var(--bd) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+  position: relative !important;
+}
+
+.esma-item-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15) !important;
+  border-color: var(--gold) !important;
+}
+
+.esma-item-card.memorized {
+  border-color: var(--grn) !important;
+  background: rgba(16, 185, 129, 0.04) !important;
+}
+
+.esma-item-card.memorized:hover {
+  border-color: var(--grn) !important;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.25) !important;
+}
+
+.hdr-chip-btn {
+  user-select: none;
+}
+
+.hdr-chip-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hdr-chip-btn:active {
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   KESİNTİSİZ TÜM SAYFALAR VE KURAN MENÜSÜ DİKEY KAYDIRMA (SCROLL) KİLİT ÇÖZÜMÜ
+   ═══════════════════════════════════════════ */
+.layout {
+  height: calc(100vh - 64px) !important;
+  max-height: calc(100vh - 64px) !important;
+  overflow: hidden !important;
+}
+
+.center {
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 14px 18px 60px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.view {
+  display: none !important;
+}
+
+.view.on {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: min-content !important;
+  overflow: visible !important;
+}
+
+#v-quran,
+#v-quran.on,
+.quran-dashboard,
+.quran-routines-card,
+.quran-routines-grid {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#headerAssistantMsg {
+  transition: opacity 0.18s ease-in-out, transform 0.18s ease-in-out;
+}
+.hdr-chip-btn:hover {
+  transform: translateY(-1px) scale(1.03) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
 }

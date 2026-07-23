@@ -40,32 +40,81 @@ const DEFAULT_HABITS = [
 
 /* ── ZİKİR LİSTESİ ── */
 let DAILY_ZIKIR = [
-  { t: 'Subhânallâh', n: '33 defa' },
-  { t: 'Elhamdülillâh', n: '33 defa' },
-  { t: 'Allâhu Ekber', n: '33 defa' },
-  { t: 'Lâ ilâhe illallâh', n: '100 defa' },
-  { t: 'Estağfirullâh', n: '100 defa' },
-  { t: 'Yâ Hayyu Yâ Kayyûm', n: '21 defa' },
-  { t: 'Lâ havle velâ kuvvete illâ billâh', n: '21 defa' },
-  { t: 'Sübhânallâhi ve bihamdihî', n: '100 defa' },
-  { t: 'Allâhümme salli alâ seyyidinâ Muhammed', n: '33 defa' },
-  { t: 'Hasbiyallâhu lâ ilâhe illâ Hû', n: '7 defa' },
-  { t: 'Rabbi zidnî ilmâ', n: '21 defa' },
-  { t: 'Yâ Latîf', n: '129 defa' },
-  { t: 'Yâ Rahmân Yâ Rahîm', n: '33 defa' },
-  { t: 'Sübhânellâhi velhamdülillâhi ve lâ ilâhe illallâhu vallâhu ekber', n: '33 defa' },
-  { t: 'Hasbünallâhu ve ni\'mel vekîl', n: '33 defa' },
-  { t: 'Rabbenâ âtinâ fid-dünyâ haseneten…', n: '7 defa' },
-  { t: 'Yâ Fettâh', n: '33 defa' },
-  { t: 'Yâ Vedûd', n: '33 defa' },
-  { t: 'Bismillâhirrahmânirrahîm', n: '100 defa' },
-  { t: 'Elhamdülillâhi alâ külli hâl', n: '33 defa' },
+  {
+    ar: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ",
+    t: "Estağfirullâhel Azîm",
+    n: "100 defa",
+    m: "Yüce Allah'tan bağışlanma dilerim."
+  },
+  {
+    ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ",
+    t: "Sübhânallâhi ve bihamdihî sübhânallâhil azîm",
+    n: "100 defa",
+    m: "Allah'ı hamd ile tesbih ederim, Yüce Allah'ı noksan sıfatlardan tenzih ederim."
+  },
+  {
+    ar: "لَا إِلَٰهَ إِلَّا اللَّهُ",
+    t: "Lâ ilâhe illallâh",
+    n: "100 defa",
+    m: "Allah'tan başka ilah yoktur."
+  },
+  {
+    ar: "لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+    t: "Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehül-mülkü ve lehül-hamdü ve hüve alâ külli şey'in kadîr",
+    n: "100 defa",
+    m: "Allah'tan başka ilah yoktur, O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır ve O her şeye gücü yetendir."
+  },
+  {
+    ar: "اللَّهُمَّ صَلِّ عَلَىٰ سَيِّدِنَا مُحَمَّدٍ وَعَلَىٰ آلِ سَيِّدِنَا مُحَمَّدٍ",
+    t: "Allâhümme salli alâ seyyidinâ Muhammedin ve alâ âli seyyidinâ Muhammed",
+    n: "100 defa",
+    m: "Allah'ım! Efendimiz Muhammed'e ve efendimiz Muhammed'in ailesine salât ve selâm eyle."
+  }
 ];
 
 /* ── GÜNLÜK İÇERİK (data/*.json'dan yüklenir, yüklenene kadar fallback) ── */
 let DAILY_AYATS = [
   { t: "Şüphesiz güçlükle beraber bir kolaylık vardır.", s: "İnşirâh 94/5" },
   { t: "Allah, hiç kimseye gücünün üstünde bir yük yüklemez.", s: "Bakara 2/286" },
+];
+
+/* ── ZİKİR İLE İLGİLİ KUTSAL AYETLER ── */
+const ZIKIR_AYATS = [
+  {
+    ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا اللَّهَ ذِكْرًا كَثِيرًا",
+    tr: "Ahzâb 33/41",
+    m: "Ey iman edenler! Allah'ı çokça zikredin."
+  },
+  {
+    ar: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+    tr: "Ra'd 13/28",
+    m: "Biliniz ki kalpler ancak Allah'ı anmakla huzur bulur."
+  },
+  {
+    ar: "فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ",
+    tr: "Bakara 2/152",
+    m: "Beni anın ki ben de sizi anayım. Bana şükredin, nankörlük etmeyin."
+  },
+  {
+    ar: "الَّذِينَ يَذْكُرُونَ اللَّهَ قِيَامًا وَقُعُودًا وَعَلَىٰ جُنُوبِهِمْ",
+    tr: "Âl-i İmrân 3/191",
+    m: "Onlar ayaktayken, otururken ve yanları üzerine yatarken Allah'ı anarlar."
+  },
+  {
+    ar: "وَاذْكُرُوا اللَّهَ كَثِيرًا لَعَلَّكُمْ تُفْلِحُونَ",
+    tr: "Cuma 62/10",
+    m: "Allah'ı çokça zikredin ki kurtuluşa eresiniz."
+  },
+  {
+    ar: "وَاذْكُرْ رَبَّكَ فِي نَفْسِكَ تَضَرُّعًا وَخِيفَةً",
+    tr: "A'râf 7/205",
+    m: "Rabbini içinden, alçak gönüllülükle ve derin bir saygıyla an."
+  },
+  {
+    ar: "فَإِذَا قَضَيْتُمُ الصَّلَاةَ فَاذْكُرُوا اللَّهَ قِيَامًا وَقُعُودًا وَعَلَىٰ جُنُوبِكُمْ",
+    tr: "Nisâ 4/103",
+    m: "Namazı kıldıktan sonra; ayaktayken, otururken ve yanlarınız üzerindeyken Allah'ı zikredin."
+  }
 ];
 let DAILY_HADITHS = [
   { t: "Merhamet etmeyene merhamet olunmaz.", s: "Buhârî, Edeb, 18" },
@@ -450,7 +499,7 @@ function sanitizeState(raw) {
   st.cats = normalizeCats(st.cats || CATS); CATS = st.cats;
   st.habitDefs = normalizeHabits(st.habitDefs || HABITS); HABITS = st.habitDefs;
   st.tasks = Array.isArray(st.tasks) ? st.tasks.slice(0, 3000).map(sanitizeTask) : [];
-  ['prayers', 'habits', 'zikirDone', 'catTime', 'timerSess', 'nafile', 'qada'].forEach(k => {
+  ['prayers', 'habits', 'zikirDone', 'catTime', 'timerSess', 'nafile', 'qada', 'esmaMemorized'].forEach(k => {
     if (!st[k] || typeof st[k] !== 'object' || Array.isArray(st[k])) st[k] = {};
   });
   ['sabah', 'ogle', 'ikindi', 'aksam', 'yatsi', 'vitir'].forEach(k => {
@@ -1220,18 +1269,92 @@ function timerToggle() {
         clearInterval(T.iv); T.running = false; T.startedAt = null;
         const d = today();
         if (!S.timerSess[d]) S.timerSess[d] = 0; S.timerSess[d]++;
-        const cat = document.getElementById('timerCat').value;
-        if (cat) {
+        
+        const selectedVal = document.getElementById('timerCat')?.value || '';
+        let completedItemName = '';
+
+        if (selectedVal.startsWith('task_')) {
+          // 1. Doğrudan seçilen bir görev
+          const taskId = selectedVal.replace('task_', '');
+          if (taskId.startsWith('quran_')) {
+            const surahId = taskId.replace('quran_', '');
+            if (!S.quran) S.quran = { routines: {} };
+            if (!S.quran.routines) S.quran.routines = {};
+            if (!S.quran.routines[d]) S.quran.routines[d] = {};
+            S.quran.routines[d][surahId] = true;
+            const def = (QURAN_ROUTINES_DEF || []).find(x => x.id === surahId);
+            completedItemName = def ? `“${def.title}” okuması` : 'Kuran rutini';
+          } else {
+            const targetTask = (S.tasks || []).find(t => String(t.id) === taskId || `task_${t.id}` === selectedVal);
+            if (targetTask) {
+              targetTask.done = true;
+              completedItemName = `“${targetTask.title}” görevi`;
+              
+              // Eğer görev başlığı Kitap veya Kuran içeriyorsa ilgili alışkanlığı da işaretle
+              const lowTitle = targetTask.title.toLowerCase();
+              if (!S.habits[d]) S.habits[d] = {};
+              if (lowTitle.includes('kitap') || targetTask.cat === 'kitap') S.habits[d]['kitap'] = true;
+              if (lowTitle.includes('kuran') || targetTask.cat === 'kuran') {
+                S.habits[d]['kuran'] = true;
+              }
+            }
+          }
+        } else if (selectedVal) {
+          // 2. Kategori seçilmiş: İlgili kategorideki ilk tamamlanmamış görevi ve alışkanlığı tamamla
+          const catKey = selectedVal;
+          const catName = CATS[catKey]?.l || catKey;
           if (!S.catTime[d]) S.catTime[d] = {};
-          S.catTime[d][cat] = (S.catTime[d][cat] || 0) + T.total;
+          S.catTime[d][catKey] = (S.catTime[d][catKey] || 0) + T.total;
+
+          // İlgili kategorideki ilk tamamlanmamış görevi tamamla
+          const matchingTasks = (S.tasks || []).filter(t => !t.done && (t.cat === catKey || t.title.toLowerCase().includes(catName.toLowerCase())));
+          if (matchingTasks.length > 0) {
+            matchingTasks[0].done = true;
+            completedItemName = `“${matchingTasks[0].title}” görevi`;
+          } else {
+            completedItemName = `“${catName}” odağı`;
+          }
+
+          // Alışkanlıklar (Kitap / Kuran vb.)
+          if (!S.habits[d]) S.habits[d] = {};
+          if (catKey === 'kitap' || catName.toLowerCase().includes('kitap')) {
+            S.habits[d]['kitap'] = true;
+          }
+          if (catKey === 'kuran' || catName.toLowerCase().includes('kuran')) {
+            S.habits[d]['kuran'] = true;
+          }
+        } else {
+          // 3. Kategori seçilmemiş: Başlığında "kitap" veya "kuran" geçen tamamlanmamış görev varsa otomatik tamamla
+          const readTasks = (S.tasks || []).filter(t => !t.done && (t.title.toLowerCase().includes('kitap') || t.title.toLowerCase().includes('kuran') || t.title.toLowerCase().includes('okuma')));
+          if (readTasks.length > 0) {
+            readTasks[0].done = true;
+            completedItemName = `“${readTasks[0].title}” görevi`;
+            const lowTitle = readTasks[0].title.toLowerCase();
+            if (!S.habits[d]) S.habits[d] = {};
+            if (lowTitle.includes('kitap')) S.habits[d]['kitap'] = true;
+            if (lowTitle.includes('kuran')) S.habits[d]['kuran'] = true;
+          }
         }
-        save(); renderSessions(); renderCatTimes();
+
+        save();
+        renderTasks();
+        renderHabits();
+        renderSessions();
+        renderCatTimes();
+        renderHeaderAssistant();
+        renderQuranView();
+        renderWeeklyQuranAnalysis();
+        renderSelects();
+
         document.getElementById('tbstart').textContent = '▶ Başlat';
         document.getElementById('tph').textContent = 'Tamamlandı 🎉';
-        toast('Seans tamamlandı! 🎉', 's');
+        const finalMsg = completedItemName 
+          ? `🎉 Odaklanma Seansı Tamamlandı! ${completedItemName} otomatik olarak tamamlandı.`
+          : '🎉 Odaklanma Seansı Tamamlandı!';
+        toast(finalMsg, 's');
         playSound('done');
         if (S.notifEnabled && Notification.permission === 'granted')
-          new Notification('⏱ Pomodoro Tamamlandı', { body: 'Seans bitti! Molayı hak ettin. ☕', tag: 'pomodoro' });
+          new Notification('⏱ Pomodoro Tamamlandı', { body: finalMsg, tag: 'pomodoro' });
       }
     }, 250);
   }
@@ -1257,8 +1380,41 @@ function renderSessions() {
     Array.from({ length: 4 }, (_, i) => `<div class="sdot${i < n ? ' done' : ''}"></div>`).join('');
 }
 
+function startFocusForTask(taskId, defaultMins = 30) {
+  showView('tasks');
+  const panel = document.getElementById('tasksFocusPanel');
+  if (panel && panel.style.display === 'none') {
+    if (typeof toggleTaskFocusPanel === 'function') toggleTaskFocusPanel();
+    else panel.style.display = 'grid';
+  }
+  
+  renderSelects();
+  const sel = document.getElementById('timerCat');
+  if (sel) {
+    sel.value = `task_${taskId}`;
+  }
+  
+  const btn30 = Array.from(document.querySelectorAll('.tpre')).find(b => b.textContent.includes('30'));
+  if (btn30) {
+    setPreset(defaultMins, btn30);
+  } else {
+    timerReset();
+    T.pausedRemain = null;
+    T.remain = defaultMins * 60;
+    T.total = defaultMins * 60;
+    drawTimer();
+  }
+
+  if (!T.running) {
+    timerToggle();
+  }
+  
+  toast(`⏱ Odaklanma sayacı başlatıldı (${defaultMins} dk)`, 'i');
+}
+window.startFocusForTask = startFocusForTask;
+
 /* ── GÖRÜNÜM GEÇER ── */
-function showView(v, el) {
+window.showView = function (v, el) {
   document.querySelectorAll('.view').forEach(x => x.classList.remove('on'));
   document.getElementById('v-' + v)?.classList.add('on');
 
@@ -1268,13 +1424,22 @@ function showView(v, el) {
     t.classList.toggle('on', oc.includes(`'${v}'`));
   });
 
-  if (v === 'analytics' || v === 'habits') { renderHabits(); renderAnalytics(); }
+  if (v === 'analytics' || v === 'habits') { renderHabits(); renderAnalytics(); renderWeeklyIbadet(); renderWeeklyZikirAnalysis(); renderWeeklyQuranAnalysis(); }
   if (v === 'calendar') { renderCalendar(); }
   if (v === 'prayers') { renderNamaz(); }
   if (v === 'zikir') { renderEsma(); renderDailyZikir(); renderZikirView(); }
   if (v === 'tasks') { renderCatCards(); renderTasks(); renderSessions(); renderCatTimes(); drawTimer(); }
   if (v === 'quran') { renderQuranView(); }
-}
+  if (v === 'dua') { renderDuaView(); }
+  if (v === 'hadis') { renderHadisView(); }
+  if (v === 'books') { renderBooksView(); }
+  if (v === 'komutrotasi') { renderKomutRotasiView(); }
+  if (v === 'teacher') { renderTeacherView(); }
+  if (v === 'finance') { renderFinanceView(); }
+
+  renderHeaderAssistant();
+};
+function showView(v, el) { window.showView(v, el); }
 
 /* ── AKILLI TAHTA MODU VE TAM EKRAN ── */
 function toggleSmartboardMode() {
@@ -1439,7 +1604,26 @@ function renderSelects() {
   if (fCatEl) fCatEl.innerHTML = opts;
 
   const timerCatEl = document.getElementById('timerCat');
-  if (timerCatEl) timerCatEl.innerHTML = '<option value="">— Kategori seç —</option>' + opts;
+  if (timerCatEl) {
+    let tOpts = '<option value="">— Otomatik Kategori veya Görev Seç —</option>';
+    
+    // 1. Kategoriler
+    tOpts += '<optgroup label="📂 Kategori Odakları">' + opts + '</optgroup>';
+    
+    // 2. Bugünün Tamamlanmamış Görevleri (Otomatik Bağlama İçin)
+    const uncompletedTasks = (S.tasks || []).filter(t => !t.done && isTaskForToday(t));
+    if (uncompletedTasks.length > 0) {
+      tOpts += '<optgroup label="📋 Görevlerim (Tamamlanınca Otomatik İşaretlenir)">';
+      uncompletedTasks.forEach((t, idx) => {
+        const catObj = CATS[t.cat] || {};
+        const tId = t.id !== undefined ? t.id : idx;
+        tOpts += `<option value="task_${tId}">🎯 ${esc(t.title)} (${esc(catObj.l || 'Genel')})</option>`;
+      });
+      tOpts += '</optgroup>';
+    }
+    
+    timerCatEl.innerHTML = tOpts;
+  }
 
   const batchCatEl = document.getElementById('batchDefaultCat');
   if (batchCatEl) batchCatEl.innerHTML = opts;
@@ -1826,13 +2010,15 @@ function renderNamaz() {
   // Sonraki vakit (Kaldırıldı)
   renderDailyZikir();
   renderWeeklyIbadet();
-  renderNafile();
   renderKerahet();
   renderVaktinQuote();
   renderEsma();
   renderQada();
   renderHeaderPrayerVakit();
   renderPrayerTimeline();
+  renderTesbihatTab();
+  renderHeaderAssistant();
+  renderWeeklyZikirAnalysis();
 }
 
 /* 🔒 [DOKUNULMAZ / KİLİTLİ ALAN] GÜNÜN VAKİT ZAMAN ŞERİDİ (24 SAAT DETAYLI TÜM VAKİTLER) ── */
@@ -2074,6 +2260,7 @@ function renderDayProg() {
 function renderEsma() {
   const arEl = document.getElementById('esmaArabic');
   const meanEl = document.getElementById('esmaMeaning');
+  const trEl = document.getElementById('esmaTranslit');
   if (!arEl) return;
 
   const list = (Array.isArray(ESMA_LIST) && ESMA_LIST.length) ? ESMA_LIST : [
@@ -2081,34 +2268,142 @@ function renderEsma() {
   ];
 
   const dayIdx = typeof dayOfYear === 'function' ? dayOfYear() : 0;
-  const esma = list[dayIdx % list.length] || list[0];
+  const idx = dayIdx % list.length;
+  const esma = list[idx] || list[0];
 
-  arEl.innerHTML = `<div style="font-family:'Amiri',serif; font-size:clamp(1.5rem, 2vw, 2.2rem); color:var(--gold); line-height:1.3; font-weight:700; text-align:right; word-break:break-word; max-width:100%; direction:rtl;">${esma.ar || ''}</div>`;
-  if (meanEl) meanEl.textContent = esma.m || '';
+  arEl.innerHTML = `<div style="font-family:'Amiri',serif; font-size:clamp(1.6rem, 2.2vw, 2.4rem); color:var(--gold); line-height:1.3; font-weight:700; text-align:right; direction:rtl;">${esma.ar || ''}</div>`;
+  if (trEl) trEl.textContent = esma.tr || '';
+  if (meanEl) meanEl.textContent = esma.m ? `"${esma.m}"` : '';
 }
 
 function renderDailyZikir() {
   const textEl = document.getElementById('zikirText');
-  const noteEl = document.getElementById('zikirNote');
-  const countLbl = document.getElementById('zikirCountLabel');
+  const labelEl = document.getElementById('zikirCountLabel');
   if (!textEl) return;
 
-  const list = (Array.isArray(DAILY_ZIKIR) && DAILY_ZIKIR.length) ? DAILY_ZIKIR : [
-    { ar: "اللَّهُ أَكْبَرُ", tr: "Allahû Ekber", m: "Allah en büyüktür.", n: "33 defa" }
+  const list = (Array.isArray(ZIKIR_AYATS) && ZIKIR_AYATS.length) ? ZIKIR_AYATS : [
+    { ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا اللَّهَ ذِكْرًا كَثِيرًا", tr: "Ahzâb 33/41", m: "Ey iman edenler! Allah'ı çokça zikredin." }
   ];
 
   const dayIdx = typeof dayOfYear === 'function' ? dayOfYear() : 0;
-  const zikir = list[dayIdx % list.length] || list[0];
+  const ayet = list[dayIdx % list.length] || list[0];
 
-  if (countLbl) countLbl.textContent = zikir.n || '33 defa';
+  if (labelEl) labelEl.textContent = ayet.tr || 'Ayet-i Kerime';
 
-  const displayHtml = zikir.ar
-    ? `<div style="font-family:'Amiri',serif; font-size:clamp(1.4rem, 1.8vw, 2rem); color:var(--teal); line-height:1.4; direction:rtl; text-align:right; font-weight:700; word-break:break-word; max-width:100%;">${zikir.ar}</div>
-       <div style="font-size:0.95rem; font-weight:800; color:var(--teal); text-align:right; margin-top:2px;">${zikir.t || zikir.tr || ''}</div>`
-    : `<div style="font-size:0.95rem; font-weight:800; color:var(--tx); text-align:right;">${zikir.t || zikir.tr || zikir.m || ''}</div>`;
+  textEl.innerHTML = `
+    <div style="font-family:'Amiri',serif; font-size:clamp(1.4rem, 1.8vw, 2.1rem); color:var(--teal); line-height:1.4; direction:rtl; text-align:right; font-weight:700; margin-bottom:4px;">${ayet.ar}</div>
+    <div style="font-size:0.88rem; color:var(--tx2); font-style:italic; text-align:left; line-height:1.4;">"${ayet.m}"</div>
+  `;
+}
 
-  textEl.innerHTML = displayHtml;
-  if (noteEl) noteEl.textContent = zikir.m ? zikir.m : '';
+/* ── RENDER: TESBİHAT & DUALAR REHBERİ ── */
+let currentTesbihatTab = 'tesbihat';
+
+function switchTesbihatTab(tab, btn) {
+  currentTesbihatTab = tab;
+  document.querySelectorAll('#tesbihatTabBtn-tesbihat, #tesbihatTabBtn-ayetelkursi, #tesbihatTabBtn-namazDualari').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  renderTesbihatTab(tab);
+}
+
+function renderTesbihatTab(tab = currentTesbihatTab) {
+  const container = document.getElementById('tesbihatTabContent');
+  if (!container) return;
+
+  if (tab === 'ayetelkursi') {
+    container.innerHTML = `
+      <div class="tesbihat-box">
+        <div class="tesbihat-item" style="border-left:4px solid var(--gold);">
+          <div class="tesbihat-ar">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</div>
+          <div class="tesbihat-tr">Ayete'l-Kürsî (Bakara 2/255)</div>
+          <div class="tesbihat-m">"Allah, O'ndan başka ilah yoktur. O diridir, kayyûmdur. O'nu ne bir uyuklama tutabilir ne de uyku. Göklerde ve yerde ne varsa hepsi O'nundur..."</div>
+        </div>
+      </div>
+    `;
+  } else if (tab === 'namazDualari') {
+    container.innerHTML = `
+      <div class="tesbihat-box" style="display:flex; flex-direction:column; gap:10px; width:100%;">
+        <div class="tesbihat-item" style="border-left:4px solid var(--gold);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div class="tesbihat-tr">Sübhaneke Duası</div>
+            <span style="font-size:0.68rem; color:var(--gold); font-weight:700;">Namaz Giriş Duası</span>
+          </div>
+          <div class="tesbihat-ar">سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَىٰ جَدُّكَ وَلَا إِلَٰهَ غَيْرُكَ</div>
+          <div class="tesbihat-m">"Allah'ım! Sen her türlü noksanlıktan münezzehsin, Seni hamd ile tesbih ederim. İsmin mübarektir, şanın yücedir, Senden başka ilah yoktur."</div>
+        </div>
+
+        <div class="tesbihat-item" style="border-left:4px solid var(--teal);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div class="tesbihat-tr">Ettehiyyâtü Duası</div>
+            <span style="font-size:0.68rem; color:var(--teal); font-weight:700;">Oturuş (Teşehhüd) Duası</span>
+          </div>
+          <div class="tesbihat-ar">التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ 🤲 اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ 🤲 اَلسَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ 🤲 أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</div>
+          <div class="tesbihat-m">"Bütün hürmetler, ibadetler ve güzel sözler Allah'a mahsustur. Ey Peygamber! Selam, Allah'ın rahmeti ve bereketleri senin üzerine olsun. Selam bize ve Allah'ın salih kullarına olsun."</div>
+        </div>
+
+        <div class="tesbihat-item" style="border-left:4px solid #60a5fa;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div class="tesbihat-tr">Salli & Bârik Duaları</div>
+            <span style="font-size:0.68rem; color:#60a5fa; font-weight:700;">Salavat Duaları</span>
+          </div>
+          <div class="tesbihat-ar">اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ 🤲 اللَّهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ</div>
+          <div class="tesbihat-m">"Allah'ım! Hz. İbrahim'e ve ailesine salât ve bereket ihsan ettiğin gibi Hz. Muhammed'e ve ailesine de salât ve bereket ihsan eyle. Şüphesiz Sen övülmeye layıksın, şanı yücesin."</div>
+        </div>
+
+        <div class="tesbihat-item" style="border-left:4px solid #f59e0b;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div class="tesbihat-tr">Rabbenâ Âtinâ Duası (Bakara 2/201)</div>
+            <span style="font-size:0.68rem; color:#f59e0b; font-weight:700;">Son Oturuş Duası</span>
+          </div>
+          <div class="tesbihat-ar">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div>
+          <div class="tesbihat-m">"Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver ve bizi ateş azabından koru."</div>
+        </div>
+
+        <div class="tesbihat-item" style="border-left:4px solid #10b981;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div class="tesbihat-tr">Rabbenâğfirlî Duası (İbrâhîm 14/41)</div>
+            <span style="font-size:0.68rem; color:#10b981; font-weight:700;">Bağışlanma Duası</span>
+          </div>
+          <div class="tesbihat-ar">رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ</div>
+          <div class="tesbihat-m">"Rabbimiz! Hesabın görüleceği gün beni, anne-babamı ve bütün müminleri bağışla."</div>
+        </div>
+
+        <div class="tesbihat-item" style="border-left:4px solid #a855f7;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div class="tesbihat-tr">Rabbenâ C'alnî (Rabbi'c'alnî) Duası (İbrâhîm 14/40)</div>
+            <span style="font-size:0.68rem; color:#a855f7; font-weight:700;">Namaz ve Zürriyet Duası</span>
+          </div>
+          <div class="tesbihat-ar">رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ</div>
+          <div class="tesbihat-m">"Rabbim! Beni ve neslimi namazı dosdoğru kılanlardan eyle. Rabbimiz! Duamı kabul buyur."</div>
+        </div>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <div class="tesbihat-box" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:10px;">
+        <div class="tesbihat-item" style="border-left:3px solid var(--teal);">
+          <div style="font-size:0.72rem; font-weight:800; color:var(--teal); margin-bottom:4px;">1. 33 DEFA SUBHANALLAH</div>
+          <div class="tesbihat-ar">سُبْحَانَ اللَّهِ</div>
+          <div class="tesbihat-m">"Allah her türlü noksanlıktan uzaktır."</div>
+        </div>
+        <div class="tesbihat-item" style="border-left:3px solid var(--gold);">
+          <div style="font-size:0.72rem; font-weight:800; color:var(--gold); margin-bottom:4px;">2. 33 DEFA ELHAMDÜLİLLAH</div>
+          <div class="tesbihat-ar">الْحَمْدُ لِلَّهِ</div>
+          <div class="tesbihat-m">"Hamd yalnız Allah'a mahsustur."</div>
+        </div>
+        <div class="tesbihat-item" style="border-left:3px solid #60a5fa;">
+          <div style="font-size:0.72rem; font-weight:800; color:#60a5fa; margin-bottom:4px;">3. 33 DEFA ALLAHUEKBER</div>
+          <div class="tesbihat-ar">اللَّهُ أَكْبَرُ</div>
+          <div class="tesbihat-m">"Allah en büyüktür."</div>
+        </div>
+      </div>
+      <div style="margin-top:10px; padding:10px; background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.2); border-radius:10px; font-size:0.78rem; color:var(--tx2);">
+        <span style="color:var(--gold); font-weight:800;">🤲 Bitiriş Duası (Kelime-i Tevhid):</span> <br>
+        <span style="font-family:'Amiri',serif; font-size:1.1rem; color:var(--gold);">لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</span><br>
+        <em>"Allah'tan başka ilah yoktur, O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır."</em>
+      </div>
+    `;
+  }
 }
 
 /* ── RENDER: GÖREVLER ── */
@@ -2220,6 +2515,29 @@ function switchZikirTab(tab, el) {
   renderZikirView();
 }
 
+let activeEsmaSubFilter = 'all';
+
+window.switchEsmaSubFilter = function (filter) {
+  activeEsmaSubFilter = filter;
+  renderZikirView();
+};
+
+window.toggleEsmaMemorized = function (idx) {
+  if (!S.esmaMemorized) S.esmaMemorized = {};
+  const isNow = !S.esmaMemorized[idx];
+  S.esmaMemorized[idx] = isNow;
+  save();
+  if (isNow) {
+    playSound('done');
+    triggerConfetti();
+    const esmaName = ESMA_LIST && ESMA_LIST[idx] ? ESMA_LIST[idx].tr : '';
+    toast(`🧠 "${esmaName}" ismini ezberlediniz olarak işaretlediniz! 🎉`, 's');
+  } else {
+    toast(`Ezber işareti kaldırıldı.`, 'i');
+  }
+  renderZikirView();
+};
+
 function filterZikirView() {
   renderZikirView();
 }
@@ -2245,6 +2563,8 @@ function tapCardZikir(idx) {
   }
 
   renderZikirView();
+  renderHeaderAssistant();
+  renderWeeklyZikirAnalysis();
 }
 
 function resetCardZikir(idx) {
@@ -2254,7 +2574,35 @@ function resetCardZikir(idx) {
   }
   save();
   renderZikirView();
+  renderHeaderAssistant();
+  renderWeeklyZikirAnalysis();
   toast('Zikir sıfırlandı, Günlük Zikirler sekmesine geri eklendi.', 'i');
+}
+
+function toggleZikirComplete(idx) {
+  const z = DAILY_ZIKIR[idx];
+  if (!z) return;
+  const ds = today();
+  if (!S.zikirCardCounts) S.zikirCardCounts = {};
+  if (!S.zikirCardCounts[ds]) S.zikirCardCounts[ds] = {};
+
+  const targetCnt = parseZikirTarget(z);
+  const cur = S.zikirCardCounts[ds][idx] || 0;
+
+  if (cur >= targetCnt) {
+    delete S.zikirCardCounts[ds][idx];
+    toast(`"${z.t || z.tr}" zikri sıfırlandı.`, 'i');
+  } else {
+    S.zikirCardCounts[ds][idx] = targetCnt;
+    if (typeof triggerConfetti === 'function') triggerConfetti();
+    toast(`🎉 "${z.t || z.tr}" zikri tamamlandı!`, 's');
+    playSound('done');
+  }
+
+  save();
+  renderZikirView();
+  renderHeaderAssistant();
+  renderWeeklyZikirAnalysis();
 }
 
 function normTR(s) {
@@ -2310,7 +2658,16 @@ function renderZikirView() {
   let html = '';
 
   if (activeZikirTab === 'esma') {
-    let list = ESMA_LIST || [];
+    cont.className = 'esma-grid-container';
+
+    if (!S.esmaMemorized) S.esmaMemorized = {};
+    const totalEsma = (ESMA_LIST || []).length;
+    const memorizedCount = (ESMA_LIST || []).filter((_, i) => S.esmaMemorized[i]).length;
+    const pct = totalEsma > 0 ? Math.round((memorizedCount / totalEsma) * 100) : 0;
+
+    let list = (ESMA_LIST || []).map((e, i) => ({ ...e, origIdx: i }));
+
+    // Arama filtresi
     if (q) {
       list = list.filter(e =>
         normTR(e.tr).includes(nQ) ||
@@ -2320,21 +2677,57 @@ function renderZikirView() {
         (e.ar || '').includes(q)
       );
     }
+
+    // Ezber alt filtresi
+    if (activeEsmaSubFilter === 'memorized') {
+      list = list.filter(e => S.esmaMemorized[e.origIdx]);
+    } else if (activeEsmaSubFilter === 'pending') {
+      list = list.filter(e => !S.esmaMemorized[e.origIdx]);
+    }
+
+    let progressHeader = `
+      <div style="grid-column:1/-1; background:var(--sf2); border:1px solid var(--bd); border-radius:14px; padding:14px 18px; margin-bottom:4px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+          <div style="font-weight:800; font-size:0.92rem; color:var(--gold); display:flex; align-items:center; gap:8px;">
+            <span>🧠 Esmâ-ül Hüsna Ezber Takibi</span>
+            <span style="font-size:0.8rem; font-weight:700; color:var(--teal); background:rgba(62,207,176,0.12); padding:2px 10px; border-radius:12px; font-family:'JetBrains Mono',monospace;">${memorizedCount} / ${totalEsma} (%${pct})</span>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button onclick="switchEsmaSubFilter('all')" class="fchip ${activeEsmaSubFilter === 'all' ? 'on' : ''}" style="font-size:0.75rem; padding:4px 10px; border-radius:12px;">📜 Tümü (${totalEsma})</button>
+            <button onclick="switchEsmaSubFilter('memorized')" class="fchip ${activeEsmaSubFilter === 'memorized' ? 'on' : ''}" style="font-size:0.75rem; padding:4px 10px; border-radius:12px;">🧠 Ezberlenen (${memorizedCount})</button>
+            <button onclick="switchEsmaSubFilter('pending')" class="fchip ${activeEsmaSubFilter === 'pending' ? 'on' : ''}" style="font-size:0.75rem; padding:4px 10px; border-radius:12px;">⏳ Ezberlenecek (${totalEsma - memorizedCount})</button>
+          </div>
+        </div>
+        <div style="width:100%; height:8px; background:var(--sf3); border-radius:4px; overflow:hidden;">
+          <div style="width:${pct}%; height:100%; background:linear-gradient(90deg, var(--teal), var(--gold)); transition:width 0.3s ease;"></div>
+        </div>
+      </div>
+    `;
+
     if (!list.length) {
-      cont.innerHTML = `<div class="empty" style="grid-column:1/-1;"><div class="empty-ico">🔍</div><div class="empty-txt">Esmâ bulunamadı.</div></div>`;
+      cont.innerHTML = progressHeader + `<div class="empty" style="grid-column:1/-1; margin-top:12px;"><div class="empty-ico">🔍</div><div class="empty-txt">Esmâ bulunamadı.</div></div>`;
       return;
     }
-    html = list.map((e, idx) => `
-      <div class="esma-item-card" style="text-align:right;">
-        <div class="esma-card-hdr">
-          <span class="esma-num">#${idx + 1}</span>
+
+    html = progressHeader + list.map(e => {
+      const isMem = !!S.esmaMemorized[e.origIdx];
+      return `
+        <div class="esma-item-card ${isMem ? 'memorized' : ''}" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:16px 12px; border-radius:14px; background:var(--sf2); border:1px solid ${isMem ? 'var(--grn)' : 'var(--bd)'}; position:relative;">
+          <span style="position:absolute; top:8px; left:10px; font-size:0.72rem; font-weight:800; color:var(--gold); opacity:0.85;">#${e.origIdx + 1}</span>
+          <button onclick="toggleEsmaMemorized(${e.origIdx})" title="${isMem ? 'Ezberlendi (İşareti kaldır)' : 'Ezberle'}" style="position:absolute; top:6px; right:8px; border:none; background:none; cursor:pointer; font-size:1.1rem; padding:2px; line-height:1; user-select:none;">
+            ${isMem ? '✅' : '⚪'}
+          </button>
+          <div style="font-family:'Amiri',serif; font-size:1.8rem; color:${isMem ? 'var(--grn)' : 'var(--gold)'}; font-weight:700; margin-top:8px; margin-bottom:4px; text-align:center; direction:rtl;">${esc(e.ar || '')}</div>
+          <div style="font-weight:800; color:var(--teal); font-size:0.95rem; margin-bottom:4px; text-align:center;">${esc(e.tr || '')}</div>
+          <div style="font-size:0.78rem; color:var(--tx2); font-style:italic; text-align:center; line-height:1.3; margin-bottom:10px;">${esc(e.m || '')}</div>
+          <button onclick="toggleEsmaMemorized(${e.origIdx})" style="margin-top:auto; padding:5px 12px; border-radius:10px; border:1px solid ${isMem ? 'var(--grn)' : 'var(--bd)'}; background:${isMem ? 'var(--grnbg)' : 'var(--sf3)'}; color:${isMem ? 'var(--grn)' : 'var(--tx2)'}; font-size:0.75rem; font-weight:700; cursor:pointer; width:100%; transition:all 0.2s ease;">
+            ${isMem ? '🧠 Ezberlendi' : '➕ Ezberle'}
+          </button>
         </div>
-        <div class="zikir-card-ar" style="text-align:right; direction:rtl;">${esc(e.ar || '')}</div>
-        <div class="zikir-card-tr" style="text-align:right; font-weight:700; color:var(--gold); font-size:0.95rem; margin:2px 0;">${esc(e.tr || '')}</div>
-        <div class="zikir-card-meaning" style="text-align:right;">${esc(e.m || '')}</div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   } else if (activeZikirTab === 'done') {
+    cont.className = 'zikir-grid-container';
     let list = completedZikirs;
     if (q) {
       list = list.filter(z =>
@@ -2350,19 +2743,27 @@ function renderZikirView() {
       return;
     }
     html = list.map(z => `
-      <div class="zikir-item-card done" style="opacity:0.75; border-color:var(--grn); text-align:right;">
-        <div>
-          <div class="zikir-card-ar" style="text-align:right; direction:rtl;">${esc(z.ar || '')}</div>
-          <div class="zikir-card-tr" style="text-align:right; font-weight:700; color:var(--teal); font-size:0.95rem; margin:2px 0;">${esc(z.t || z.tr || '')}</div>
-          ${z.m ? `<div class="zikir-card-meaning" style="text-align:right;">${esc(z.m)}</div>` : ''}
+      <div class="zikir-item-card done" style="width:100%; opacity:0.9; border-color:var(--grn);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:200px; text-align:left; display:flex; align-items:center; gap:10px;">
+            <div onclick="toggleZikirComplete(${z.origIdx})" style="width:28px; height:28px; border-radius:50%; border:2px solid var(--grn); background:var(--grn); color:#0b1320; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.9rem; flex-shrink:0; cursor:pointer;" title="İşareti kaldır / Sıfırla">
+              ✓
+            </div>
+            <div>
+              <div class="zikir-card-tr" style="font-weight:800; color:var(--grn); font-size:1.05rem; margin-bottom:2px; text-align:left; text-decoration:line-through; cursor:pointer;" onclick="toggleZikirComplete(${z.origIdx})">${esc(z.t || z.tr || '')}</div>
+              ${z.m ? `<div class="zikir-card-meaning" style="font-size:0.85rem; color:var(--tx2); font-style:italic; text-align:left;">${esc(z.m)}</div>` : ''}
+            </div>
+          </div>
+          <div class="zikir-card-ar" style="font-family:'Amiri',serif; font-size:1.4rem; color:var(--gold); font-weight:700; direction:rtl; text-align:right;">${esc(z.ar || '')}</div>
         </div>
-        <div class="zikir-card-foot">
-          <span class="zikir-count-pill" style="background:var(--grnbg); color:var(--grn);">✅ Tamamlandı (${z.cnt}/${z.target})</span>
-          <button class="zikir-tap-btn" onclick="resetCardZikir(${z.origIdx})" style="border-color:var(--bd); color:var(--tx2); background:var(--sf3);" title="Sıfırla ve listeye geri al">↺ Sıfırla</button>
+        <div class="zikir-card-foot" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:8px; border-top:1px dashed var(--bd);">
+          <span class="zikir-count-pill" style="padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:700; background:var(--grnbg); color:var(--grn);">✅ Tamamlandı (${z.cnt}/${z.target})</span>
+          <button class="zikir-tap-btn" onclick="resetCardZikir(${z.origIdx})" style="padding:6px 14px; border-radius:8px; border:1px solid var(--bd); color:var(--tx2); background:var(--sf3); cursor:pointer; font-weight:700; font-size:0.8rem;" title="Sıfırla ve listeye geri al">↺ Sıfırla</button>
         </div>
       </div>
     `).join('');
   } else {
+    cont.className = 'zikir-grid-container';
     let list = pendingZikirs;
     if (q) {
       list = list.filter(z =>
@@ -2378,15 +2779,25 @@ function renderZikirView() {
       return;
     }
     html = list.map(z => `
-      <div class="zikir-item-card" style="text-align:right;">
-        <div>
-          <div class="zikir-card-ar" style="text-align:right; direction:rtl;">${esc(z.ar || '')}</div>
-          <div class="zikir-card-tr" style="text-align:right; font-weight:700; color:var(--teal); font-size:0.95rem; margin:2px 0;">${esc(z.t || z.tr || '')}</div>
-          ${z.m ? `<div class="zikir-card-meaning" style="text-align:right;">${esc(z.m)}</div>` : ''}
+      <div class="zikir-item-card" style="width:100%; border:1px solid ${z.isDone ? 'var(--teal)' : 'var(--bd)'};">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:200px; text-align:left; display:flex; align-items:center; gap:10px;">
+            <div onclick="toggleZikirComplete(${z.origIdx})" style="width:28px; height:28px; border-radius:50%; border:2px solid ${z.isDone ? 'var(--teal)' : 'var(--tx3)'}; background:${z.isDone ? 'var(--teal)' : 'transparent'}; color:#0b1320; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.9rem; flex-shrink:0; cursor:pointer; transition:all 0.2s ease;" title="${z.isDone ? 'Tamamlandı (İşareti kaldır)' : 'Tamamlandı olarak işaretle'}">
+              ${z.isDone ? '✓' : ''}
+            </div>
+            <div>
+              <div class="zikir-card-tr" style="font-weight:800; color:${z.isDone ? 'var(--teal)' : 'var(--tx)'}; font-size:1.05rem; margin-bottom:2px; text-align:left; text-decoration:${z.isDone ? 'line-through' : 'none'}; cursor:pointer;" onclick="toggleZikirComplete(${z.origIdx})">${esc(z.t || z.tr || '')}</div>
+              ${z.m ? `<div class="zikir-card-meaning" style="font-size:0.85rem; color:var(--tx2); font-style:italic; text-align:left;">${esc(z.m)}</div>` : ''}
+            </div>
+          </div>
+          <div class="zikir-card-ar" style="font-family:'Amiri',serif; font-size:1.4rem; color:var(--gold); font-weight:700; direction:rtl; text-align:right;">${esc(z.ar || '')}</div>
         </div>
-        <div class="zikir-card-foot">
-          <span class="zikir-count-pill">🎯 Hedef: ${z.target}x ${z.cnt > 0 ? `(${z.cnt}/${z.target})` : ''}</span>
-          <button class="zikir-tap-btn" onclick="tapCardZikir(${z.origIdx})">👆 Say (+1)</button>
+        <div class="zikir-card-foot" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:8px; border-top:1px dashed var(--bd);">
+          <span class="zikir-count-pill" style="padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:700; background:rgba(62,207,176,0.1); color:var(--teal);">🎯 Hedef: ${z.target}x ${z.cnt > 0 ? `(${z.cnt}/${z.target})` : ''}</span>
+          <div style="display:flex; gap:6px;">
+            <button class="zikir-tap-btn" onclick="toggleZikirComplete(${z.origIdx})" style="padding:6px 12px; border-radius:8px; border:1px solid var(--teal); color:var(--teal); background:rgba(62,207,176,0.1); cursor:pointer; font-weight:800; font-size:0.8rem;" title="Direkt Tamamla / İşaretle">✓ Tamamla</button>
+            <button class="zikir-tap-btn" onclick="tapCardZikir(${z.origIdx})" style="padding:8px 18px; border-radius:8px; border:none; color:#fff; background:var(--teal); cursor:pointer; font-weight:800; font-size:0.85rem; box-shadow:0 2px 6px rgba(0,0,0,0.15); transition:transform 0.1s ease;">👆 Say (+1)</button>
+          </div>
         </div>
       </div>
     `).join('');
@@ -2416,6 +2827,294 @@ function renderWeeklyIbadet() {
   }).join('');
   score.textContent = `${total}/35`;
   box.innerHTML = html;
+}
+
+/* ── RENDER: ÜST HEADER CANLI İSTATİSTİK BAR-I ── */
+function isTaskForToday(t) {
+  if (!t) return false;
+  const td = typeof today === 'function' ? today() : new Date().toISOString().slice(0, 10);
+  if (t.due) return t.due === td;
+  return true;
+}
+
+function getNextPrayerTimeStr() {
+  if (!PRAYERS || PRAYERS.length !== 5) return '';
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+
+  let nextP = PRAYERS[0];
+  let diffMin = 0;
+
+  for (let i = 0; i < PRAYERS.length; i++) {
+    const [h, m] = PRAYERS[i].t.split(':').map(Number);
+    const pMin = h * 60 + m;
+    if (pMin > nowMin) {
+      nextP = PRAYERS[i];
+      diffMin = pMin - nowMin;
+      break;
+    }
+  }
+
+  if (diffMin === 0) {
+    const [h, m] = PRAYERS[0].t.split(':').map(Number);
+    diffMin = (24 * 60 - nowMin) + (h * 60 + m);
+    nextP = PRAYERS[0];
+  }
+
+  const rh = Math.floor(diffMin / 60);
+  const rm = diffMin % 60;
+  const timeStr = rh > 0 ? `${rh}s ${rm}d` : `${rm}d`;
+  return `${nextP.n} ${timeStr}`;
+}
+
+let _hdrAssistantIndex = 0;
+let _hdrAssistantTimer = null;
+let _hdrAssistantPaused = false;
+
+function getHeaderAssistantItems() {
+  const ds = typeof today === 'function' ? today() : new Date().toISOString().slice(0, 10);
+
+  // 1. Görevler
+  const todayTasks = (S.tasks || []).filter(t => isTaskForToday(t));
+  const doneTasks = todayTasks.filter(t => t.done).length;
+  const totalTasks = todayTasks.length;
+
+  // 2. Alışkanlıklar
+  const totalHabits = (typeof HABITS !== 'undefined' && Array.isArray(HABITS)) ? HABITS.length : 0;
+  const doneHabits = (totalHabits > 0 && S.habits && S.habits[ds]) ? HABITS.filter(h => S.habits[ds][h.id]).length : 0;
+
+  // 3. Namaz Vakti & Kalan Süre
+  const prayersDone = (PRAYERS && Array.isArray(PRAYERS)) ? PRAYERS.filter(p => S.prayers && S.prayers[ds] && S.prayers[ds][p.n]).length : 0;
+  const nextPStr = getNextPrayerTimeStr();
+
+  // 4. Günlük Zikirler
+  const cardCounts = (S.zikirCardCounts && S.zikirCardCounts[ds]) ? S.zikirCardCounts[ds] : {};
+  const zikirsDone = (DAILY_ZIKIR || []).filter((z, i) => (cardCounts[i] || 0) >= parseZikirTarget(z)).length;
+  const totalZikirCount = (DAILY_ZIKIR || []).reduce((acc, _, i) => acc + (cardCounts[i] || 0), 0);
+
+  // 5. Kuran Okumaları
+  const qRoutines = (S.quran && S.quran.routines && S.quran.routines[ds]) ? S.quran.routines[ds] : {};
+  const quranDone = Object.values(qRoutines).filter(Boolean).length;
+
+  return [
+    {
+      view: 'tasks',
+      title: 'Görevler Menüsüne Git',
+      color: 'var(--teal)',
+      bg: 'rgba(62,207,176,0.14)',
+      bd: 'rgba(62,207,176,0.35)',
+      html: `📋 Günlük Görev İlerlemesi : ${doneTasks} / ${totalTasks}`
+    },
+    {
+      view: 'habits',
+      title: 'Analiz & Alışkanlıklar Menüsüne Git',
+      color: 'var(--pur)',
+      bg: 'rgba(167,139,250,0.14)',
+      bd: 'rgba(167,139,250,0.35)',
+      html: `⚡ Alışkanlık & Rutin Takibi : ${doneHabits} / ${totalHabits}`
+    },
+    {
+      view: 'prayers',
+      title: 'Namaz Vakitleri Menüsüne Git',
+      color: 'var(--gold)',
+      bg: 'rgba(232,184,75,0.14)',
+      bd: 'rgba(232,184,75,0.35)',
+      html: `🕌 Günlük Vakit Namazları : ${prayersDone} / 5 ${nextPStr ? `<small style="font-size:0.72rem; opacity:0.85; font-weight:700;">(${nextPStr})</small>` : ''}`
+    },
+    {
+      view: 'zikir',
+      title: 'Zikir & Esmâ Menüsüne Git',
+      color: '#60a5fa',
+      bg: 'rgba(96,165,250,0.14)',
+      bd: 'rgba(96,165,250,0.35)',
+      html: `📿 Günlük Zikir & Tesbihat Takibi : ${zikirsDone} / 5 (${totalZikirCount} / 500 defa)`
+    },
+    {
+      view: 'quran',
+      title: 'Kuran-ı Kerîm Takip Menüsüne Git',
+      color: '#34d399',
+      bg: 'rgba(52,211,153,0.14)',
+      bd: 'rgba(52,211,153,0.35)',
+      html: `📖 Kuran'ı Kerim Okumalarım : ${quranDone} / 6`
+    }
+  ];
+}
+
+function renderHeaderAssistant() {
+  const el = document.getElementById('headerAssistantMsg');
+  if (!el) return;
+
+  try {
+    const items = getHeaderAssistantItems();
+    if (!items.length) return;
+
+    _hdrAssistantIndex = _hdrAssistantIndex % items.length;
+    const cur = items[_hdrAssistantIndex];
+
+    el.innerHTML = `
+      <button type="button" onclick="window.showView('${cur.view}')" class="hdr-chip-btn" style="background:${cur.bg}; border:1px solid ${cur.bd}; color:${cur.color}; padding:4px 14px; border-radius:12px; font-size:0.80rem; font-weight:800; display:inline-flex; align-items:center; gap:6px; cursor:pointer; transition:all 0.25s ease;" title="${cur.title}">
+        ${cur.html}
+      </button>
+    `;
+
+    startHeaderAssistantRotation();
+  } catch (err) {
+    console.error('Header assistant error:', err);
+  }
+}
+
+function startHeaderAssistantRotation() {
+  if (_hdrAssistantTimer) return;
+
+  const wrap = document.getElementById('headerAssistant');
+  if (wrap && !wrap._hdrHoverBound) {
+    wrap._hdrHoverBound = true;
+    wrap.addEventListener('mouseenter', () => { _hdrAssistantPaused = true; });
+    wrap.addEventListener('mouseleave', () => { _hdrAssistantPaused = false; });
+  }
+
+  _hdrAssistantTimer = setInterval(() => {
+    if (_hdrAssistantPaused) return;
+
+    const items = getHeaderAssistantItems();
+    if (!items.length) return;
+
+    _hdrAssistantIndex = (_hdrAssistantIndex + 1) % items.length;
+    const cur = items[_hdrAssistantIndex];
+    const el = document.getElementById('headerAssistantMsg');
+    if (!el) return;
+
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(-4px)';
+    setTimeout(() => {
+      el.innerHTML = `
+        <button type="button" onclick="window.showView('${cur.view}')" class="hdr-chip-btn" style="background:${cur.bg}; border:1px solid ${cur.bd}; color:${cur.color}; padding:4px 14px; border-radius:12px; font-size:0.80rem; font-weight:800; display:inline-flex; align-items:center; gap:6px; cursor:pointer; transition:all 0.25s ease;" title="${cur.title}">
+          ${cur.html}
+        </button>
+      `;
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 150);
+  }, 2800);
+}
+
+/* ── RENDER: HAFTALIK ZİKİR İSTATİSTİK ANALİZİ ── */
+function renderWeeklyZikirAnalysis() {
+  const box = document.getElementById('weeklyZikirDays');
+  const score = document.getElementById('weeklyZikirScore');
+  const breakdown = document.getElementById('dailyZikirBreakdown');
+  if (!box || !score) return;
+
+  const dnames = ['P', 'S', 'Ç', 'P', 'C', 'C', 'P'];
+  let totalZikirsDone = 0;
+  let totalCountSum = 0;
+
+  const html = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(); date.setDate(date.getDate() - (6 - i));
+    const ds = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const cardCounts = S.zikirCardCounts?.[ds] || {};
+
+    let dayZikirsDone = 0;
+    let dayTotalCount = 0;
+    (DAILY_ZIKIR || []).forEach((z, idx) => {
+      const cnt = cardCounts[idx] || 0;
+      dayTotalCount += cnt;
+      if (cnt >= parseZikirTarget(z)) dayZikirsDone++;
+    });
+
+    totalZikirsDone += dayZikirsDone;
+    totalCountSum += dayTotalCount;
+
+    const pct = (dayZikirsDone / 5) * 100;
+    const dayNameIdx = date.getDay() === 0 ? 6 : date.getDay() - 1;
+    return `<div class="wi-day ${i === 6 ? 'today ' : ''} ${dayZikirsDone === 5 ? 'full' : ''}" title="${ds} · ${dayZikirsDone}/5 zikir (${dayTotalCount}/500 defa)">
+      <div class="wi-bar"><div class="wi-fill" style="height:${Math.max(8, pct)}%; background:linear-gradient(180deg, #60a5fa, #3b82f6);"></div></div>
+      <div class="wi-label">${dnames[dayNameIdx]}</div>
+    </div>`;
+  }).join('');
+
+  score.textContent = `${totalZikirsDone}/35 zikir (${totalCountSum}/3500 defa)`;
+  box.innerHTML = html;
+
+  if (breakdown) {
+    const ds = today();
+    const cardCounts = S.zikirCardCounts?.[ds] || {};
+    breakdown.innerHTML = `
+      <div style="font-size:0.78rem; font-weight:800; color:var(--gold); margin-bottom:4px;">📊 Bugünün 5 Günlük Zikir Durumu:</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+        ${(DAILY_ZIKIR || []).map((z, idx) => {
+      const cnt = cardCounts[idx] || 0;
+      const target = parseZikirTarget(z);
+      const isDone = cnt >= target;
+      const pct = Math.min(100, Math.round((cnt / target) * 100));
+      return `
+            <div style="padding:8px 10px; background:var(--sf2); border:1px solid ${isDone ? 'var(--grn)' : 'var(--bd)'}; border-radius:10px; font-size:0.78rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; font-weight:700; color:var(--tx); margin-bottom:4px;">
+                <span style="color:${isDone ? 'var(--grn)' : 'var(--teal)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:120px;">${z.t || z.tr}</span>
+                <span style="font-size:0.72rem; color:var(--tx2); font-family:'JetBrains Mono',monospace;">${cnt}/${target}</span>
+              </div>
+              <div style="width:100%; height:5px; background:var(--sf3); border-radius:3px; overflow:hidden;">
+                <div style="width:${pct}%; height:100%; background:${isDone ? 'var(--grn)' : '#60a5fa'}; transition:width 0.3s ease;"></div>
+              </div>
+            </div>
+          `;
+    }).join('')}
+      </div>
+    `;
+  }
+}
+
+/* ── RENDER: HAFTALIK KURAN TİLÂVETİ & HATİM ANALİZİ ── */
+function renderWeeklyQuranAnalysis() {
+  const box = document.getElementById('weeklyQuranDays');
+  const score = document.getElementById('weeklyQuranScore');
+  const breakdown = document.getElementById('dailyQuranBreakdown');
+  if (!box || !score) return;
+
+  const dnames = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
+  let totalDone = 0;
+
+  const html = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(); date.setDate(date.getDate() - (6 - i));
+    const ds = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const routines = S.quran?.routines?.[ds] || {};
+    const cnt = Object.values(routines).filter(Boolean).length;
+    totalDone += cnt;
+
+    const pct = (cnt / 6) * 100;
+    const dayNameIdx = date.getDay() === 0 ? 6 : date.getDay() - 1;
+    return `<div class="wi-day ${i === 6 ? 'today ' : ''} ${cnt >= 6 ? 'full' : ''}" title="${ds} · ${cnt}/6 sure okuması">
+      <div class="wi-bar"><div class="wi-fill" style="height:${Math.max(8, pct)}%; background:linear-gradient(180deg, #34d399, #10b981);"></div></div>
+      <div class="wi-label">${dnames[dayNameIdx]}</div>
+    </div>`;
+  }).join('');
+
+  const ds = today();
+  const todayRoutines = S.quran?.routines?.[ds] || {};
+  const todayDoneCount = Object.values(todayRoutines).filter(Boolean).length;
+
+  score.textContent = `${todayDoneCount}/6 bugün (${totalDone}/36 bu hafta)`;
+  box.innerHTML = html;
+
+  if (breakdown) {
+    breakdown.innerHTML = `
+      <div style="font-size:0.78rem; font-weight:800; color:var(--teal); margin-bottom:4px;">📖 Kuran'ı Kerim Okumalarım (${todayDoneCount}/6):</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+        ${(QURAN_ROUTINES_DEF || []).map(item => {
+          const isDone = !!todayRoutines[item.id];
+          return `
+            <div style="padding:8px 10px; background:var(--sf2); border:1px solid ${isDone ? 'var(--teal)' : 'var(--bd)'}; border-radius:10px; font-size:0.78rem; display:flex; align-items:center; justify-content:space-between;">
+              <div style="display:flex; align-items:center; gap:6px; overflow:hidden;">
+                <span style="color:${isDone ? 'var(--teal)' : 'var(--tx3)'}; font-weight:800;">${isDone ? '✓' : '○'}</span>
+                <span style="font-weight:700; color:${isDone ? 'var(--tx)' : 'var(--tx2)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.title}</span>
+              </div>
+              <span style="font-size:0.70rem; color:var(--gold); font-weight:700;">${item.sub}</span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
 }
 
 /* ── RENDER: ALIŞKANLIKLAR ── */
@@ -3569,110 +4268,9 @@ function renderHeaderPrayerVakit() {
 }
 
 /* ── AKILLI GÜNLÜK ASİSTAN ── */
-let _assistantTimer = null;
-let _assistantRotateTimer = null;
-let _assistantIdx = 0;
-
-function buildAssistantMessages() {
-  const msgs = [];
-  const td = today();
-
-  // 1. Sonraki namaz vakti
-  const info = getCurrentPrayerInfo();
-  if (info) {
-    const h = Math.floor(info.left / 60);
-    const m = info.left % 60;
-    const timeStr = h > 0 ? `${h} sa ${m} dk` : `${m} dk`;
-    msgs.push({ icon: '🕌', text: `${info.next} vakti — ${timeStr} sonra (${info.nextTime})`, color: 'var(--teal)' });
-  }
-
-  // 2. Bugünkü görev özeti
-  const todayTasks = S.tasks.filter(t => isTaskForToday(t));
-  const doneTasks = todayTasks.filter(t => t.done);
-  if (todayTasks.length > 0) {
-    const pct = Math.round(doneTasks.length / todayTasks.length * 100);
-    const emoji = pct === 100 ? '🏆' : pct >= 50 ? '📈' : '📋';
-    msgs.push({ icon: emoji, text: `Bugün ${doneTasks.length}/${todayTasks.length} görev tamamlandı (%${pct})`, color: pct === 100 ? 'var(--gold)' : pct >= 50 ? 'var(--teal)' : 'var(--tx2)' });
-  } else {
-    msgs.push({ icon: '📋', text: 'Bugün için henüz görev yok — hadi bir şeyler ekle!', color: 'var(--tx3)' });
-  }
-
-  // 3. Namaz kılma durumu
-  const prayedCount = PRAYERS.filter(p => S.prayers?.[td]?.[p.n]).length;
-  if (prayedCount > 0) {
-    const prayEmoji = prayedCount === 5 ? '✨' : prayedCount >= 3 ? '🙏' : '🕌';
-    msgs.push({ icon: prayEmoji, text: `Bugün ${prayedCount}/5 namaz kılındı`, color: prayedCount === 5 ? 'var(--gold)' : 'var(--teal)' });
-  }
-
-  // 4. Alışkanlık durumu
-  const habitToday = S.habits?.[td] || {};
-  const habitDone = HABITS.filter(h => habitToday[h.id]).length;
-  if (HABITS.length > 0) {
-    const hPct = Math.round(habitDone / HABITS.length * 100);
-    const hEmoji = habitDone === HABITS.length ? '🔥' : habitDone >= HABITS.length / 2 ? '⚡' : '💤';
-    msgs.push({ icon: hEmoji, text: `Alışkanlıklar: ${habitDone}/${HABITS.length} tamamlandı`, color: habitDone === HABITS.length ? '#fb923c' : 'var(--tx2)' });
-  }
-
-  // 5. Acil görev uyarısı
-  const overdueOrToday = S.tasks.filter(t => !t.done && t.due && t.due <= td && t.rep === 'yok');
-  if (overdueOrToday.length > 0) {
-    msgs.push({ icon: '⚠️', text: `${overdueOrToday.length} görevin son tarihi bugün veya geçti!`, color: '#fb923c' });
-  }
-
-  // 6. Zikir durumu
-  if (S.zikirDone?.[td]) {
-    msgs.push({ icon: '📿', text: 'Günlük zikir tamamlandı — mâşâllah!', color: 'var(--gold)' });
-  }
-
-  // 7. Motivasyon — tüm görevler bittiyse
-  if (todayTasks.length > 0 && doneTasks.length === todayTasks.length) {
-    msgs.push({ icon: '🏆', text: 'Bugünkü tüm görevleri bitirdin — harika iş!', color: 'var(--gold)' });
-  }
-
-  // Hiç mesaj yoksa genel karşılama
-  if (msgs.length === 0) {
-    msgs.push({ icon: '✨', text: 'Hoş geldin! Zamanını bereketlendir.', color: 'var(--teal)' });
-  }
-
-  return msgs;
-}
-
-function renderHeaderAssistant() {
-  const el = document.getElementById('headerAssistantMsg');
-  if (!el) return;
-
-  const msgs = buildAssistantMessages();
-  if (!msgs.length) return;
-
-  _assistantIdx = _assistantIdx % msgs.length;
-  const msg = msgs[_assistantIdx];
-
-  // Fade-out → değiştir → fade-in
-  el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(-3px)';
-  setTimeout(() => {
-    el.innerHTML = `<span style="font-size:0.95rem;">${msg.icon}</span> <span style="color:${msg.color}; font-weight:800;">${msg.text}</span>`;
-    el.style.borderColor = msg.color + '50';
-    el.style.opacity = '1';
-    el.style.transform = 'translateY(0)';
-  }, 300);
-}
-
-function tickHeaderAssistant() {
-  const msgs = buildAssistantMessages();
-  _assistantIdx = (_assistantIdx + 1) % (msgs.length || 1);
-  renderHeaderAssistant();
-}
-
-function initHeaderAssistant() {
-  // İlk render hemen
-  _assistantIdx = 0;
-  renderHeaderAssistant();
-  // 6 saniyede bir döndür
-  if (_assistantRotateTimer) clearInterval(_assistantRotateTimer);
-  _assistantRotateTimer = setInterval(tickHeaderAssistant, 6000);
-}
+function buildAssistantMessages() { return []; }
+function tickHeaderAssistant() { renderHeaderAssistant(); }
+function initHeaderAssistant() { renderHeaderAssistant(); }
 
 /* ── TOAST ── */
 function toast(msg, type) {
@@ -4769,13 +5367,45 @@ function renderQuranRoutines() {
     const isDone = !!todayDone[item.id];
     if (isDone) completedCount++;
     return `
-      <div class="qroutine-item ${isDone ? 'done' : ''}" onclick="toggleQuranRoutine('${item.id}')">
-        <div class="qroutine-chk">${isDone ? '✓' : ''}</div>
-        <div class="qroutine-text">
-          <div class="qroutine-title">${item.title}</div>
-          <div class="qroutine-sub">${item.sub}</div>
+      <div class="qroutine-card ${isDone ? 'done' : ''}" style="background:var(--sf); border:1.5px solid ${isDone ? 'var(--teal)' : 'var(--bd)'}; border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:14px; width:100%; transition:all 0.2s ease; box-shadow:var(--sh);">
+        
+        <!-- ÜST SATIR: Tik Kutusu & Başlık & Odaklan Butonu -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:12px;">
+          <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="toggleQuranRoutine('${item.id}')">
+            <div style="width:28px; height:28px; border-radius:50%; border:2px solid ${isDone ? 'var(--teal)' : 'var(--tx3)'}; background:${isDone ? 'var(--teal)' : 'transparent'}; color:#0b1320; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.9rem; flex-shrink:0;">
+              ${isDone ? '✓' : ''}
+            </div>
+            <div>
+              <div style="font-weight:800; font-size:1.05rem; color:${isDone ? 'var(--teal)' : 'var(--tx)'}; text-decoration:${isDone ? 'line-through' : 'none'}; display:flex; align-items:center; gap:8px;">
+                ${item.title}
+              </div>
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-top:2px;">${item.sub}</div>
+            </div>
+          </div>
+          <button class="tbtn" onclick="startFocusForTask('quran_${item.id}', 30)" style="font-size:0.78rem; padding:6px 14px; border-radius:10px; border:1px solid var(--teal); color:var(--teal); background:rgba(62,207,176,0.1); font-weight:700;" title="30dk Odaklanma Sayacını Başlat">⏱ Odaklan (30dk)</button>
         </div>
-        <button class="qroutine-info-btn" onclick="openSurahInfoModal('${item.id}', event)" title="Fazileti ve Vakit Açıklaması">ℹ️</button>
+
+        <!-- YATAY DETAY IZGARASI (Görünür Fazilet & Hikmet) -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+          
+          <!-- SURE FAZİLETİ (HADİS VE MEAL) -->
+          <div style="background:rgba(212,175,55,0.08); border-left:4px solid var(--gold); padding:12px 14px; border-radius:10px; font-size:0.86rem; line-height:1.5; color:var(--tx);">
+            <div style="font-size:0.7rem; font-weight:800; color:var(--gold); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:5px; display:flex; align-items:center; gap:5px;">
+              <span>✨ SURE FAZİLETİ & HADİS-İ ŞERİF</span>
+            </div>
+            <div style="font-style:italic;">${item.fazilet}</div>
+          </div>
+
+          <!-- VAKİT HİKMETİ -->
+          <div style="background:rgba(62,207,176,0.06); border-left:4px solid var(--teal); padding:12px 14px; border-radius:10px; font-size:0.83rem; line-height:1.48; color:var(--tx2);">
+            <div style="font-size:0.7rem; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:5px; display:flex; align-items:center; gap:5px;">
+              <span>⏰ VAKİT HİKMETİ & OKUMA NEDENİ</span>
+            </div>
+            <div>${item.neden}</div>
+          </div>
+
+        </div>
+
       </div>
     `;
   }).join('');
@@ -4805,12 +5435,16 @@ function openSurahInfoModal(id, e) {
 
 function toggleQuranRoutine(id) {
   const tKey = today();
+  if (!S.quran) S.quran = { routines: {} };
   if (!S.quran.routines) S.quran.routines = {};
   if (!S.quran.routines[tKey]) S.quran.routines[tKey] = {};
 
   S.quran.routines[tKey][id] = !S.quran.routines[tKey][id];
   save();
+  renderQuranView();
   renderQuranRoutines();
+  renderHeaderAssistant();
+  renderWeeklyQuranAnalysis();
   if (S.quran.routines[tKey][id]) {
     toast('Rutin tamamlandı!', 's');
   }
@@ -4860,6 +5494,1210 @@ function saveBookmarkModal() {
   renderQuranView();
   closeModal('bookmarkModal');
   toast('Kaldığın yer kaydedildi!', 's');
+}
+
+// Sayfa yüklendiğinde canlı header barı ve haftalık zikir analizini güncelle
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(() => { renderHeaderAssistant(); renderWeeklyZikirAnalysis(); }, 100);
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => { renderHeaderAssistant(); renderWeeklyZikirAnalysis(); }, 100);
+  });
+}
+
+// Canlı header barını her 30 saniyede bir otomatik güncelle (kalan vakit sayacı için)
+setInterval(() => {
+  renderHeaderAssistant();
+}, 30000);
+
+/* ════════════════════════════════════════════════════════════
+   1. DUA & MÜNÂCÂT MODÜLÜ
+   ════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════
+   1. DUA & MÜNÂCÂT MODÜLÜ
+   ════════════════════════════════════════════════════════════ */
+const DEFAULT_DUAS = [
+  { id: 'd1', type: 'daily', title: 'Sabah Okunacak Me\'sûrât Duası', ar: 'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ', tr: 'Sabaha erdik, mülk de Allah\'ın olarak sabaha erdi. Hamd Allah\'a mahsustur.', fazilet: 'Her sabah okunması sünnet olan şükür duasıdır.' },
+  { id: 'd2', type: 'daily', title: 'Akşam Korunma Duası', ar: 'بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ', tr: 'İsmiyle yerde ve gökte hiçbir şeyin zarar veremediği Allah\'ın adıyla.', fazilet: 'Sabah ve akşam 3\'er defa okuyan her türlü afetten korunur.' },
+  { id: 'd3', type: 'prophet', title: 'Hz. İbrahim\'in (a.s.) Namaz & Nesil Duası', ar: 'رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي رَبَّنَا وَتَقَبَّلْ دُعَاءِ', tr: 'Rabbim! Beni ve neslimi namazı dosdoğru kılanlardan eyle. Rabbimiz! Duamı kabul buyur.', fazilet: 'İbrahim Suresi 40. ayet.' },
+  { id: 'd4', type: 'prophet', title: 'Hz. Yunus\'un (a.s.) Zikr-i Şerifi (Lâ ilâhe illâ ente)', ar: 'لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ', tr: 'Senden başka hiçbir ilâh yoktur. Seni tenzih ederim. Şüphesiz ben zalimlerden oldum.', fazilet: 'Sıkıntı ve darlıklardan kurtulmak için okunan en tesirli tesbihattır.' },
+  { id: 'd5', type: 'daily', title: 'Seyyidül İstiğfar Duası', ar: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ', tr: 'Allah\'ım! Sen benim Rabbimsin. Senden başka ilâh yoktur. Beni sen yarattın, ben senin kulunum.', fazilet: 'İstiğfarların efendisi olan çok mübarek bir duadır.' }
+];
+
+let activeDuaTab = 'all';
+let _featuredDuaIdx = 0;
+
+function switchDuaTab(tab, btn) {
+  activeDuaTab = tab;
+  document.querySelectorAll('#v-dua .fchip').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  renderDuaView();
+}
+
+function openAddDuaModal() {
+  document.getElementById('duaTitleInp').value = '';
+  document.getElementById('duaArInp').value = '';
+  document.getElementById('duaTrInp').value = '';
+  document.getElementById('addDuaModal').classList.add('on');
+}
+
+function saveCustomDua() {
+  const title = document.getElementById('duaTitleInp').value.trim();
+  const ar = document.getElementById('duaArInp').value.trim();
+  const tr = document.getElementById('duaTrInp').value.trim();
+  if (!title) { toast('Lütfen dua başlığı girin.', 'e'); return; }
+
+  if (!S.customDuas) S.customDuas = [];
+  S.customDuas.push({ id: 'cdua_' + Date.now(), type: 'custom', title, ar, tr, fazilet: 'Kişisel dua notu' });
+  save();
+  closeModal('addDuaModal');
+  renderDuaView();
+  toast('Dua kaydedildi! 🤲', 's');
+}
+
+function toggleDuaDone(id) {
+  const ds = today();
+  if (!S.duaDone) S.duaDone = {};
+  if (!S.duaDone[ds]) S.duaDone[ds] = {};
+
+  const cur = !!S.duaDone[ds][id];
+  S.duaDone[ds][id] = !cur;
+
+  save();
+  renderDuaView();
+  renderHeaderAssistant();
+  if (typeof playSound === 'function') playSound(cur ? 'bell' : 'done');
+  toast(!cur ? 'Dua okundu olarak işaretlendi! 🤲' : 'Dua okundu işareti kaldırıldı.', 's');
+}
+
+function nextDailyDua() {
+  const allDuas = [...DEFAULT_DUAS, ...(S.customDuas || [])];
+  _featuredDuaIdx = (_featuredDuaIdx + 1) % allDuas.length;
+  const d = allDuas[_featuredDuaIdx];
+  const refEl = document.getElementById('duaFeaturedRef');
+  const arEl = document.getElementById('duaFeaturedAr');
+  const trEl = document.getElementById('duaFeaturedTr');
+  if (refEl) refEl.textContent = d.title;
+  if (arEl) arEl.textContent = d.ar || '';
+  if (trEl) trEl.textContent = `"${d.tr}"`;
+}
+
+function copyFeaturedDuaText() {
+  const allDuas = [...DEFAULT_DUAS, ...(S.customDuas || [])];
+  const d = allDuas[_featuredDuaIdx] || allDuas[0];
+  navigator.clipboard.writeText(`"${d.tr}" - ${d.title}`);
+  toast('Günün Niyazı kopyalandı! 📋', 's');
+}
+
+function renderDuaView() {
+  const cont = document.getElementById('duaGridContainer');
+  if (!cont) return;
+
+  const ds = today();
+  const todayDone = S.duaDone?.[ds] || {};
+
+  const q = (document.getElementById('searchDuaInp')?.value || '').toLowerCase().trim();
+  const allDuas = [...DEFAULT_DUAS, ...(S.customDuas || [])];
+
+  const totalDuas = allDuas.length;
+  const doneCount = allDuas.filter(d => todayDone[d.id]).length;
+  const pendCount = totalDuas - doneCount;
+  const pct = totalDuas > 0 ? Math.round((doneCount / totalDuas) * 100) : 0;
+
+  // Üst kart istatistiklerini güncelle
+  const bVal = document.getElementById('duaBadgeVal');
+  const cTot = document.getElementById('duaCountTotal');
+  const cDon = document.getElementById('duaCountDone');
+  const cPen = document.getElementById('duaCountPending');
+  const pVal = document.getElementById('duaProgVal');
+  const pFil = document.getElementById('duaProgFill');
+
+  if (bVal) bVal.textContent = `${doneCount}/${totalDuas} Okundu`;
+  if (cTot) cTot.textContent = totalDuas;
+  if (cDon) cDon.textContent = doneCount;
+  if (cPen) cPen.textContent = pendCount;
+  if (pVal) pVal.textContent = `%${pct}`;
+  if (pFil) pFil.style.width = `${pct}%`;
+
+  let filtered = allDuas;
+  if (activeDuaTab !== 'all') {
+    filtered = filtered.filter(d => d.type === activeDuaTab);
+  }
+  if (q) {
+    filtered = filtered.filter(d => (d.title || '').toLowerCase().includes(q) || (d.tr || '').toLowerCase().includes(q));
+  }
+
+  if (!filtered.length) {
+    cont.innerHTML = `<div class="empty" style="grid-column:1/-1;"><div class="empty-ico">🤲</div><div class="empty-txt">Dua bulunamadı.</div></div>`;
+    return;
+  }
+
+  cont.innerHTML = filtered.map(d => {
+    const isDone = !!todayDone[d.id];
+    return `
+      <div style="background:var(--sf); border:1.5px solid ${isDone ? 'var(--teal)' : 'var(--bd)'}; border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:10px; width:100%; transition:all 0.2s ease;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; width:100%;">
+          
+          <div style="display:flex; align-items:center; gap:10px; cursor:pointer; min-width:180px; flex:1;" onclick="toggleDuaDone('${d.id}')">
+            <div style="width:28px; height:28px; border-radius:50%; border:2px solid ${isDone ? 'var(--teal)' : 'var(--tx3)'}; background:${isDone ? 'var(--teal)' : 'transparent'}; color:#0b1320; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.9rem; flex-shrink:0;">
+              ${isDone ? '✓' : ''}
+            </div>
+            <div style="font-weight:800; font-size:1.05rem; color:${isDone ? 'var(--teal)' : 'var(--tx)'}; text-decoration:${isDone ? 'line-through' : 'none'}; word-break:break-word;">
+              ${esc(d.title)}
+            </div>
+          </div>
+
+          <div style="display:flex; gap:6px; align-items:center; flex-shrink:0; margin-left:auto;">
+            <button class="tbtn" onclick="navigator.clipboard.writeText('${esc(d.tr)}'); toast('Dua kopyalandı!', 's');" style="font-size:0.75rem; padding:5px 12px; border-radius:8px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; flex-shrink:0; cursor:pointer; font-weight:700;">
+              📋 Kopyala
+            </button>
+          </div>
+        </div>
+
+        ${d.ar ? `<div style="font-family:'Amiri',serif; font-size:1.4rem; color:var(--gold); direction:rtl; text-align:right; line-height:1.6;">${esc(d.ar)}</div>` : ''}
+        <div style="font-size:0.88rem; color:var(--tx); line-height:1.45;">${esc(d.tr)}</div>
+        ${d.fazilet ? `<div style="font-size:0.75rem; color:var(--tx3); font-style:italic;">✨ ${esc(d.fazilet)}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════════════════
+   2. 40 HADİS-İ ŞERİF & EZBER MODÜLÜ
+   ════════════════════════════════════════════════════════════ */
+const HADIS_40_DEF = [
+  { id: 1, topic: 'İhlas & Niyet', ar: 'إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ', tr: 'Ameller ancak niyetlere göredir. Herkes için ancak niyet ettiğinin karşılığı vardır.', ref: 'Buhârî, Bed\'ü\'l-Vahy 1' },
+  { id: 2, topic: 'Ahlak & İman', ar: 'أَكْمَلُ الْمُؤْمِنِينَ إِيمَانًا أَحْسَنُهُمْ خُلُقًا', tr: 'Müminlerin iman bakımından en mükemmeli, ahlakı en güzel olanıdır.', ref: 'Tirmizî, Radâ 11' },
+  { id: 3, topic: 'Kardeşlik & Merhamet', ar: 'لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ', tr: 'Sizden biriniz, kendisi için istediğini kardeşi için de istemedikçe hakiki iman etmiş olamaz.', ref: 'Buhârî, İmân 7' },
+  { id: 4, topic: 'Kolaylaştırma', ar: 'يَسِّرُوا وَلاَ تُعَسِّرُوا وَبَشِّرُوا وَلاَ تُنَفِّرُوا', tr: 'Kolaylaştırınız, zorlaştırmayınız; müjdeleyiniz, nefret ettirmeyiniz.', ref: 'Buhârî, İlim 11' },
+  { id: 5, topic: 'Selamlaşma & Sevgi', ar: 'أَفْشُوا السَّلاَمَ تَحَابُّوا', tr: 'Aramızda selamı yayın ki birbirinizi sevesiniz.', ref: 'Müslim, İmân 93' },
+  { id: 6, topic: 'İlim Öğrenme', ar: 'طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ', tr: 'İlim öğrenmek her Müslümana farzdır.', ref: 'İbn Mâce, Mukaddime 17' },
+  { id: 7, topic: 'Tebessüm & Sadaka', ar: 'تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ', tr: 'Kardeşinin yüzüne tebessüm etmen senin için bir sadakadır.', ref: 'Tirmizî, Birr 36' },
+  { id: 8, topic: 'Temizlik', ar: 'الطَّهُورُ شَطْرُ الإِيمَانِ', tr: 'Temizlik imanın yarısıdır.', ref: 'Müslim, Tahâret 1' },
+  { id: 9, topic: 'Cömertlik', ar: 'الْيَدُ الْعُلْيَا خَيْرٌ مِنَ الْيَدِ السُّفْلَى', tr: 'Veren el alan elden üstündür.', ref: 'Buhârî, Zekât 18' },
+  { id: 10, topic: 'Komşuluk Hakkı', ar: 'مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيُحْسِنْ إِلَى جَارِهِ', tr: 'Allah\'a ve ahiret gününe iman eden kimse komşusuna iyilik etsin.', ref: 'Müslim, İmân 74' },
+  { id: 11, topic: 'Güzel Söz', ar: 'الْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ', tr: 'Güzel söz sadakadır.', ref: 'Buhârî, Edeb 34' },
+  { id: 12, topic: 'Hayıra Vesile Olmak', ar: 'مَنْ دَلَّ عَلَى خَيْرٍ فَلَهُ مِثْلُ أَجْرِ فَاعِلِهِ', tr: 'Bir hayra vesile olan, o hayrı yapan kimse gibi sevap kazanır.', ref: 'Müslim, İmâre 133' },
+  { id: 13, topic: 'Öfke Kontrolü', ar: 'لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الْغَضَبِ', tr: 'Pehlivan, güreşte rakibini yenen değildir; asıl pehlivan, öfke anında kendine hakim olandır.', ref: 'Buhârî, Edeb 76' },
+  { id: 14, topic: 'Tevazu & Alçakgönüllülük', ar: 'مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ وَمَا زَادَ اللَّهُ عَبْدًا بِعَفْوٍ إِلاَّ عِزًّا', tr: 'Sadaka malı eksiltmez. Allah, affeden kulunun ancak izzet ve şerefini artırır.', ref: 'Müslim, Birr 69' },
+  { id: 15, topic: 'Hayırlı İnsan', ar: 'خَيْرُ النَّاسِ مَنْ يَنْفَعُ النَّاسَ', tr: 'İnsanların en hayırlısı, insanlara en faydalı olanıdır.', ref: 'Taberânî, el-Mu\'cemü\'l-Evsat' },
+  { id: 16, topic: 'Kur\'an Öğrenimi', ar: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ', tr: 'Sizin en hayırlınız, Kur\'an\'ı öğrenen ve öğreteninizdir.', ref: 'Buhârî, Fezâilü\'l-Kur\'ân 21' },
+  { id: 17, topic: 'Güvenilirlik', ar: 'لاَ إِيمَانَ لِمَنْ لاَ أَمَانَةَ لَهُ', tr: 'Emanete riayet etmeyenin (kâmil) imanı yoktur.', ref: 'Ahmed b. Hanbel, Müsned 3/135' },
+  { id: 18, topic: 'Zaman Kadrini Bilmek', ar: 'نِعْمَتَانِ مَغْبُونٌ فِيهِمَا كَثِيرٌ مِنَ النَّاسِ: الصِّحَّةُ وَالْفَرَاغُ', tr: 'İki nimet vardır ki insanların çoğu onların kıymetini bilmekte aldanmıştır: Sağlık ve boş vakit.', ref: 'Buhârî, Rikâk 1' },
+  { id: 19, topic: 'Namazın Önemi', ar: 'الصَّلاَةُ عِمَادُ الدِّينِ', tr: 'Namaz dinin direğidir.', ref: 'Tirmizî, İmân 8' },
+  { id: 20, topic: 'Dua ve Münâcât', ar: 'الدُّعَاءُ هُوَ الْعِبَادَةُ', tr: 'Dua, ibadetin ta kendisidir.', ref: 'Tirmizî, Tefsîru\'l-Kur\'ân 40' },
+  { id: 21, topic: 'Anne-Baba Hakkı', ar: 'رِضَا الرَّبِّ فِي رِضَا الْوَالِدِ وَسَخَطُ الرَّبِّ فِي سَخَطِ الْوَالِدِ', tr: 'Rabb\'in rızası anne babanın rızasında, Rabb\'in öfkesi anne babanın öfkesindedir.', ref: 'Tirmizî, Birr 3' },
+  { id: 22, topic: 'Doğruluk & Dürüstlük', ar: 'عَلَيْكُمْ بِالصِّدْقِ فَإِنَّ الصِّدْقَ يَهْدِي إِلَى الْبِرِّ', tr: 'Doğruluktan ayrılmayınız. Şüphesiz doğruluk insanı iyiliğe götürür.', ref: 'Müslim, Birr 105' },
+  { id: 23, topic: 'Sıla-i Rahim (Akraba Ziyareti)', ar: 'مَنْ أَحَبَّ أَنْ يُبْسَطَ لَهُ فِي رِزْقِهِ وَيُنْسَأَ لَهُ فِي أَثَرِهِ فَلْيَصِلْ رَحِمَهُ', tr: 'Rızkının bollaşmasını ve ömrünün uzamasını isteyen kimse akrabasını ziyaret etsin.', ref: 'Buhârî, Büyû\' 13' },
+  { id: 24, topic: 'Gıybet ve Dili Korumak', ar: 'مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ', tr: 'Allah\'a ve ahiret gününe iman eden ya hayır söylesin ya da sussun.', ref: 'Buhârî, Edeb 31' },
+  { id: 25, topic: 'Tevbe ve İstiğfar', ar: 'التَّائِبُ مِنَ الذَّنْبِ كَمَنْ لاَ ذَنْبَ لَهُ', tr: 'Günahından tam dönüp tevbe eden, hiç günah işlememiş gibidir.', ref: 'İbn Mâce, Zühd 30' },
+  { id: 26, topic: 'Sabır & Şükür', ar: 'عَجَبًا لأَمْرِ الْمُؤْمِنِ إِنَّ أَمْرَهُ كُلَّهُ خَيْرٌ', tr: 'Müminin durumu ne hoştur! Her hali kendisi için hayırdır: Sevinirse şükreder hayır olur, sıkıntıya düşerse sabreder hayır olur.', ref: 'Müslim, Zühd 64' },
+  { id: 27, topic: 'Yetim Hakkı & Şefkat', ar: 'أَنَا وَكَافِلُ الْيَتِيمِ فِي الْجَنَّةِ هَكَذَا', tr: 'Ben ve yetimi koruyup gözeten kimse cennette şöyle yan yanayız.', ref: 'Buhârî, Edeb 24' },
+  { id: 28, topic: 'Kıskançlık & Haset', ar: 'إِيَّاكُمْ وَالْحَسَدَ فَإِنَّ الْحَسَدَ يَأْكُلُ الْحَسَنَاتِ كَمَا تَأْكُلُ النَّارُ الْحَطَبَ', tr: 'Haset etmekten sakının. Çünki haset, ateşin odunu yediği gibi iyilikleri yer bitirir.', ref: 'Ebû Dâvûd, Edeb 44' },
+  { id: 29, topic: 'Hediyeleşmek', ar: 'تَهَادَوْا تَحَابُّوا', tr: 'Birbirinize hediye veriniz ki aranızdaki sevgi artsın.', ref: 'Buhârî, el-Edebü\'l-Müfred' },
+  { id: 30, topic: 'Haya & Utanma Duygusu', ar: 'الْحَيَاءُ لاَ يَأْتِي إِلاَّ بِخَيْرٍ', tr: 'Hayâ (utanma duygusu) insan sadece hayır getirir.', ref: 'Buhârî, Edeb 77' },
+  { id: 31, topic: 'Merhamet Etmek', ar: 'مَنْ لاَ يَرْحَمْ لاَ يُرْحَمْ', tr: 'Merhamet etmeyene merhamet olunmaz.', ref: 'Buhârî, Edeb 18' },
+  { id: 32, topic: 'Zulümden Sakınmak', ar: 'اتَّقُوا الظُّلْمَ فَإِنَّ الظُّلْمَ ظُلُمَاتٌ يَوْمَ الْقِيَامَةِ', tr: 'Zulümden sakının! Çünki zulüm, kıyamet gününde zifiri karanlıklardır.', ref: 'Müslim, Birr 56' },
+  { id: 33, topic: 'İbadetlerde Devamlılık', ar: 'أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ', tr: 'Allah katında amellerin en makbulü, az da olsa devamlı olanıdır.', ref: 'Müslim, Musâfirîn 218' },
+  { id: 34, topic: 'Dünya ve Ahiret Dengesi', ar: 'كُنْ فِي الدُّنْيَا كَأَنَّكَ غَرِيبٌ أَوْ عَابِرُ سَبِيلٍ', tr: 'Dünyada sanki bir garip yahut bir yolcu gibi ol.', ref: 'Buhârî, Rikâk 3' },
+  { id: 35, topic: 'Ayıp Örtmek', ar: 'مَنْ سَتَرَ مُسْلِمًا سَتَرَهُ اللَّهُ فِي الدُّنْيَا وَالآخِرَةِ', tr: 'Kim bir Müslümanın ayıbını örterse, Allah da dünya ve ahirette onun ayıbını örter.', ref: 'Müslim, Birr 72' },
+  { id: 36, topic: 'Güzel Huyluluk', ar: 'إِنَّمَا بُعِثْتُ لأُتَمِّمَ صَالِحَ الأَخْلاَقِ', tr: 'Ben ancak güzel ahlakı tamamlamak için gönderildim.', ref: 'Ahmed b. Hanbel 2/381' },
+  { id: 37, topic: 'Kalp Temizliği', ar: 'أَلاَ وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ وَهِيَ الْقَلْبُ', tr: 'Dikkat edin! Vücutta bir et parçası vardır ki, o iyi olursa bütün vücut iyi olur; o bozulursa bütün vücut bozulur. O kalptir!', ref: 'Buhârî, İmân 39' },
+  { id: 38, topic: 'Cemaat ve Birlik', ar: 'يَدُ اللَّهِ مَعَ الْجَمَاعَةِ', tr: 'Allah\'ın yardım eli cemaat (birlik ve beraberlik) ile beraberdir.', ref: 'Tirmizî, Fiten 7' },
+  { id: 39, topic: 'Helal Rızık', ar: 'إِنَّ اللَّهَ طَيِّبٌ لاَ يَقْبَلُ إِلاَّ طَيِّبًا', tr: 'Şüphesiz Allah tayyibdir (temizdir), ancak temiz ve helal olanı kabul eder.', ref: 'Müslim, Zekât 65' },
+  { id: 40, topic: 'Şükür ve Hamd', ar: 'مَنْ لَمْ يَشْكُرِ النَّاسَ لَمْ يَشْكُرِ اللَّهَ', tr: 'İnsanlara teşekkür etmeyen, Allah\'a da şükretmiş olmaz.', ref: 'Tirmizî, Birr 35' }
+];
+
+let activeHadisTab = 'all';
+let _featuredHadisIdx = 0;
+
+function switchHadisTab(tab, btn) {
+  activeHadisTab = tab;
+  document.querySelectorAll('#v-hadis .fchip').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  renderHadisView();
+}
+
+function toggleHadisMemorized(idx) {
+  if (!S.hadisMemorized) S.hadisMemorized = {};
+  S.hadisMemorized[idx] = !S.hadisMemorized[idx];
+  save();
+  renderHadisView();
+  toast(S.hadisMemorized[idx] ? 'Hadis ezberlendi! 🧠🎉' : 'Ezber işareti kaldırıldı.', 'i');
+}
+
+function nextDailyHadis() {
+  _featuredHadisIdx = (_featuredHadisIdx + 1) % HADIS_40_DEF.length;
+  const h = HADIS_40_DEF[_featuredHadisIdx];
+  const refEl = document.getElementById('hadisFeaturedRef');
+  const arEl = document.getElementById('hadisFeaturedAr');
+  const trEl = document.getElementById('hadisFeaturedTr');
+  if (refEl) refEl.textContent = `Buhârî / Müslim #${h.id}`;
+  if (arEl) arEl.textContent = h.ar;
+  if (trEl) trEl.textContent = `"${h.tr}"`;
+}
+
+function copyFeaturedHadisText() {
+  const h = HADIS_40_DEF[_featuredHadisIdx] || HADIS_40_DEF[0];
+  navigator.clipboard.writeText(`"${h.tr}" (${h.ref})`);
+  toast('Günün Hadis-i Şerifi kopyalandı! 📋', 's');
+}
+
+function renderHadisView() {
+  const cont = document.getElementById('hadisGridContainer');
+  if (!cont) return;
+
+  if (!S.hadisMemorized) S.hadisMemorized = {};
+  const total = HADIS_40_DEF.length;
+  const memCount = HADIS_40_DEF.filter(h => S.hadisMemorized[h.id]).length;
+  const pendCount = total - memCount;
+
+  // Kuran tarzı üst kart istatistiklerini güncelle
+  const hBVal = document.getElementById('hadisBadgeVal');
+  const hCTot = document.getElementById('hadisCountTotal');
+  const hCMem = document.getElementById('hadisCountMem');
+  const hCPen = document.getElementById('hadisCountPend');
+  const hPVal = document.getElementById('hadisProgVal');
+  const hPFil = document.getElementById('hadisProgFill');
+
+  const pct = Math.round((memCount / total) * 100);
+  if (hBVal) hBVal.textContent = `${memCount}/${total} Ezberlendi`;
+  if (hCTot) hCTot.textContent = total;
+  if (hCMem) hCMem.textContent = memCount;
+  if (hCPen) hCPen.textContent = pendCount;
+  if (hPVal) hPVal.textContent = `%${pct}`;
+  if (hPFil) hPFil.style.width = `${pct}%`;
+
+  const setHCnt = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  setHCnt('hcnt-mem', memCount);
+  setHCnt('hcnt-pend', pendCount);
+
+  const q = (document.getElementById('searchHadisInp')?.value || '').toLowerCase().trim();
+
+  let list = HADIS_40_DEF;
+  if (activeHadisTab === 'mem') list = list.filter(h => S.hadisMemorized[h.id]);
+  if (activeHadisTab === 'pend') list = list.filter(h => !S.hadisMemorized[h.id]);
+  if (q) list = list.filter(h => (h.tr || '').toLowerCase().includes(q) || (h.topic || '').toLowerCase().includes(q));
+
+  if (!list.length) {
+    cont.innerHTML = `<div class="empty"><div class="empty-ico">📜</div><div class="empty-txt">Hadis-i Şerif bulunamadı.</div></div>`;
+    return;
+  }
+
+  cont.innerHTML = list.map(h => {
+    const isMem = !!S.hadisMemorized[h.id];
+    return `
+      <div style="background:var(--sf); border:1.5px solid ${isMem ? 'var(--teal)' : 'var(--bd)'}; border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:10px; width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; width:100%;">
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; min-width:140px; flex:1;">
+            <span style="font-size:0.75rem; font-weight:800; color:var(--gold); background:rgba(232,184,75,0.12); padding:2px 8px; border-radius:8px; white-space:nowrap;">#Hadis ${h.id}</span>
+            <span style="font-size:0.75rem; font-weight:700; color:var(--teal);">${esc(h.topic)}</span>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center; flex-shrink:0; margin-left:auto;">
+            <button class="tbtn" onclick="navigator.clipboard.writeText('${esc(h.tr)} (${esc(h.ref)})'); toast('Hadis kopyalandı!', 's');" style="font-size:0.75rem; padding:4px 10px; border-radius:8px; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; flex-shrink:0; cursor:pointer; font-weight:700;">
+              📋 Kopyala
+            </button>
+            <button class="tbtn" onclick="toggleHadisMemorized(${h.id})" style="font-size:0.75rem; padding:4px 10px; border-radius:8px; border:1px solid ${isMem ? 'var(--teal)' : 'var(--bd)'}; color:${isMem ? 'var(--teal)' : 'var(--tx2)'}; background:${isMem ? 'rgba(62,207,176,0.12)' : 'transparent'}; font-weight:800; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; flex-shrink:0; cursor:pointer;">
+              ${isMem ? '🧠 Ezberlendi ✓' : '➕ Ezberle'}
+            </button>
+          </div>
+        </div>
+        <div style="font-family:'Amiri',serif; font-size:1.45rem; color:var(--gold); direction:rtl; text-align:right; line-height:1.6;">${esc(h.ar)}</div>
+        <div style="font-size:0.9rem; color:var(--tx); line-height:1.45; font-weight:500;">"${esc(h.tr)}"</div>
+        <div style="font-size:0.72rem; color:var(--tx3); text-align:right;">📖 ${esc(h.ref)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════════════════
+   3. KİTAPLIK & OKUMA TAKİBİ MODÜLÜ
+   ════════════════════════════════════════════════════════════ */
+let activeBookTab = 'reading';
+let _editingBookId = null;
+
+function switchBookTab(tab, btn) {
+  activeBookTab = tab;
+  document.querySelectorAll('#v-books .fchip').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  renderBooksView();
+}
+
+function openAddBookModal(bookId = null) {
+  _editingBookId = bookId;
+  const modalTitle = document.querySelector('#addBookModal .modal-title');
+
+  if (bookId) {
+    const b = (S.books || []).find(x => x.id === bookId);
+    if (b) {
+      document.getElementById('bookTitleInp').value = b.title || '';
+      document.getElementById('bookAuthorInp').value = b.author || '';
+      document.getElementById('bookTotalPagesInp').value = b.totalPages || '';
+      document.getElementById('bookCurrentPageInp').value = b.currentPage || 0;
+      if (modalTitle) modalTitle.textContent = '✏️ Kitap Bilgilerini Düzenle';
+    }
+  } else {
+    document.getElementById('bookTitleInp').value = '';
+    document.getElementById('bookAuthorInp').value = '';
+    document.getElementById('bookTotalPagesInp').value = '';
+    document.getElementById('bookCurrentPageInp').value = '';
+    if (modalTitle) modalTitle.textContent = '📚 Yeni Kitap Ekle';
+  }
+  document.getElementById('addBookModal').classList.add('on');
+}
+
+function saveBookModal() {
+  const title = document.getElementById('bookTitleInp').value.trim();
+  const author = document.getElementById('bookAuthorInp').value.trim() || 'Bilinmiyor';
+  const totalP = Math.max(1, parseInt(document.getElementById('bookTotalPagesInp').value || '100', 10));
+  const curP = Math.max(0, parseInt(document.getElementById('bookCurrentPageInp').value || '0', 10));
+
+  if (!title) { toast('Lütfen kitap adı girin.', 'e'); return; }
+
+  if (!S.books) S.books = [];
+
+  if (_editingBookId) {
+    const b = S.books.find(x => x.id === _editingBookId);
+    if (b) {
+      b.title = title;
+      b.author = author;
+      b.totalPages = totalP;
+      b.currentPage = Math.min(totalP, curP);
+      b.finished = b.currentPage >= totalP;
+    }
+    toast('Kitap güncellendi! 📚', 's');
+  } else {
+    S.books.push({ id: 'b_' + Date.now(), title, author, totalPages: totalP, currentPage: Math.min(totalP, curP), finished: curP >= totalP });
+    toast('Kitap kütüphanenize eklendi! 📚', 's');
+  }
+
+  save();
+  closeModal('addBookModal');
+  _editingBookId = null;
+  renderBooksView();
+}
+
+function deleteBook(bookId) {
+  if (!S.books) return;
+  const b = S.books.find(x => x.id === bookId);
+  if (!b) return;
+  S.books = S.books.filter(x => x.id !== bookId);
+  save();
+  renderBooksView();
+  toast(`"${b.title}" silindi.`, 'i');
+}
+
+function incBookPage(bookId, n) {
+  const b = (S.books || []).find(x => x.id === bookId);
+  if (!b) return;
+  b.currentPage = Math.min(b.totalPages, Math.max(0, (b.currentPage || 0) + n));
+  if (b.currentPage >= b.totalPages) b.finished = true;
+  save();
+  renderBooksView();
+  toast(`"${b.title}" ${b.currentPage}/${b.totalPages}. Sayfa`, 's');
+}
+
+function openAddQuoteModal() {
+  document.getElementById('quoteBookInp').value = '';
+  document.getElementById('quoteTextInp').value = '';
+  document.getElementById('quotePageInp').value = '';
+  document.getElementById('addQuoteModal').classList.add('on');
+}
+
+function saveQuoteModal() {
+  const book = document.getElementById('quoteBookInp').value.trim() || 'Genel';
+  const text = document.getElementById('quoteTextInp').value.trim();
+  const page = document.getElementById('quotePageInp').value.trim();
+
+  if (!text) { toast('Lütfen alıntı metni girin.', 'e'); return; }
+
+  if (!S.quotes) S.quotes = [];
+  S.quotes.push({ id: 'q_' + Date.now(), book, text, page });
+  save();
+  closeModal('addQuoteModal');
+  renderBooksView();
+  toast('Alıntı defterinize kaydedildi! 📝', 's');
+}
+
+function deleteQuote(quoteId) {
+  if (!S.quotes) return;
+  S.quotes = S.quotes.filter(x => x.id !== quoteId);
+  save();
+  renderBooksView();
+  toast('Alıntı silindi.', 'i');
+}
+
+function renderBooksView() {
+  const cont = document.getElementById('booksGridContainer');
+  if (!cont) return;
+
+  if (!S.books) S.books = [
+    { id: 'b_def1', title: 'Mesnevi-i Şerif', author: 'Mevlânâ Celâleddîn-i Rûmî', totalPages: 450, currentPage: 120, finished: false }
+  ];
+  if (!S.quotes) S.quotes = [
+    { id: 'q_def1', book: 'Mesnevi-i Şerif', text: 'Cümleler doğrudur sen doğru isen, doğruluk bulunmaz sen eğri isen.', page: 45 }
+  ];
+
+  if (activeBookTab === 'quotes') {
+    if (!S.quotes.length) {
+      cont.innerHTML = `<div class="empty"><div class="empty-ico">📝</div><div class="empty-txt">Henüz kayıtlı alıntı yok.</div></div>`;
+      return;
+    }
+    cont.innerHTML = S.quotes.map(q => `
+      <div style="background:var(--sf); border:1px solid var(--bd); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:8px; width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-weight:800; font-size:0.82rem; color:var(--gold);">📖 ${esc(q.book)} ${q.page ? `· Sayfa ${q.page}` : ''}</div>
+          <button class="tbtn" onclick="deleteQuote('${q.id}')" style="font-size:0.75rem; padding:4px 10px; color:#ef4444; border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.08);">🗑️ Sil</button>
+        </div>
+        <div style="font-size:0.95rem; font-style:italic; color:var(--tx); line-height:1.45;">"${esc(q.text)}"</div>
+      </div>
+    `).join('');
+    return;
+  }
+
+  const isFin = activeBookTab === 'finished';
+  const list = S.books.filter(b => isFin ? b.finished : !b.finished);
+
+  if (!list.length) {
+    cont.innerHTML = `<div class="empty"><div class="empty-ico">📚</div><div class="empty-txt">${isFin ? 'Henüz bitirilen kitap yok.' : 'Okunmakta olan kitap yok.'}</div></div>`;
+    return;
+  }
+
+  cont.innerHTML = list.map(b => {
+    const pct = Math.round(((b.currentPage || 0) / (b.totalPages || 1)) * 100);
+    return `
+      <div style="background:var(--sf); border:1px solid var(--bd); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+          <div>
+            <div style="font-weight:800; font-size:1.1rem; color:var(--teal);">${esc(b.title)}</div>
+            <div style="font-size:0.8rem; color:var(--tx2); font-style:italic; margin-top:2px;">✍️ ${esc(b.author)}</div>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <button class="tbtn" onclick="openAddBookModal('${b.id}')" style="font-size:0.75rem; padding:4px 10px; border-radius:8px;">✏️ Düzenle</button>
+            <button class="tbtn" onclick="deleteBook('${b.id}')" style="font-size:0.75rem; padding:4px 10px; border-radius:8px; color:#ef4444; border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.08);">🗑️ Sil</button>
+            <button class="tbtn" onclick="startFocusForTask('book_${b.id}', 30)" style="font-size:0.75rem; padding:4px 10px; border-radius:8px; border:1px solid var(--teal); color:var(--teal); background:rgba(62,207,176,0.1); font-weight:700;">⏱ 30dk Okuma</button>
+          </div>
+        </div>
+
+        <div style="background:var(--sf2); padding:10px 14px; border-radius:10px; border:1px solid var(--bd);">
+          <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:800; color:var(--tx); margin-bottom:6px;">
+            <span>İlerleme: ${b.currentPage} / ${b.totalPages} Sayfa</span>
+            <span style="color:var(--gold);">%${pct}</span>
+          </div>
+          <div style="width:100%; height:6px; background:var(--sf3); border-radius:3px; overflow:hidden;">
+            <div style="width:${pct}%; height:100%; background:linear-gradient(90deg, #3ecfb0, #e8b84b); transition:width 0.3s ease;"></div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button class="btn" onclick="incBookPage('${b.id}', 10)" style="flex:1; font-size:0.8rem;">+10 Sayfa</button>
+          <button class="btn btn-primary" onclick="incBookPage('${b.id}', 1)" style="flex:1; font-size:0.8rem;">+1 Sayfa</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════════════════
+   4. KOMUT ROTASI (WEB & KOD DEFTERİ) MODÜLÜ
+   ════════════════════════════════════════════════════════════ */
+let activeKomutTab = 'snippets';
+let _editingSnippetId = null;
+let _editingWebToolId = null;
+
+const DEFAULT_WEB_TOOLS = [
+  { id: 'wt1', title: 'Komut Rotası Web Portal', url: 'https://komutrotasi.com', icon: '🌐', note: 'Ana web sitesi ve teknoloji yayınları' },
+  { id: 'wt2', title: 'Google Search Console', url: 'https://search.google.com/search-console', icon: '🔍', note: 'İndeks takibi, SEO ve arama performansı' },
+  { id: 'wt3', title: 'Google Analytics', url: 'https://analytics.google.com', icon: '📊', note: 'Canlı ziyaretçi trafiği ve analiz raporları' },
+  { id: 'wt4', title: 'Google PageSpeed Insights', url: 'https://pagespeed.web.dev', icon: '⚡', note: 'Core Web Vitals ve site hız ölçümü' }
+];
+
+function switchKomutTab(tab, btn) {
+  activeKomutTab = tab;
+  document.querySelectorAll('#v-komutrotasi .fchip').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  renderKomutRotasiView();
+}
+
+function openAddSnippetModal(snipId = null) {
+  _editingSnippetId = snipId;
+  const modalTitle = document.querySelector('#addSnippetModal .modal-title');
+
+  if (snipId) {
+    const s = (S.snippets || []).find(x => x.id === snipId);
+    if (s) {
+      document.getElementById('snipTitleInp').value = s.title || '';
+      document.getElementById('snipLangInp').value = s.lang || 'HTML';
+      document.getElementById('snipCodeInp').value = s.code || '';
+      if (modalTitle) modalTitle.textContent = '✏️ Snippet / Not Düzenle';
+    }
+  } else {
+    document.getElementById('snipTitleInp').value = '';
+    document.getElementById('snipLangInp').value = 'HTML';
+    document.getElementById('snipCodeInp').value = '';
+    if (modalTitle) modalTitle.textContent = '💻 Kod Snippet / Not Ekle';
+  }
+  document.getElementById('addSnippetModal').classList.add('on');
+}
+
+function saveSnippetModal() {
+  const title = document.getElementById('snipTitleInp').value.trim();
+  const lang = document.getElementById('snipLangInp').value;
+  const code = document.getElementById('snipCodeInp').value.trim();
+
+  if (!title || !code) { toast('Lütfen başlık ve kod içeriği girin.', 'e'); return; }
+
+  if (!S.snippets) S.snippets = [];
+
+  if (_editingSnippetId) {
+    const s = S.snippets.find(x => x.id === _editingSnippetId);
+    if (s) {
+      s.title = title;
+      s.lang = lang;
+      s.code = code;
+    }
+    toast('Öğe güncellendi! 💻', 's');
+  } else {
+    S.snippets.push({ id: 'snip_' + Date.now(), title, lang, code });
+    toast('Kod Snippet kaydedildi! 💻', 's');
+  }
+
+  save();
+  closeModal('addSnippetModal');
+  _editingSnippetId = null;
+  renderKomutRotasiView();
+}
+
+function deleteSnippet(snipId) {
+  if (!S.snippets) return;
+  const s = S.snippets.find(x => x.id === snipId);
+  if (!s) return;
+  S.snippets = S.snippets.filter(x => x.id !== snipId);
+  save();
+  renderKomutRotasiView();
+  toast(`"${s.title}" silindi.`, 'i');
+}
+
+function openAddWebToolModal(toolId = null) {
+  _editingWebToolId = toolId;
+  const modalTitle = document.querySelector('#addWebToolModal .modal-title');
+  const allTools = S.webTools || DEFAULT_WEB_TOOLS;
+
+  if (toolId) {
+    const t = allTools.find(x => x.id === toolId);
+    if (t) {
+      document.getElementById('webToolTitleInp').value = t.title || '';
+      document.getElementById('webToolUrlInp').value = t.url || '';
+      document.getElementById('webToolIconInp').value = t.icon || '🌐';
+      document.getElementById('webToolNoteInp').value = t.note || '';
+      if (modalTitle) modalTitle.textContent = '✏️ Webmaster Aracını Düzenle';
+    }
+  } else {
+    document.getElementById('webToolTitleInp').value = '';
+    document.getElementById('webToolUrlInp').value = '';
+    document.getElementById('webToolIconInp').value = '🌐';
+    document.getElementById('webToolNoteInp').value = '';
+    if (modalTitle) modalTitle.textContent = '🌐 Webmaster Aracı / Site Bağlantısı Ekle';
+  }
+  document.getElementById('addWebToolModal').classList.add('on');
+}
+
+function saveWebToolModal() {
+  const title = document.getElementById('webToolTitleInp').value.trim();
+  let url = document.getElementById('webToolUrlInp').value.trim();
+  const icon = document.getElementById('webToolIconInp').value;
+  const note = document.getElementById('webToolNoteInp').value.trim();
+
+  if (!title || !url) { toast('Lütfen araç adı ve web adresi (URL) girin.', 'e'); return; }
+
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = 'https://' + url;
+  }
+
+  if (!S.webTools) S.webTools = [...DEFAULT_WEB_TOOLS];
+
+  if (_editingWebToolId) {
+    const t = S.webTools.find(x => x.id === _editingWebToolId);
+    if (t) {
+      t.title = title;
+      t.url = url;
+      t.icon = icon;
+      t.note = note;
+    }
+    toast('Webmaster aracı güncellendi! 🌐', 's');
+  } else {
+    S.webTools.push({ id: 'wt_' + Date.now(), title, url, icon, note });
+    toast('Yeni Webmaster aracı eklendi! 🌐', 's');
+  }
+
+  save();
+  closeModal('addWebToolModal');
+  _editingWebToolId = null;
+  renderKomutRotasiView();
+}
+
+function deleteWebTool(toolId) {
+  if (!S.webTools) S.webTools = [...DEFAULT_WEB_TOOLS];
+  const t = S.webTools.find(x => x.id === toolId);
+  if (!t) return;
+  S.webTools = S.webTools.filter(x => x.id !== toolId);
+  save();
+  renderKomutRotasiView();
+  toast(`"${t.title}" kaldırıldı.`, 'i');
+}
+
+const DEFAULT_SUBDOMAINS = [
+  { id: 'subd1', title: 'Mikat — Kişisel Verimlilik & İbadet Asistanı', url: 'https://mikat.komutrotasi.com', icon: '🕋', note: 'Canlı zaman takibi, namaz, 40 hadis, ders ve bütçe yönetim uygulaması' },
+  { id: 'subd2', title: 'Bilişimci Hocam — Eğitim Portalı', url: 'https://bilisimcihocam.komutrotasi.com', icon: '🏫', note: 'Bilişim teknolojileri ders materyalleri ve sınav içerikleri' },
+  { id: 'subd3', title: 'Kod Laboratuvarı & Sandbox', url: 'https://lab.komutrotasi.com', icon: '💻', note: 'Kod denemeleri, web bileşenleri ve demo projeler' }
+];
+
+function deleteSubdomain(subId) {
+  if (!S.subdomains) S.subdomains = [...DEFAULT_SUBDOMAINS];
+  const s = S.subdomains.find(x => x.id === subId);
+  if (!s) return;
+  S.subdomains = S.subdomains.filter(x => x.id !== subId);
+  save();
+  renderKomutRotasiView();
+  toast(`"${s.title}" subdomain'i silindi.`, 'i');
+}
+
+function renderKomutRotasiView() {
+  const cont = document.getElementById('komutGridContainer');
+  if (!cont) return;
+
+  if (!S.snippets) S.snippets = [
+    { id: 's1', title: 'CSS Modern Glassmorphism Kart Kodu', lang: 'HTML', code: 'background: rgba(255, 255, 255, 0.08);\nbackdrop-filter: blur(12px);\nborder: 1px solid rgba(255, 255, 255, 0.15);' },
+    { id: 's2', title: 'Python Listeyi Ters Çevirme Snippet', lang: 'Python', code: 'numbers = [1, 2, 3, 4, 5]\nreversed_list = numbers[::-1]\nprint(reversed_list)' },
+    { id: 's3', title: 'Python 3.12 Yenilikleri & Performans Rehberi', lang: 'İçerik', code: 'Makale Taslağı:\n1. GIL İyileştirmeleri\n2. F-String Esneklikleri\n3. Hata Mesajları' },
+    { id: 's4', title: 'Yapay Zeka Destekli Web Geliştirme İpuçları', lang: 'İçerik', code: 'İçerik Fikri:\nSitede yayımlanacak AI prompt örnekleri ve rehber.' }
+  ];
+
+  if (activeKomutTab === 'subdomains') {
+    if (!S.subdomains) S.subdomains = [...DEFAULT_SUBDOMAINS];
+
+    cont.innerHTML = `
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; width:100%;">
+        ${S.subdomains.map(sd => `
+          <div style="background:var(--sf); border:1px solid var(--bd); padding:18px; border-radius:14px; display:flex; flex-direction:column; justify-content:space-between; gap:12px; transition:all 0.2s ease;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <div style="font-size:2rem;">${esc(sd.icon || '🌐')}</div>
+                <div style="display:flex; gap:4px;">
+                  <button class="tbtn" onclick="openAddWebToolModal('${sd.id}')" style="font-size:0.75rem; padding:3px 8px;" title="Düzenle">✏️</button>
+                  <button class="tbtn" onclick="deleteSubdomain('${sd.id}')" style="font-size:0.75rem; padding:3px 8px; color:#ef4444;" title="Sil">🗑️</button>
+                </div>
+              </div>
+              <div style="font-weight:800; font-size:1.05rem; color:var(--gold); margin-bottom:4px;">${esc(sd.title)}</div>
+              <div style="font-size:0.78rem; font-weight:700; color:var(--teal); margin-bottom:6px;">🔗 ${esc(sd.url)}</div>
+              ${sd.note ? `<div style="font-size:0.8rem; color:var(--tx2); line-height:1.4;">${esc(sd.note)}</div>` : ''}
+            </div>
+            <button class="btn btn-primary" onclick="window.open('${esc(sd.url)}', '_blank')" style="font-size:0.8rem; width:100%; font-weight:700; margin-top:6px;">
+              Subdomain'e Git ↗
+            </button>
+          </div>
+        `).join('')}
+
+        <div onclick="openAddWebToolModal()" style="background:rgba(232,184,75,0.04); border:2px dashed var(--bd); padding:20px; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; cursor:pointer; min-height:160px; transition:all 0.2s ease;" onmouseover="this.style.borderColor='var(--gold)';" onmouseout="this.style.borderColor='var(--bd)';">
+          <div style="font-size:2rem; color:var(--gold);">🌐</div>
+          <div style="font-weight:800; font-size:0.9rem; color:var(--gold);">+ Yeni Subdomain Ekle</div>
+          <div style="font-size:0.75rem; color:var(--tx3); text-align:center;">mikat.komutrotasi.com, lab.komutrotasi.com vb.</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  if (activeKomutTab === 'tools') {
+    if (!S.webTools) S.webTools = [...DEFAULT_WEB_TOOLS];
+    
+    cont.innerHTML = `
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; width:100%;">
+        ${S.webTools.map(wt => `
+          <div style="background:var(--sf); border:1px solid var(--bd); padding:18px; border-radius:14px; display:flex; flex-direction:column; justify-content:space-between; gap:12px; transition:all 0.2s ease;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <div style="font-size:2rem;">${esc(wt.icon || '🌐')}</div>
+                <div style="display:flex; gap:4px;">
+                  <button class="tbtn" onclick="openAddWebToolModal('${wt.id}')" style="font-size:0.75rem; padding:3px 8px;" title="Düzenle">✏️</button>
+                  <button class="tbtn" onclick="deleteWebTool('${wt.id}')" style="font-size:0.75rem; padding:3px 8px; color:#ef4444;" title="Sil">🗑️</button>
+                </div>
+              </div>
+              <div style="font-weight:800; font-size:1.05rem; color:var(--teal); margin-bottom:4px;">${esc(wt.title)}</div>
+              ${wt.note ? `<div style="font-size:0.8rem; color:var(--tx2); line-height:1.4;">${esc(wt.note)}</div>` : ''}
+            </div>
+            <button class="btn btn-primary" onclick="window.open('${esc(wt.url)}', '_blank')" style="font-size:0.8rem; width:100%; font-weight:700; margin-top:6px;">
+              Siteye / Araca Git ↗
+            </button>
+          </div>
+        `).join('')}
+        
+        <div onclick="openAddWebToolModal()" style="background:rgba(62,207,176,0.04); border:2px dashed var(--bd); padding:20px; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; cursor:pointer; min-height:160px; transition:all 0.2s ease;" onmouseover="this.style.borderColor='var(--teal)';" onmouseout="this.style.borderColor='var(--bd)';">
+          <div style="font-size:2rem; color:var(--teal);">➕</div>
+          <div style="font-weight:800; font-size:0.9rem; color:var(--teal);">+ Yeni Webmaster Aracı Ekle</div>
+          <div style="font-size:0.75rem; color:var(--tx3); text-align:center;">Analytics, WordPress Admin, Search Console vb.</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  let list = S.snippets;
+  if (activeKomutTab === 'snippets') {
+    list = list.filter(s => s.lang !== 'İçerik');
+  } else if (activeKomutTab === 'ideas') {
+    list = list.filter(s => s.lang === 'İçerik');
+  }
+
+  const q = (document.getElementById('searchKomutInp')?.value || '').toLowerCase().trim();
+  if (q) list = list.filter(s => (s.title || '').toLowerCase().includes(q) || (s.code || '').toLowerCase().includes(q));
+
+  if (!list.length) {
+    cont.innerHTML = `<div class="empty"><div class="empty-ico">💻</div><div class="empty-txt">Kayıtlı öye bulunamadı.</div></div>`;
+    return;
+  }
+
+  cont.innerHTML = list.map(s => `
+    <div style="background:var(--sf); border:1px solid var(--bd); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:10px; width:100%;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:0.75rem; font-weight:800; color:var(--teal); background:rgba(62,207,176,0.12); padding:2px 8px; border-radius:8px;">${esc(s.lang)}</span>
+          <span style="font-weight:800; font-size:1rem; color:var(--tx);">${esc(s.title)}</span>
+        </div>
+        <div style="display:flex; gap:6px; align-items:center; flex-shrink:0; margin-left:auto;">
+          <button class="tbtn" onclick="openAddSnippetModal('${s.id}')" style="font-size:0.75rem; padding:4px 10px; border-radius:8px;">✏️ Düzenle</button>
+          <button class="tbtn" onclick="deleteSnippet('${s.id}')" style="font-size:0.75rem; padding:4px 10px; border-radius:8px; color:#ef4444; border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.08);">🗑️ Sil</button>
+          <button class="tbtn" onclick="navigator.clipboard.writeText(\`${esc(s.code)}\`); toast('Kod panoya kopyalandı!', 's');" style="font-size:0.75rem; padding:4px 10px; border-radius:8px;">📋 Kopyala</button>
+        </div>
+      </div>
+      <pre style="background:var(--sf2); border:1px solid var(--bd); padding:12px; border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--gold); overflow-x:auto; margin:0;"><code>${esc(s.code)}</code></pre>
+    </div>
+  `).join('');
+}
+
+/* ════════════════════════════════════════════════════════════
+   5. DERS & ÖĞRETMENLİK PANELİ MODÜLÜ
+   ════════════════════════════════════════════════════════════ */
+let activeTeacherTab = 'classes';
+let _editingTeacherTaskId = null;
+
+function switchTeacherTab(tab, btn) {
+  activeTeacherTab = tab;
+  document.querySelectorAll('#v-teacher .fchip').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  renderTeacherView();
+}
+
+function openAddTeacherTaskModal(taskId = null) {
+  _editingTeacherTaskId = taskId;
+  const modalTitle = document.querySelector('#addTeacherTaskModal .modal-title');
+
+  if (taskId) {
+    const t = (S.teacherTasks || []).find(x => x.id === taskId);
+    if (t) {
+      document.getElementById('ttaskTitleInp').value = t.title || '';
+      document.getElementById('ttaskClassInp').value = t.class || '5. Sınıf';
+      document.getElementById('ttaskTypeInp').value = t.type || 'Müfredat';
+      if (modalTitle) modalTitle.textContent = '✏️ Ders Görevini Düzenle';
+    }
+  } else {
+    document.getElementById('ttaskTitleInp').value = '';
+    document.getElementById('ttaskClassInp').value = '5. Sınıf';
+    document.getElementById('ttaskTypeInp').value = 'Müfredat';
+    if (modalTitle) modalTitle.textContent = '🏫 Ders / Sınıf Görevi Ekle';
+  }
+  document.getElementById('addTeacherTaskModal').classList.add('on');
+}
+
+function saveTeacherTaskModal() {
+  const title = document.getElementById('ttaskTitleInp').value.trim();
+  const cls = document.getElementById('ttaskClassInp').value;
+  const type = document.getElementById('ttaskTypeInp').value;
+
+  if (!title) { toast('Lütfen görev başlığı girin.', 'e'); return; }
+
+  if (!S.teacherTasks) S.teacherTasks = [];
+
+  if (_editingTeacherTaskId) {
+    const t = S.teacherTasks.find(x => x.id === _editingTeacherTaskId);
+    if (t) {
+      t.title = title;
+      t.class = cls;
+      t.type = type;
+    }
+    toast('Ders görevi güncellendi! 🏫', 's');
+  } else {
+    S.teacherTasks.push({ id: 'tt_' + Date.now(), title, class: cls, type, done: false });
+    toast('Ders görevi eklendi! 🏫', 's');
+  }
+
+  save();
+  closeModal('addTeacherTaskModal');
+  _editingTeacherTaskId = null;
+  renderTeacherView();
+}
+
+function deleteTeacherTask(taskId) {
+  if (!S.teacherTasks) return;
+  const t = S.teacherTasks.find(x => x.id === taskId);
+  if (!t) return;
+  S.teacherTasks = S.teacherTasks.filter(x => x.id !== taskId);
+  save();
+  renderTeacherView();
+  toast(`"${t.title}" silindi.`, 'i');
+}
+
+function toggleTeacherTask(id) {
+  const t = (S.teacherTasks || []).find(x => x.id === id);
+  if (t) {
+    t.done = !t.done;
+    save();
+    renderTeacherView();
+    toast(t.done ? 'Görev tamamlandı! 🎉' : 'Görev geri alındı.', 'i');
+  }
+}
+
+function renderTeacherView() {
+  const cont = document.getElementById('teacherGridContainer');
+  if (!cont) return;
+
+  if (!S.teacherTasks) S.teacherTasks = [
+    { id: 'tt1', title: '5-A Scratch Değişkenler & Algoritma Konusu', class: '5. Sınıf', type: 'Müfredat', done: false },
+    { id: 'tt2', title: '6-B Bilişim 1. Dönem 1. Yazılı Hazırlanması', class: '6. Sınıf', type: 'Sınav', done: false },
+    { id: 'tt3', title: 'Bilişim Laboratuvarı Bilgisayar Güncellemeleri', class: 'Laboratuvar', type: 'Lab', done: true }
+  ];
+
+  let list = S.teacherTasks;
+  if (activeTeacherTab === 'classes') {
+    list = list.filter(t => t.type === 'Müfredat' || (t.class && (t.class.includes('Sınıf') || t.class.includes('Kulüp') || t.class.includes('Takım'))));
+  } else if (activeTeacherTab === 'exams') {
+    list = list.filter(t => t.type === 'Sınav' || t.type === 'Ödev');
+  } else if (activeTeacherTab === 'lab') {
+    list = list.filter(t => t.type === 'Lab' || t.class === 'Laboratuvar');
+  }
+
+  const q = (document.getElementById('searchTeacherInp')?.value || '').toLowerCase().trim();
+  if (q) list = list.filter(t => (t.title || '').toLowerCase().includes(q) || (t.class || '').toLowerCase().includes(q));
+
+  if (!list.length) {
+    cont.innerHTML = `<div class="empty"><div class="empty-ico">🏫</div><div class="empty-txt">Ders görevi bulunamadı.</div></div>`;
+    return;
+  }
+
+  cont.innerHTML = list.map(t => `
+    <div style="background:var(--sf); border:1.5px solid ${t.done ? 'var(--teal)' : 'var(--bd)'}; border-radius:14px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:12px; cursor:pointer; flex:1; min-width:200px;" onclick="toggleTeacherTask('${t.id}')">
+        <div style="width:26px; height:26px; border-radius:50%; border:2px solid ${t.done ? 'var(--teal)' : 'var(--tx3)'}; background:${t.done ? 'var(--teal)' : 'transparent'}; color:#0b1320; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.85rem; flex-shrink:0;">
+          ${t.done ? '✓' : ''}
+        </div>
+        <div>
+          <div style="font-weight:800; font-size:1rem; color:${t.done ? 'var(--teal)' : 'var(--tx)'}; text-decoration:${t.done ? 'line-through' : 'none'};">${esc(t.title)}</div>
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <span style="font-size:0.72rem; font-weight:700; color:var(--pur); background:rgba(167,139,250,0.12); padding:1px 8px; border-radius:8px;">${esc(t.class)}</span>
+            <span style="font-size:0.72rem; font-weight:700; color:var(--gold); background:rgba(232,184,75,0.12); padding:1px 8px; border-radius:8px;">${esc(t.type)}</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px; align-items:center; flex-shrink:0; margin-left:auto;">
+        <button class="tbtn" onclick="openAddTeacherTaskModal('${t.id}')" style="font-size:0.75rem; padding:4px 10px; border-radius:8px;">✏️ Düzenle</button>
+        <button class="tbtn" onclick="deleteTeacherTask('${t.id}')" style="font-size:0.75rem; padding:4px 10px; border-radius:8px; color:#ef4444; border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.08);">🗑️ Sil</button>
+        <button class="tbtn" onclick="startFocusForTask('ttask_${t.id}', 30)" style="font-size:0.75rem; padding:4px 10px; border-radius:8px; border:1px solid var(--teal); color:var(--teal); background:rgba(62,207,176,0.1); font-weight:700;">⏱ 30dk Odaklan</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ════════════════════════════════════════════════════════════
+   6. KİŞİSEL FİNANS & BÜTÇE TAKİBİ MODÜLÜ
+   ════════════════════════════════════════════════════════════ */
+let activeFinanceTab = 'all';
+let _editingFinanceId = null;
+
+const DEFAULT_FINANCE_ITEMS = [
+  { id: 'fin1', title: 'Öğretmenlik Maaşı (Milli Eğitim)', type: 'income', amount: 42500, category: 'Maaş / Ek Ders', date: today(), note: 'Aylık sabit maaş ödemesi', totalInstallments: 1, paidInstallments: 0 },
+  { id: 'fin2', title: 'Okul Ek Ders Ücreti', type: 'income', amount: 4800, category: 'Maaş / Ek Ders', date: today(), note: 'Aylık 40 saat ek ders', totalInstallments: 1, paidInstallments: 0 },
+  { id: 'fin3', title: 'Komut Rotası Sunucu & Hosting', type: 'expense', amount: 450, category: 'Hosting / Domain', date: today(), note: 'Hetzner VPS sunucu ödemesi', totalInstallments: 1, paidInstallments: 0 },
+  { id: 'fin4', title: 'Bilişim Laboratuvarı Laptop Alımı', type: 'expense', amount: 24000, category: 'Okul / Eğitim', date: today(), note: '12 Taksitli bilgisayar alımı', totalInstallments: 12, paidInstallments: 4 },
+  { id: 'fin5', title: 'Ev İnterneti (Türk Telekom Fiber)', type: 'expense', amount: 390, category: 'Fatura / Ev', date: today(), note: 'Aylık fiber internet faturası', totalInstallments: 1, paidInstallments: 0 }
+];
+
+function toggleInstallmentDetails() {
+  const count = parseInt(document.getElementById('finInstallmentCountInp')?.value || '1', 10);
+  const row = document.getElementById('finPaidInstallmentsRow');
+  if (row) {
+    row.style.display = count > 1 ? 'block' : 'none';
+  }
+}
+
+function payFinanceInstallment(id) {
+  const allItems = S.financeItems || DEFAULT_FINANCE_ITEMS;
+  const f = allItems.find(x => x.id === id);
+  if (f && (f.totalInstallments || 1) > 1) {
+    const totalInst = f.totalInstallments;
+    const curPaid = f.paidInstallments || 0;
+    if (curPaid < totalInst) {
+      f.paidInstallments = curPaid + 1;
+      save();
+      renderFinanceView();
+      toast(`"${f.title}" için ${f.paidInstallments}/${totalInst}. taksit ödendi! 💳`, 's');
+    } else {
+      toast('Bu işlemin tüm taksitleri zaten ödenmiş.', 'i');
+    }
+  }
+}
+
+const DEFAULT_FINANCE_CATEGORIES = [
+  'Maaş / Ek Ders',
+  'Hosting / Domain',
+  'Abonelik / Yazılım',
+  'Fatura / Ev',
+  'Okul / Eğitim',
+  'Mutfak / Market',
+  'Ulaşım / Yakıt',
+  'Diğer'
+];
+
+function getFinanceCategories() {
+  if (!S.financeCategories || !S.financeCategories.length) {
+    S.financeCategories = [...DEFAULT_FINANCE_CATEGORIES];
+  }
+  return S.financeCategories;
+}
+
+function openManageFinanceCategoriesModal() {
+  renderFinanceCategoryManagerList();
+  document.getElementById('manageFinanceCategoriesModal').classList.add('on');
+}
+
+function renderFinanceCategoryManagerList() {
+  const cont = document.getElementById('finCategoryManagerList');
+  if (!cont) return;
+  const cats = getFinanceCategories();
+
+  cont.innerHTML = cats.map((cat, i) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--sf2); border:1px solid var(--bd); padding:8px 12px; border-radius:8px;">
+      <span style="font-weight:700; font-size:0.88rem; color:var(--tx);">${esc(cat)}</span>
+      <button class="tbtn" onclick="deleteCustomFinanceCategory(${i})" style="font-size:0.75rem; padding:2px 6px; color:#ef4444;" title="Kategoriyi Sil">🗑️</button>
+    </div>
+  `).join('');
+
+  populateFinanceCategorySelect();
+}
+
+function addCustomFinanceCategory() {
+  const inp = document.getElementById('newFinCatInp');
+  const val = (inp?.value || '').trim();
+  if (!val) { toast('Lütfen kategori adı girin.', 'e'); return; }
+
+  const cats = getFinanceCategories();
+  if (cats.includes(val)) { toast('Bu kategori zaten mevcut.', 'i'); return; }
+
+  cats.push(val);
+  save();
+  if (inp) inp.value = '';
+  renderFinanceCategoryManagerList();
+  toast(`"${val}" kategorisi eklendi! ⚙️`, 's');
+}
+
+function deleteCustomFinanceCategory(index) {
+  const cats = getFinanceCategories();
+  if (index >= 0 && index < cats.length) {
+    const deleted = cats.splice(index, 1)[0];
+    save();
+    renderFinanceCategoryManagerList();
+    toast(`"${deleted}" kategorisi silindi.`, 'i');
+  }
+}
+
+function populateFinanceCategorySelect() {
+  const sel = document.getElementById('finCategoryInp');
+  if (!sel) return;
+  const curVal = sel.value;
+  const cats = getFinanceCategories();
+
+  sel.innerHTML = cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  if (curVal && cats.includes(curVal)) {
+    sel.value = curVal;
+  }
+}
+
+function switchFinanceTab(tab, btn) {
+  activeFinanceTab = tab;
+  document.querySelectorAll('#v-finance .fchip').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  renderFinanceView();
+}
+
+function openAddFinanceModal(itemValId = null) {
+  populateFinanceCategorySelect();
+  _editingFinanceId = itemValId;
+  const modalTitle = document.querySelector('#addFinanceModal .modal-title');
+  const allItems = S.financeItems || DEFAULT_FINANCE_ITEMS;
+
+  if (itemValId) {
+    const f = allItems.find(x => x.id === itemValId);
+    if (f) {
+      document.getElementById('finTitleInp').value = f.title || '';
+      document.getElementById('finTypeInp').value = f.type || 'expense';
+      document.getElementById('finAmountInp').value = f.amount || '';
+      document.getElementById('finCategoryInp').value = f.category || 'Diğer';
+      document.getElementById('finDateInp').value = f.date || today();
+      document.getElementById('finInstallmentCountInp').value = f.totalInstallments || 1;
+      document.getElementById('finPaidInstallmentsInp').value = f.paidInstallments || 0;
+      document.getElementById('finNoteInp').value = f.note || '';
+      if (modalTitle) modalTitle.textContent = '✏️ Finans İşlemini Düzenle';
+    }
+  } else {
+    document.getElementById('finTitleInp').value = '';
+    document.getElementById('finTypeInp').value = 'expense';
+    document.getElementById('finAmountInp').value = '';
+    const cats = getFinanceCategories();
+    document.getElementById('finCategoryInp').value = cats[0] || 'Maaş / Ek Ders';
+    document.getElementById('finDateInp').value = today();
+    document.getElementById('finInstallmentCountInp').value = '1';
+    document.getElementById('finPaidInstallmentsInp').value = '0';
+    document.getElementById('finNoteInp').value = '';
+    if (modalTitle) modalTitle.textContent = '💰 Finans İşlemi Ekle';
+  }
+  toggleInstallmentDetails();
+  document.getElementById('addFinanceModal').classList.add('on');
+}
+
+function saveFinanceModal() {
+  const title = document.getElementById('finTitleInp').value.trim();
+  const type = document.getElementById('finTypeInp').value;
+  const amount = parseFloat(document.getElementById('finAmountInp').value || '0');
+  const category = document.getElementById('finCategoryInp').value;
+  const date = document.getElementById('finDateInp').value || today();
+  const totalInstallments = parseInt(document.getElementById('finInstallmentCountInp').value || '1', 10);
+  const paidInstallments = parseInt(document.getElementById('finPaidInstallmentsInp').value || '0', 10);
+  const note = document.getElementById('finNoteInp').value.trim();
+
+  if (!title || isNaN(amount) || amount <= 0) {
+    toast('Lütfen geçerli bir işlem adı ve tutar girin.', 'e');
+    return;
+  }
+
+  if (!S.financeItems) S.financeItems = [...DEFAULT_FINANCE_ITEMS];
+
+  if (_editingFinanceId) {
+    const f = S.financeItems.find(x => x.id === _editingFinanceId);
+    if (f) {
+      f.title = title;
+      f.type = type;
+      f.amount = amount;
+      f.category = category;
+      f.date = date;
+      f.totalInstallments = totalInstallments;
+      f.paidInstallments = Math.min(totalInstallments, paidInstallments);
+      f.note = note;
+    }
+    toast('İşlem güncellendi! 💰', 's');
+  } else {
+    S.financeItems.push({ id: 'fin_' + Date.now(), title, type, amount, category, date, totalInstallments, paidInstallments: Math.min(totalInstallments, paidInstallments), note });
+    toast(type === 'income' ? 'Gelir kaydedildi! 📥' : 'Gider kaydedildi! 📤', 's');
+  }
+
+  save();
+  closeModal('addFinanceModal');
+  _editingFinanceId = null;
+  renderFinanceView();
+}
+
+function deleteFinanceItem(itemId) {
+  if (!S.financeItems) S.financeItems = [...DEFAULT_FINANCE_ITEMS];
+  const f = S.financeItems.find(x => x.id === itemId);
+  if (!f) return;
+  S.financeItems = S.financeItems.filter(x => x.id !== itemId);
+  save();
+  renderFinanceView();
+  toast(`"${f.title}" silindi.`, 'i');
+}
+
+function fmtTL(num) {
+  return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(num || 0);
+}
+
+function renderFinanceView() {
+  const cont = document.getElementById('financeGridContainer');
+  if (!cont) return;
+
+  if (!S.financeItems) S.financeItems = [...DEFAULT_FINANCE_ITEMS];
+
+  const totalInc = S.financeItems.filter(x => x.type === 'income').reduce((acc, x) => acc + (x.amount || 0), 0);
+  const totalExp = S.financeItems.filter(x => x.type === 'expense').reduce((acc, x) => acc + (x.amount || 0), 0);
+  const netBal = totalInc - totalExp;
+
+  const incEl = document.getElementById('finTotalIncome');
+  const expEl = document.getElementById('finTotalExpense');
+  const netEl = document.getElementById('finNetBalance');
+
+  if (incEl) incEl.textContent = fmtTL(totalInc);
+  if (expEl) expEl.textContent = fmtTL(totalExp);
+  if (netEl) {
+    netEl.textContent = fmtTL(netBal);
+    netEl.style.color = netBal >= 0 ? 'var(--teal)' : '#ef4444';
+  }
+
+  let list = S.financeItems;
+  if (activeFinanceTab === 'income') {
+    list = list.filter(x => x.type === 'income');
+  } else if (activeFinanceTab === 'expense') {
+    list = list.filter(x => x.type === 'expense');
+  } else if (activeFinanceTab === 'installments') {
+    list = list.filter(x => (x.totalInstallments || 1) > 1);
+  } else if (activeFinanceTab === 'sub') {
+    list = list.filter(x => x.category === 'Abonelik / Yazılım' || x.category === 'Fatura / Ev');
+  }
+
+  const q = (document.getElementById('searchFinanceInp')?.value || '').toLowerCase().trim();
+  if (q) list = list.filter(x => (x.title || '').toLowerCase().includes(q) || (x.category || '').toLowerCase().includes(q) || (x.note || '').toLowerCase().includes(q));
+
+  if (!list.length) {
+    cont.innerHTML = `<div class="empty"><div class="empty-ico">💰</div><div class="empty-txt">Kayıtlı işlem bulunamadı.</div></div>`;
+    return;
+  }
+
+  cont.innerHTML = list.map(f => {
+    const isInc = f.type === 'income';
+    const totalInst = f.totalInstallments || 1;
+    const paidInst = f.paidInstallments || 0;
+    const isInst = totalInst > 1;
+    const monthlyAmt = isInst ? f.amount / totalInst : f.amount;
+
+    return `
+      <div style="background:var(--sf); border:1.5px solid ${isInc ? 'rgba(62,207,176,0.3)' : 'var(--bd)'}; border-radius:14px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:220px;">
+          <div style="width:36px; height:36px; border-radius:10px; background:${isInc ? 'rgba(62,207,176,0.12)' : (isInst ? 'rgba(232,184,75,0.12)' : 'rgba(239,68,68,0.12)')}; color:${isInc ? 'var(--teal)' : (isInst ? 'var(--gold)' : '#ef4444')}; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; font-weight:900;">
+            ${isInc ? '📥' : (isInst ? '💳' : '📤')}
+          </div>
+          <div>
+            <div style="font-weight:800; font-size:1.05rem; color:var(--tx);">${esc(f.title)}</div>
+            <div style="display:flex; gap:6px; align-items:center; margin-top:4px; flex-wrap:wrap;">
+              <span style="font-size:0.72rem; font-weight:700; color:var(--gold); background:rgba(232,184,75,0.12); padding:1px 8px; border-radius:8px;">${esc(f.category)}</span>
+              ${isInst ? `<span style="font-size:0.72rem; font-weight:800; color:var(--teal); background:rgba(62,207,176,0.12); padding:1px 8px; border-radius:8px;">💳 ${paidInst}/${totalInst} Taksit Ödendi (${fmtTL(monthlyAmt)}/ay)</span>` : ''}
+              ${f.date ? `<span style="font-size:0.72rem; color:var(--tx3);">📅 ${esc(f.date)}</span>` : ''}
+              ${f.note ? `<span style="font-size:0.72rem; color:var(--tx2); font-style:italic;">💬 ${esc(f.note)}</span>` : ''}
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center; margin-left:auto; flex-wrap:wrap;">
+          <div style="text-align:right;">
+            <div style="font-weight:900; font-size:1.15rem; color:${isInc ? 'var(--teal)' : '#ef4444'}; white-space:nowrap;">
+              ${isInc ? '+' : '-'}${fmtTL(f.amount)}
+            </div>
+            ${isInst ? `<div style="font-size:0.72rem; font-weight:700; color:var(--tx3);">${paidInst >= totalInst ? '✅ Borç Bitti' : `Kalan: ${totalInst - paidInst} Taksit (${fmtTL((totalInst - paidInst) * monthlyAmt)})`}</div>` : ''}
+          </div>
+          <div style="display:flex; gap:4px; align-items:center;">
+            ${isInst && paidInst < totalInst ? `<button class="tbtn" onclick="payFinanceInstallment('${f.id}')" style="font-size:0.75rem; padding:4px 8px; border-color:var(--teal); color:var(--teal);" title="1 Taksit Öde">💳 Taksit Öde</button>` : ''}
+            <button class="tbtn" onclick="openAddFinanceModal('${f.id}')" style="font-size:0.75rem; padding:4px 8px;" title="Düzenle">✏️</button>
+            <button class="tbtn" onclick="deleteFinanceItem('${f.id}')" style="font-size:0.75rem; padding:4px 8px; color:#ef4444;" title="Sil">🗑️</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 
